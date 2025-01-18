@@ -4,33 +4,33 @@ let userEmail = "";
 let testAnswers = [];
 const questions = [
     {
-        text: "I enjoy spending time alone.",
-        options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+        text: "Eu gosto de passar tempo sozinha(o).",
+        options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
     {
-        text: "I am a very social person.",
-        options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+        text: "Eu sou uma pessoa muito sociável.",
+        options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
       {
-        text: "I am often lost in thoughts.",
-        options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+        text: "Eu frequentemente fico perdida(o) em pensamentos.",
+        options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
     {
-        text: "I am creative person.",
-        options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+        text: "Eu sou uma pessoa criativa.",
+        options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
      {
-        text: "I am always worried.",
-        options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+        text: "Eu estou sempre preocupada(o).",
+        options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
       {
-        text: "I feel calm in stressful situations.",
-        options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+        text: "Eu me sinto calma(o) em situações estressantes.",
+        options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     }
 ];
@@ -39,9 +39,9 @@ const questions = [
 const radarChartConfig = {
      type: 'radar',
       data: {
-        labels: ['Introversion', 'Extroversion', 'Intuition', 'Creativity', 'Anxiety', 'Calm'],
+        labels: ['Introversão', 'Extroversão', 'Intuição', 'Criatividade', 'Ansiedade', 'Tranquilidade'],
         datasets: [{
-            label: 'Personality Traits',
+            label: 'Traços de Personalidade',
             data: [],
             fill: true,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -55,15 +55,28 @@ const radarChartConfig = {
       options: {
           scales: {
            r: {
-              min: -10,
-              max: 10,
+              min: 0,
+              max: 7,
            }
           },
           elements: {
             line: {
               borderWidth: 3
             }
-          }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed.r || 0;
+
+                  return `${label}: ${value}`;
+                }
+              }
+            }
+        }
+
 
       }
 };
@@ -189,7 +202,8 @@ function showResults() {
     document.getElementById('test-container').classList.add('hidden');
     document.getElementById('results-container').classList.remove('hidden');
 
-    const scores = calculateScores();
+    let scores = calculateScores();
+    scores = scores.map(score => Math.max(0, score));
      radarChartConfig.data.datasets[0].data = scores;
     const ctx = document.getElementById('radarChart').getContext('2d');
      new Chart(ctx, radarChartConfig);
@@ -207,30 +221,30 @@ function generateSummary(scores) {
   const calm = scores[5];
 
 
-   let summary =`Based on your score: \n`;
+   let summary =`Baseado nos seus resultados: \n`;
    if (introversion > extroversion) {
-    summary +=  `You tend to be more introverted.`;
+    summary +=  `Você tende a ser uma pessoa mais introvertida.`;
    } else {
-        summary += `You tend to be more extroverted.`;
+        summary += `Você tende a ser uma pessoa mais extrovertida.`;
    }
 
    if(intuition > 0){
-    summary += ` You are an intuitive person. `;
+    summary += ` E também pode ser considerada intuitiva. `;
    } else {
-    summary += ` You are not an intuitive person. `;
+    summary += ` E não é considerada muito intuitiva. `;
    }
 
     if(creativity > 0) {
-     summary +=`You are a very creative person.`;
+     summary +=`Sua criatividade é evidente.`;
     } else {
-       summary += `You are not very creative person.`;
+       summary += `Talvez você possa exercitar mais sua criatividade.`;
     }
 
     if(anxiety > calm){
-        summary += ` You tend to be more anxious.`;
+        summary += ` Também notamos que tem seus momentos de ansiosedade.`;
     }
     else {
-        summary += `You tend to be a calm person`;
+        summary += `Também notamos que costuma ser calma(o).`;
     }
 
 
