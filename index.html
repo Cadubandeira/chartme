@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Test</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Chart.js CDN-->
+
+</head>
+<body>
+    <div class="container">
+        <div id="name-form" class="form-step">
+            <h1>Bem-vindo! </h1>
+		<h2>Como você gostaria de ser chamado?</h2>
+            <input type="text" id="name" placeholder="Nome ou apelido" required>
+            <button onclick="showEmailForm()">Continuar</button>
+        </div>
+
+        <div id="email-form" class="form-step hidden">
+             <h2>Para onde podemos<br>enviar o resultado do seu teste?</h2>
+            <input type="email" id="email" placeholder="E-mail" required>
+            <button onclick="startTest()">Vamos começar!</button>
+        </div>
+
+        <div id="test-container" class="form-step hidden">
+            <h3 id="question-number"></h3>
+            <h2 id="question-text"></h2>
+            <div id="answer-options"></div>
+            <button onclick="nextQuestion()">Continuar</button>
+        </div>
+
+        <div id="results-container" class="form-step hidden">
+            <h1>Aqui está o resultado do seu teste</h1>
+            <canvas id="radarChart"></canvas>
+             <p id="personality-summary"></p>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
