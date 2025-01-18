@@ -3,7 +3,7 @@ let userName = "";
 let userEmail = "";
 let testAnswers = [];
 const questions = [
-    {
+ {
         text: "Eu gosto de passar tempo sozinha(o).",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
@@ -71,7 +71,7 @@ const radarChartConfig = {
                   const label = context.label || '';
                   const value = context.parsed.r || 0;
 
-                  return `${label}: ${value}`;
+                  return `${label}: ${value === 1 ? 0 : value}`; // Display 0 if the value is 1
                 }
               }
             }
@@ -204,7 +204,9 @@ function showResults() {
 
     let scores = calculateScores();
     scores = scores.map(score => Math.max(0, score));
-     radarChartConfig.data.datasets[0].data = scores;
+    // Transform zero values to 1 for display
+    scores = scores.map(score => (score === 0 ? 1 : score));
+    radarChartConfig.data.datasets[0].data = scores;
     const ctx = document.getElementById('radarChart').getContext('2d');
      new Chart(ctx, radarChartConfig);
     const summary= generateSummary(scores);
@@ -221,30 +223,30 @@ function generateSummary(scores) {
   const calm = scores[5];
 
 
-   let summary =`Baseado nos seus resultados: \n`;
+    let summary =`Baseado nos seus resultados: \n`;
    if (introversion > extroversion) {
-    summary +=  `Você tende a ser uma pessoa mais introvertida.`;
+    summary +=  `Você tende a ser uma pessoa mais introvertida, o que significa que provavelmente valoriza momentos de reflexão e prefere ambientes calmos ou atividades individuais para recarregar suas energias.`;
    } else {
-        summary += `Você tende a ser uma pessoa mais extrovertida.`;
+        summary += `Você tende a ser uma pessoa mais extrovertida, o que indica que é energizado(a) pela interação social e geralmente se sente confortável em ambientes dinâmicos e cheios de pessoas.`;
    }
 
    if(intuition > 0){
-    summary += ` E também pode ser considerada intuitiva. `;
+    summary += `Além disso, você parece ser uma pessoa intuitiva, confiando mais em padrões e possibilidades abstratas do que nos detalhes imediatos da realidade.`;
    } else {
-    summary += ` E não é considerada muito intuitiva. `;
+    summary += `Além disso, você parece valorizar mais a percepção prática e concreta, preferindo lidar com fatos e experiências diretas.`;
    }
 
     if(creativity > 0) {
-     summary +=`Sua criatividade é evidente.`;
+     summary +=`Sua criatividade é um ponto forte, sugerindo que você tem facilidade para gerar ideias inovadoras e explorar soluções originais para problemas`;
     } else {
-       summary += `Talvez você possa exercitar mais sua criatividade.`;
+       summary += `Sua criatividade pode ser menos evidente no momento, mas isso não significa que você não possa desenvolvê-la por meio de práticas que estimulem o pensamento criativo.`;
     }
 
     if(anxiety > calm){
-        summary += ` Também notamos que tem seus momentos de ansiosedade.`;
+        summary += `Também observamos uma tendência à ansiedade, o que pode significar que você frequentemente se preocupa ou se sente tenso(a) diante de desafios. Trabalhar em estratégias para lidar com o estresse pode ser benéfico para seu bem-estar.`;
     }
     else {
-        summary += `Também notamos que costuma ser calma(o).`;
+        summary += `Você demonstra uma tendência a permanecer calmo(a) mesmo em situações potencialmente estressantes, o que reflete uma habilidade valiosa para lidar com desafios de forma equilibrada`;
     }
 
 
