@@ -42,7 +42,7 @@ const radarChartConfig = {
         labels: ['Introversion', 'Extroversion', 'Intuition', 'Creativity', 'Anxiety', 'Calm'],
         datasets: [{
             label: 'Personality Traits',
-            data: [], // Updated in generateResults
+            data: [],
             fill: true,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgb(54, 162, 235)',
@@ -78,7 +78,18 @@ function showEmailForm() {
     userName = name;
     document.getElementById('name-form').classList.add('hidden');
     document.getElementById('email-form').classList.remove('hidden');
+    // Focus on the email input and attach the listener
+     document.getElementById('email').focus();
+    document.getElementById('email').addEventListener('keypress', handleEnterEmail);
+
 }
+
+function handleEnterEmail(event) {
+    if(event.key === 'Enter'){
+        startTest();
+    }
+}
+
 
 function startTest() {
     const email = document.getElementById('email').value;
@@ -87,9 +98,16 @@ function startTest() {
       return;
     }
     userEmail = email;
+     document.getElementById('email').removeEventListener('keypress', handleEnterEmail);
     document.getElementById('email-form').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
     loadQuestion();
+}
+
+function handleEnterTest(event) {
+   if(event.key === 'Enter'){
+        nextQuestion();
+    }
 }
 
 
@@ -112,6 +130,8 @@ function loadQuestion() {
       answerOptionsDiv.appendChild(label);
 
     });
+    // Attach enter listener only when options are loaded
+    document.addEventListener('keypress', handleEnterTest);
 }
 
 function nextQuestion() {
@@ -120,6 +140,7 @@ function nextQuestion() {
          alert('Please select an answer');
          return;
      }
+    document.removeEventListener('keypress', handleEnterTest); // Remove listener to avoid multiple triggers
     testAnswers.push(parseInt(selectedOption.value));
     currentStep++;
      if (currentStep < questions.length) {
