@@ -68,6 +68,12 @@ const radarChartConfig = {
       }
 };
 
+function handleEnterName(event){
+    if (event.key === 'Enter') {
+        showEmailForm();
+     }
+}
+
 
 function showEmailForm() {
     const name = document.getElementById('name').value;
@@ -75,6 +81,7 @@ function showEmailForm() {
       alert("Please, enter your name.");
       return;
     }
+     document.getElementById('name').removeEventListener('keypress', handleEnterName);
     userName = name;
     document.getElementById('name-form').classList.add('hidden');
     document.getElementById('email-form').classList.remove('hidden');
@@ -229,3 +236,6 @@ function generateSummary(scores) {
 
   return summary;
 }
+//Focus on name field when page loads and attach keypress event listener
+document.getElementById('name').focus();
+document.getElementById('name').addEventListener('keypress', handleEnterName);
