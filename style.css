@@ -51,7 +51,6 @@ button:hover {
 }
 #answers-wrapper{
     display: flex;
-    justify-content: center;
     width: 100%;
 }
 #answer-options{
@@ -75,7 +74,22 @@ button:hover {
     margin-right: 10px;
 }
 
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    display: none;
+    text-align: left;
+    margin-top: 5px;
+}
 
+.mandatory-error {
+  color: red;
+  font-size: 0.9em;
+  display: block;
+    text-align: left;
+  position: relative;
+  margin-top: 10px;
+}
 
 #results-container{
     text-align:left;

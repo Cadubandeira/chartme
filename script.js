@@ -91,12 +91,24 @@ function handleEnterName(event){
      }
 }
 
+function showError(id, show, mandatory = false, message = ''){
+   const errorElement = document.getElementById(id);
+    errorElement.innerText = message;
+   errorElement.classList.toggle('mandatory-error', mandatory);
+    if(show){
+         errorElement.style.display = 'block';
+    } else {
+         errorElement.style.display = 'none';
+    }
+}
+
 
 function showEmailForm() {
     const name = document.getElementById('name').value;
+     showError('name-error', false);
     if (!name) {
-      alert("Please, enter your name.");
-      return;
+      showError('name-error', true, false, "Campo obrigatório.");
+       return;
     }
      document.getElementById('name').removeEventListener('keypress', handleEnterName);
     userName = name;
@@ -117,10 +129,17 @@ function handleEnterEmail(event) {
 
 function startTest() {
     const email = document.getElementById('email').value;
+     showError('email-error', false);
     if (!email) {
-
+        showError('email-error', true, true, "Campo obrigatório.");
       return;
     }
+
+    if(!validateEmail(email)){
+       showError('email-error', true, false, "E-mail inválido.");
+        return;
+    }
+
     userEmail = email;
      document.getElementById('email').removeEventListener('keypress', handleEnterEmail);
     document.getElementById('email-form').classList.add('hidden');
@@ -288,8 +307,12 @@ function generateSummary(scores) {
     }
 
 
-
   return summary;
+}
+
+function validateEmail(email){
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 //Focus on name field when page loads and attach keypress event listener
 document.getElementById('name').focus();

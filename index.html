@@ -9,31 +9,32 @@
 
 </head>
 <body>
-    <div class="container">
+     <div class="container">
         <div id="name-form" class="form-step">
-            <h1>Bem-vindo! </h1>
-		<h2>Como você gostaria de ser chamado?</h2>
-            <input type="text" id="name" placeholder="Nome ou apelido" required>
-            <button onclick="showEmailForm()">Continuar</button>
+            <h1>Welcome! Please enter your name:</h1>
+            <input type="text" id="name" placeholder="Your Name" required>
+            <span id="name-error" class="error-message hidden">Please enter your name</span>
+            <button onclick="showEmailForm()">Next</button>
         </div>
 
         <div id="email-form" class="form-step hidden">
-             <h2>Para onde podemos<br>enviar o resultado do seu teste?</h2>
-            <input type="email" id="email" placeholder="E-mail" required>
-            <button onclick="startTest()">Vamos começar!</button>
+             <h1>Please enter your email:</h1>
+            <input type="email" id="email" placeholder="Your Email" required>
+             <span id="email-error" class="error-message hidden">Please enter a valid email</span>
+            <button onclick="startTest()">Start Test</button>
         </div>
 
- <div id="test-container" class="form-step hidden">
-    <h2 id="question-number"></h2>
-    <h2 id="question-text"></h2>
-    <div id="answers-wrapper">  <!--Added wrapper-->
-        <div id="answer-options"></div>
-    </div>
-    <button onclick="nextQuestion()">Next</button>
-</div>
+        <div id="test-container" class="form-step hidden">
+            <h2 id="question-number"></h2>
+            <h2 id="question-text"></h2>
+             <div id="answers-wrapper">  <!--Added wrapper-->
+                 <div id="answer-options"></div>
+            </div>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
 
         <div id="results-container" class="form-step hidden">
-            <h1>Aqui está o resultado do seu teste</h1>
+            <h1>Your Personality Results</h1>
             <canvas id="radarChart"></canvas>
              <p id="personality-summary"></p>
 
