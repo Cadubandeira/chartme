@@ -53,15 +53,24 @@ button:hover {
 #answer-options{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 20px;
 
 }
 
 #answer-options label{
-    display:block;
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+
 }
+
+#answer-options label input[type="radio"] {
+    margin-right: 10px;
+}
+
 
 
 #results-container{
