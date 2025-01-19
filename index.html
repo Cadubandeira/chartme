@@ -23,12 +23,14 @@
             <button onclick="startTest()">Vamos começar!</button>
         </div>
 
-        <div id="test-container" class="form-step hidden">
-            <h3 id="question-number"></h3>
-            <h2 id="question-text"></h2>
-            <div id="answer-options"></div>
-            <button onclick="nextQuestion()">Continuar</button>
-        </div>
+ <div id="test-container" class="form-step hidden">
+    <h2 id="question-number"></h2>
+    <h2 id="question-text"></h2>
+    <div id="answers-wrapper">  <!--Added wrapper-->
+        <div id="answer-options"></div>
+    </div>
+    <button onclick="nextQuestion()">Next</button>
+</div>
 
         <div id="results-container" class="form-step hidden">
             <h1>Aqui está o resultado do seu teste</h1>
