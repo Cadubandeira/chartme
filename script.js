@@ -259,7 +259,7 @@ function calculateScores() {
 function showResults() {
     document.getElementById('test-container').classList.add('hidden');
     document.getElementById('results-container').classList.remove('hidden');
-    document.querySelector('#results-container h1').innerText = ` ${userName}, aqui está o resultado do seu teste de personalidade`;
+    document.querySelector('#results-container h2').innerText = ` ${userName}, aqui está o resultado do seu teste de personalidade`;
 
     let scores = calculateScores();
 
