@@ -4,33 +4,33 @@ let userEmail = "";
 let testAnswers = [];
 const questions = [
     {
-        text: "Eu gosto de passar tempo sozinha(o).",
+        text: "Em geral, você diria que gosta de passar tempo sozinha(o)?",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
          scores: [-2, -1, 0, 1, 2]
     },
     {
-        text: "Eu sou uma pessoa muito sociável.",
+        text: "Você se considera uma pessoa muito sociável?",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
 
     },
       {
-        text: "Eu frequentemente fico perdida(o) em pensamentos.",
+         text: "Você se pega, frequentemente, perdida(o) em seus pensamentos?",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
     {
-        text: "Eu sou uma pessoa criativa.",
+       text: "Você se considera uma pessoa criativa?",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
          scores: [-2, -1, 0, 1, 2]
     },
      {
-        text: "Eu estou sempre preocupada(o).",
+       text: "Você se preocupa com muita frequência?",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
     },
       {
-        text: "Eu me sinto calma(o) em situações estressantes.",
+         text: "Você se sente calma(o) mesmo em situações estressantes?",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
          scores: [-2, -1, 0, 1, 2]
     }
@@ -107,7 +107,7 @@ function showEmailForm() {
     const name = document.getElementById('name').value;
      showError('name-error', false);
     if (!name) {
-      showError('name-error', true, false, "Campo obrigatório.");
+      showError('name-error', true, false, "Por favor, diga seu nome");
        return;
     }
      document.getElementById('name').removeEventListener('keypress', handleEnterName);
@@ -156,7 +156,7 @@ function handleEnterTest(event) {
 
 
 function loadQuestion() {
-    document.getElementById('question-number').innerText = `Question ${currentStep + 1} of ${questions.length}`;
+    document.getElementById('question-number').innerText = `Pergunta ${currentStep + 1} de ${questions.length}`;
     const currentQuestion = questions[currentStep];
     document.getElementById('question-text').innerText = currentQuestion.text;
      const answerOptionsDiv = document.getElementById('answer-options');
@@ -260,6 +260,8 @@ function showResults() {
     document.getElementById('test-container').classList.add('hidden');
     document.getElementById('results-container').classList.remove('hidden');
     document.querySelector('#results-container h2').innerText = ` ${userName}, aqui está o resultado do seu teste de personalidade`;
+    document.querySelector('#results-container h1').innerText = ` `;
+
 
     let scores = calculateScores();
 
