@@ -3,15 +3,16 @@ let userName = "";
 let userEmail = "";
 let testAnswers = [];
 const questions = [
- {
+    {
         text: "Eu gosto de passar tempo sozinha(o).",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
-        scores: [-2, -1, 0, 1, 2]
+         scores: [-2, -1, 0, 1, 2]
     },
     {
         text: "Eu sou uma pessoa muito sociável.",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
         scores: [-2, -1, 0, 1, 2]
+
     },
       {
         text: "Eu frequentemente fico perdida(o) em pensamentos.",
@@ -21,7 +22,7 @@ const questions = [
     {
         text: "Eu sou uma pessoa criativa.",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
-        scores: [-2, -1, 0, 1, 2]
+         scores: [-2, -1, 0, 1, 2]
     },
      {
         text: "Eu estou sempre preocupada(o).",
@@ -31,7 +32,7 @@ const questions = [
       {
         text: "Eu me sinto calma(o) em situações estressantes.",
         options: ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"],
-        scores: [-2, -1, 0, 1, 2]
+         scores: [-2, -1, 0, 1, 2]
     }
 ];
 
@@ -56,7 +57,10 @@ const radarChartConfig = {
           scales: {
            r: {
               min: 0,
-              max: 7,
+              max: 10,
+               ticks: {
+                 stepSize: 1
+               }
            }
           },
           elements: {
@@ -71,7 +75,7 @@ const radarChartConfig = {
                   const label = context.label || '';
                   const value = context.parsed.r || 0;
 
-                  return `${label}: ${value === 1 ? 0 : value}`; // Display 0 if the value is 1
+                  return `${label}: ${value}`;
                 }
               }
             }
@@ -114,13 +118,14 @@ function handleEnterEmail(event) {
 function startTest() {
     const email = document.getElementById('email').value;
     if (!email) {
-      alert("Please, enter your email.");
+
       return;
     }
     userEmail = email;
      document.getElementById('email').removeEventListener('keypress', handleEnterEmail);
     document.getElementById('email-form').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
+     document.removeEventListener('keypress', handleEnterTest);
     loadQuestion();
 }
 
@@ -146,19 +151,23 @@ function loadQuestion() {
      const label = document.createElement('label');
       label.innerText = option;
       label.setAttribute('for', `option-${index}`);
-        label.appendChild(input);
+      label.insertBefore(input, label.firstChild);
       answerOptionsDiv.appendChild(label);
 
     });
+        const firstRadioButton = document.querySelector('input[name="answer"]');
+       if(firstRadioButton){
+           firstRadioButton.focus();
+       }
     // Attach enter listener only when options are loaded
     document.addEventListener('keypress', handleEnterTest);
 }
 
 function nextQuestion() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
+
      if(!selectedOption){
-         alert('Please select an answer');
-         return;
+        return;
      }
     document.removeEventListener('keypress', handleEnterTest); // Remove listener to avoid multiple triggers
     testAnswers.push(parseInt(selectedOption.value));
@@ -172,29 +181,59 @@ function nextQuestion() {
 
 
 function calculateScores() {
-    const traitScores = [0, 0, 0, 0, 0, 0];
-    testAnswers.forEach((answerIndex,questionIndex)=>{
-        const question = questions[questionIndex];
-        const score = question.scores[answerIndex];
-        if(questionIndex===0){
-           traitScores[0] += score;
-        }
-        else if(questionIndex === 1) {
-             traitScores[1] += score;
-        }
-        else if (questionIndex === 2) {
-             traitScores[2] += score;
-        }
-         else if(questionIndex===3) {
-             traitScores[3] +=score;
-         } else if(questionIndex===4) {
-            traitScores[4] += score;
-        }else if(questionIndex === 5){
-            traitScores[5] +=score;
-        }
+     const traitScores = [0, 0, 0, 0, 0, 0];
+        // Calculate base scores for each trait
+       testAnswers.forEach((answerIndex, questionIndex) => {
+        const score = questions[questionIndex].scores[answerIndex];
 
-    });
-   return traitScores;
+           if(questionIndex === 0){
+               traitScores[0] += score;
+           }
+           else if(questionIndex === 1){
+                traitScores[1] += score;
+            }
+           else if(questionIndex === 2){
+                traitScores[2] += score;
+            }
+           else if(questionIndex === 3){
+                 traitScores[3] += score;
+           }
+            else if(questionIndex === 4){
+                 traitScores[4] += score;
+            }
+           else if(questionIndex === 5){
+                traitScores[5] += score;
+           }
+        });
+
+         // Adjust scores to achieve 10 on "Strongly Agree" for two questions
+          if(testAnswers[0]===4){
+              traitScores[0] += 8;
+          }
+
+          if(testAnswers[1]===4){
+              traitScores[1] += 8;
+          }
+
+          if(testAnswers[2]===4){
+              traitScores[2] += 8;
+          }
+
+          if(testAnswers[3]===4){
+              traitScores[3] += 8;
+          }
+
+          if(testAnswers[4]===4){
+              traitScores[4] += 8;
+          }
+          if(testAnswers[5]===4){
+              traitScores[5] += 8;
+          }
+
+       for(let i = 0; i < traitScores.length; i++){
+           traitScores[i] = Math.max(0, traitScores[i])
+       }
+      return traitScores;
 }
 
 
@@ -203,10 +242,9 @@ function showResults() {
     document.getElementById('results-container').classList.remove('hidden');
 
     let scores = calculateScores();
-    scores = scores.map(score => Math.max(0, score));
-    // Transform zero values to 1 for display
-    scores = scores.map(score => (score === 0 ? 1 : score));
-    radarChartConfig.data.datasets[0].data = scores;
+
+
+     radarChartConfig.data.datasets[0].data = scores;
     const ctx = document.getElementById('radarChart').getContext('2d');
      new Chart(ctx, radarChartConfig);
     const summary= generateSummary(scores);
@@ -248,6 +286,7 @@ function generateSummary(scores) {
     else {
         summary += `Você demonstra uma tendência a permanecer calmo(a) mesmo em situações potencialmente estressantes, o que reflete uma habilidade valiosa para lidar com desafios de forma equilibrada`;
     }
+
 
 
   return summary;
