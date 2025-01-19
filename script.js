@@ -156,7 +156,7 @@ function handleEnterTest(event) {
 
 
 function loadQuestion() {
-    document.getElementById('question-number').innerText = `Questão ${currentStep + 1} of ${questions.length}`;
+    document.getElementById('question-number').innerText = `Questão ${currentStep + 1} de ${questions.length}`;
     const currentQuestion = questions[currentStep];
     document.getElementById('question-text').innerText = currentQuestion.text;
      const answerOptionsDiv = document.getElementById('answer-options');
