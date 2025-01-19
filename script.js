@@ -284,7 +284,7 @@ function generateSummary(scores) {
         summary += `Também observamos uma tendência à ansiedade, o que pode significar que você frequentemente se preocupa ou se sente tenso(a) diante de desafios. Trabalhar em estratégias para lidar com o estresse pode ser benéfico para seu bem-estar.`;
     }
     else {
-        summary += `Você demonstra uma tendência a permanecer calmo(a) mesmo em situações potencialmente estressantes, o que reflete uma habilidade valiosa para lidar com desafios de forma equilibrada`;
+        summary += `Você demonstra uma tendência a permanecer calmo(a) mesmo em situações potencialmente estressantes, o que reflete uma habilidade valiosa para lidar com desafios de forma equilibrada.`;
     }
 
 
