@@ -259,7 +259,7 @@ function calculateScores() {
 function showResults() {
     document.getElementById('test-container').classList.add('hidden');
     document.getElementById('results-container').classList.remove('hidden');
-    document.querySelector('#results-container h1').innerText = ` ${userName}, aqui está o resultado do seu teste de personalidade`;
+    document.querySelector('#results-container h2').innerText = ` ${userName}, aqui está o resultado do seu teste de personalidade`;
 
     let scores = calculateScores();
 
@@ -352,7 +352,7 @@ function generateSummary(scores) {
   const calm = scores[5];
 
 
-    let summary =`Baseado nos seus resultados: \n`;
+    let summary =`Como seus resultados podem ser interpretados: \n`;
    if (introversion > extroversion) {
     summary +=  `Você tende a ser uma pessoa mais introvertida, o que significa que provavelmente valoriza momentos de reflexão e prefere ambientes calmos ou atividades individuais para recarregar suas energias.`;
    } else {
