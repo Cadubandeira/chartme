@@ -275,7 +275,7 @@ function showResults() {
 
 
 async function shareOnWhatsApp(chart) {
-    const message = `Olá! Acabei de fazer um teste de personalidade incrível e olha só o resultado:  ${document.querySelector('#results-container h1').innerText}, ${document.getElementById('personality-summary').innerText} \n Você também pode fazer o teste no [link do seu site]`;
+    const message = `Olá! Acabei de fazer um teste de personalidade incrível e olha só o resultado:  ${document.querySelector('#results-container h1').innerText}, ${document.getElementById('personality-summary').innerText} \n Você também pode fazer o teste em https://cadubandeira.github.io/chartme/. Veja meus resultados em`;
     const encodedMessage = encodeURIComponent(message);
 
     const chartImageBase64 = chart.toBase64Image();
