@@ -266,11 +266,82 @@ function showResults() {
 
      radarChartConfig.data.datasets[0].data = scores;
     const ctx = document.getElementById('radarChart').getContext('2d');
-     new Chart(ctx, radarChartConfig);
+     const myChart = new Chart(ctx, radarChartConfig);
     const summary= generateSummary(scores);
     document.getElementById('personality-summary').innerText = summary;
-
+	const shareButton = document.getElementById('share-button');
+    shareButton.addEventListener('click', () => shareOnWhatsApp(myChart));
 }
+
+
+async function shareOnWhatsApp(chart) {
+    const message = `Olá! Acabei de fazer um teste de personalidade incrível e olha só o resultado:  ${document.querySelector('#results-container h1').innerText}, ${document.getElementById('personality-summary').innerText} \n Você também pode fazer o teste no [link do seu site]`;
+    const encodedMessage = encodeURIComponent(message);
+
+    const chartImageBase64 = chart.toBase64Image();
+
+    try {
+        const imageUrl = await uploadToImgBB(chartImageBase64);
+
+        const whatsappUrl = `https://wa.me/?text=${encodedMessage}%0A${imageUrl}`;
+         window.open(whatsappUrl, '_blank');
+    } catch (error) {
+        console.error("Error sharing the image:", error);
+         //  alert("Error sharing image. Please try again.");  // Optional user message
+    }
+}
+
+
+
+async function uploadToImgBB(base64Image) {
+    const apiKey = '96b3d56795dfee4c17973e9e5184e3c2'; // Replace with your ImgBB API Key
+    const formData = new FormData();
+    const base64Data = base64Image.split(',')[1];
+     const blob = b64toBlob(base64Data, 'image/png')
+     formData.append('image', blob);
+
+    try {
+        const response = await fetch('https://api.imgbb.com/1/upload?key=' + apiKey, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if(data.success){
+            return data.data.url;
+        } else{
+             throw new Error(`ImgBB API error! Details: ${JSON.stringify(data.error)}`);
+        }
+    } catch (error) {
+         console.error('Error uploading image to ImgBB:', error);
+        throw error;
+    }
+}
+
+function b64toBlob(b64Data, contentType='', sliceSize=512) {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+
 
 function generateSummary(scores) {
   const introversion = scores[0]
