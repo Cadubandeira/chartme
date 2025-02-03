@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+     <style>
+        #password-requirements {
+            text-align: left;
+            margin-top: 5px;
+            font-size: 0.8em;
+             padding-left: 10px;
+            color: #573065;
+             display: none;
+        }
+
+        #password-requirements.visible{
+             display: block;
+        }
+
+       #password-requirements li.valid {
+            color: green;
+       }
+        #register-confirm-password.error {
+            border-color: red;
+        }
+         #message {
+              text-align: center;
+                margin-top: 10px;
+            }
+            #email-already-registered {
+             color: red;
+              font-size: 0.9em;
+              text-align: left;
+              margin-top: 5px;
+              display: none;
+
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+       <div id="message"></div>
+        <div id="name-form" class="form-step">
+            <h1>Olá!</h1>
+            <h2>Por favor, crie sua conta para continuar.</h2>
+            <form id="register-form">
+                <input type="email" id="register-email" placeholder="Digite seu e-mail" required>
+                <input type="password" id="register-password" placeholder="Digite sua senha" required>
+                 <input type="password" id="register-confirm-password" placeholder="Confirme sua senha" required>
+                  <span id="confirm-password-error" class="error-message hidden">Senhas não conferem</span>
+                 <span id="name-error" class="error-message hidden">Por favor, digite seu e-mail e senha</span>
+                <ul id="password-requirements" >
+                    <li data-rule="minlength">Mínimo 8 caracteres</li>
+                    <li data-rule="uppercase">Pelo menos uma letra maiúscula</li>
+                    <li data-rule="lowercase">Pelo menos uma letra minúscula</li>
+                    <li data-rule="number">Pelo menos um número</li>
+                </ul>
+                <br>
+                <button type="submit">Criar conta</button>
+                <span id="email-already-registered" class="error-message hidden">E-mail já cadastrado</span>
+                 <p>Já tem uma conta? <a href="index.html" style="color: blue; text-decoration: underline;">Entrar</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add this BEFORE your script.js file-->
+     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="register-script.js"></script>
+</body>
+</html>

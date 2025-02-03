@@ -4,30 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IMP - Índice de Magnetismo Pessoal</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Chart.js CDN-->
+     <link rel="stylesheet" href="style.css">
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #logout-button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+         #home-button-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
 
+
+    </style>
 </head>
 <body>
+     <div id="home-button-container">
+         <button id="home-icon-button" onclick="handleHome()">
+            <i class="material-icons">home</i>
+        </button>
+    </div>
+    <div id="logout-button-container">
+         <button id="logout-icon-button" onclick="handleLogout()">
+            <i class="material-icons">logout</i>
+        </button>
+    </div>
      <div class="container">
-        <div id="name-form" class="form-step">
-            <h1>Olá!</h1>
-            <h2>Que nome você gostaria de usar?</h2>
-            <input type="text" id="name" placeholder="Digite seu nome ou apelido" required>
-            <span id="name-error" class="error-message hidden">Por favor, diga seu nome</span>
-            <br>
-		<button onclick="showEmailForm()">Próximo</button>
-        </div>
 
-        <div id="email-form" class="form-step hidden">
-             <h2>Qual é o seu e-mail?</h2>
-            <input type="email" id="email" placeholder="Digite seu melhor e-mail" required>
-             <span id="email-error" class="error-message hidden">Por favor, digite um e-mail válido</span>
-            <br>
-		<button onclick="startTest()">Começar o teste</button>
-        </div>
 
-        <div id="test-container" class="form-step hidden">
+        <div id="test-container" class="form-step">
             <h3 id="question-number"></h3>
             <h2 id="question-text"></h2>
              <div id="answers-wrapper">
@@ -45,5 +58,34 @@
     </div>
 
     <script src="assessment1.js"></script>
+      <script>
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                  apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+                authDomain: "chartme-2c4aa.firebaseapp.com",
+                projectId: "chartme-2c4aa",
+                storageBucket: "chartme-2c4aa.firebasestorage.app",
+                messagingSenderId: "1000796548418",
+                appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+                measurementId: "G-T2686T1ETY"
+            };
+            firebase.initializeApp(firebaseConfig);
+             const auth = firebase.auth();
+            async function handleLogout(){
+                 try {
+                        await auth.signOut();
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                         console.log(error.message);
+                   }
+            }
+             async function handleHome(){
+                 try {
+                        window.location.href = 'dashboard.html';
+                    } catch (error) {
+                         console.log(error.message);
+                   }
+            }
+        </script>
 </body>
 </html>

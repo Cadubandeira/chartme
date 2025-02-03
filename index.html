@@ -4,31 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Example</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; }
-        .form-container { margin: 20px; padding: 20px; border: 1px solid #ddd; display: inline-block; }
-        .hidden { display: none; }
-        input, button { margin: 10px; padding: 8px; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="form-container">
-        <h2>Register</h2>
-        <form id="register-form">
-            <input type="email" id="register-email" placeholder="Email">
-            <input type="password" id="register-password" placeholder="Password">
-            <button type="submit">Register</button>
-            <p>Already have an account? <span id="to-login-button" style="cursor: pointer; color: blue; text-decoration: underline;">Login</span></p>
-        </form>
-
-        <form id="login-form" class="hidden">
-            <h2>Login</h2>
-            <input type="email" id="login-email" placeholder="Email">
-            <input type="password" id="login-password" placeholder="Password">
-            <button type="submit">Login</button>
-           <p>Dont have an account? <span id="to-register-button" style="cursor: pointer; color: blue; text-decoration: underline;">Register</span></p>
-        </form>
-
+    <div class="container">
+        <div id="email-form" class="form-step">
+            <h1>Olá novamente!</h1>
+            <h2>Para começar a usar o teste, faça login.</h2>
+            <form id="login-form" class="form-step">
+                <input type="email" id="login-email" placeholder="Digite seu e-mail" required>
+                <input type="password" id="login-password" placeholder="Digite sua senha" required>
+                <span id="email-error" class="error-message hidden">Por favor, digite seu e-mail e senha</span>
+                <br>
+                <button type="submit">Entrar</button>
+                 <p>Não tem uma conta? <a href="register.html" style="color: blue; text-decoration: underline;">Criar conta</a></p>
+            </form>
+        </div>
         <div id="message"></div>
         <div id="user-info" class="hidden">
             <h2>You are logged in!</h2>

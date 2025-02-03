@@ -1,6 +1,6 @@
 let currentStep = 0;
-let userName = "";
-let userEmail = "";
+let userName = "User"; // Set a default user name
+let userEmail = "user@email.com";  //Set a default user email
 let testAnswers = [];
 const questions = [
     {
@@ -85,11 +85,8 @@ const radarChartConfig = {
       }
 };
 
-function handleEnterName(event){
-    if (event.key === 'Enter') {
-        showEmailForm();
-     }
-}
+
+
 
 function showError(id, show, mandatory = false, message = ''){
    const errorElement = document.getElementById(id);
@@ -103,50 +100,14 @@ function showError(id, show, mandatory = false, message = ''){
 }
 
 
-function showEmailForm() {
-    const name = document.getElementById('name').value;
-     showError('name-error', false);
-    if (!name) {
-      showError('name-error', true, false, "Campo obrigatório.");
-       return;
-    }
-     document.getElementById('name').removeEventListener('keypress', handleEnterName);
-    userName = name;
-    document.getElementById('name-form').classList.add('hidden');
-    document.getElementById('email-form').classList.remove('hidden');
-    // Focus on the email input and attach the listener
-     document.getElementById('email').focus();
-    document.getElementById('email').addEventListener('keypress', handleEnterEmail);
-
-}
-
-function handleEnterEmail(event) {
-    if(event.key === 'Enter'){
-        startTest();
-    }
-}
-
 
 function startTest() {
-    const email = document.getElementById('email').value;
-     showError('email-error', false);
-    if (!email) {
-        showError('email-error', true, true, "Campo obrigatório.");
-      return;
-    }
-
-    if(!validateEmail(email)){
-       showError('email-error', true, false, "E-mail inválido.");
-        return;
-    }
-
-    userEmail = email;
-     document.getElementById('email').removeEventListener('keypress', handleEnterEmail);
-    document.getElementById('email-form').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
      document.removeEventListener('keypress', handleEnterTest);
     loadQuestion();
 }
+
+
 
 function handleEnterTest(event) {
    if(event.key === 'Enter'){
@@ -275,7 +236,7 @@ function showResults() {
 
 
 async function shareOnWhatsApp(chart) {
-    const message = `Olá! Acabei de fazer um teste de personalidade incrível e olha só o resultado:  ${document.querySelector('#results-container h1').innerText}, ${document.getElementById('personality-summary').innerText} \n Você também pode fazer o teste em https://cadubandeira.github.io/chartme/. Veja meus resultados em`;
+    const message = `Olá! Acabei de fazer um teste de personalidade incrível e olha só o resultado:  ${document.querySelector('#results-container h2').innerText}, ${document.getElementById('personality-summary').innerText} \n Você também pode fazer o teste em https://cadubandeira.github.io/chartme/. Veja meus resultados em`;
     const encodedMessage = encodeURIComponent(message);
 
     const chartImageBase64 = chart.toBase64Image();
@@ -287,7 +248,7 @@ async function shareOnWhatsApp(chart) {
          window.open(whatsappUrl, '_blank');
     } catch (error) {
         console.error("Error sharing the image:", error);
-         //  alert("Error sharing image. Please try again.");  // Optional user message
+          alert("Error sharing image. Please try again.");  // Optional user message
     }
 }
 
@@ -386,6 +347,5 @@ function validateEmail(email){
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
-//Focus on name field when page loads and attach keypress event listener
-document.getElementById('name').focus();
-document.getElementById('name').addEventListener('keypress', handleEnterName);
+
+startTest();

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <style>
+        body {
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: flex-start;
+
+         }
+        .card-container{
+           display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+             max-width: 1200px;
+        }
+          .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 250px;
+            cursor: pointer;
+            transition: transform 0.3s;
+             display: flex;
+            flex-direction: column;
+            align-items: center;
+             justify-content: center;
+             color: #573065;
+             text-decoration: none;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card.disabled {
+             opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+         .card.disabled:hover {
+            transform: none;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+        .card p {
+            color: #777;
+        }
+        #logout-button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+         h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #573065;
+           }
+    </style>
+     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div id="logout-button-container">
+         <button id="logout-icon-button" onclick="handleLogout()">
+            <i class="material-icons">logout</i>
+        </button>
+    </div>
+    <h1>Selecione o teste que você gostaria de realizar</h1>
+    <div class="card-container">
+        <a href="assessment1.html" class="card">
+            <h2>Índice de Magnetismo Pessoal</h2>
+            <p>Descubra sua personalidade</p>
+        </a>
+        <div class="card disabled">
+            <h2>Coming Soon</h2>
+            <p>New Test</p>
+        </div>
+        <div class="card disabled">
+            <h2>Coming Soon</h2>
+            <p>New Test</p>
+        </div>
+    </div>
+    <script>
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                  apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+                authDomain: "chartme-2c4aa.firebaseapp.com",
+                projectId: "chartme-2c4aa",
+                storageBucket: "chartme-2c4aa.firebasestorage.app",
+                messagingSenderId: "1000796548418",
+                appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+                measurementId: "G-T2686T1ETY"
+            };
+            firebase.initializeApp(firebaseConfig);
+             const auth = firebase.auth();
+            async function handleLogout(){
+                 try {
+                        await auth.signOut();
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                         console.log(error.message);
+                   }
+            }
+        </script>
+</body>
+</html>

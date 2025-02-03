@@ -17,16 +17,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-const registerForm = document.getElementById('register-form');
 const loginForm = document.getElementById('login-form');
 const messageDiv = document.getElementById('message');
 const userInfoDiv = document.getElementById('user-info');
 const userEmailSpan = document.getElementById('user-email');
 const logoutButton = document.getElementById('logout-button');
-const toLoginButton = document.getElementById('to-login-button');
-const toRegisterButton = document.getElementById('to-register-button')
-
-const redirectURL = 'assessment1.html';
+const redirectURL = 'dashboard.html'; // Changed the redirect to dashboard
 
 function showMessage(message, isError=false){
   messageDiv.innerText = message;
@@ -39,34 +35,7 @@ function hideMessage(){
   messageDiv.style.display = 'none';
 }
 
-function showLogin(){
-    registerForm.classList.add('hidden');
-    loginForm.classList.remove('hidden');
-    userInfoDiv.classList.add('hidden');
-    hideMessage();
-}
 
-function showRegister(){
-     registerForm.classList.remove('hidden');
-    loginForm.classList.add('hidden');
-     userInfoDiv.classList.add('hidden');
-    hideMessage();
-}
-// Register
-registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    hideMessage();
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-
-    try {
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-         showMessage("Account created successfully! Please login.", false);
-         showLogin();
-    } catch (error) {
-         showMessage(error.message, true);
-    }
-});
 
 // Login
 loginForm.addEventListener('submit', async (e) => {
@@ -80,9 +49,8 @@ loginForm.addEventListener('submit', async (e) => {
     const user = userCredential.user;
     userInfoDiv.classList.remove('hidden');
     userEmailSpan.textContent = user.email;
-    registerForm.classList.add('hidden');
-    loginForm.classList.add('hidden');
-    showMessage(`Welcome back, ${user.email}!`, false);
+        // Redirect after successful login
+         window.location.href = redirectURL;
 
   } catch(error){
     showMessage(error.message, true);
@@ -92,20 +60,15 @@ loginForm.addEventListener('submit', async (e) => {
 logoutButton.addEventListener('click', async () => {
   try {
     await auth.signOut();
-      showRegister();
        showMessage("User logged out", false)
   } catch (error) {
      showMessage(error.message, true);
   }
 });
 
-toLoginButton.addEventListener('click', showLogin)
-toRegisterButton.addEventListener('click', showRegister);
-
-
 auth.onAuthStateChanged((user) => {
     if(user){
          // Redirect after successful login
-       window.location.href = redirectURL;
+         window.location.href = redirectURL;
     }
 });
