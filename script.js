@@ -26,6 +26,8 @@ const logoutButton = document.getElementById('logout-button');
 const toLoginButton = document.getElementById('to-login-button');
 const toRegisterButton = document.getElementById('to-register-button')
 
+const redirectURL = 'assessment1.html';
+
 function showMessage(message, isError=false){
   messageDiv.innerText = message;
   messageDiv.style.color = isError ? 'red' : 'green';
@@ -103,9 +105,7 @@ toRegisterButton.addEventListener('click', showRegister);
 
 auth.onAuthStateChanged((user) => {
     if(user){
-         userInfoDiv.classList.remove('hidden');
-        userEmailSpan.textContent = user.email;
-           registerForm.classList.add('hidden');
-            loginForm.classList.add('hidden');
+         // Redirect after successful login
+       window.location.href = redirectURL;
     }
 });
