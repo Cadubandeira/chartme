@@ -23,6 +23,7 @@ const userInfoDiv = document.getElementById('user-info');
 const userEmailSpan = document.getElementById('user-email');
 const logoutButton = document.getElementById('logout-button');
 const redirectURL = 'dashboard.html'; // Changed the redirect to dashboard
+ const loadingOverlay = document.getElementById('loading-overlay');
 
 function showMessage(message, isError=false){
   messageDiv.innerText = message;
@@ -34,12 +35,19 @@ function showMessage(message, isError=false){
 function hideMessage(){
   messageDiv.style.display = 'none';
 }
+ function showLoading() {
+    loadingOverlay.classList.add('show');
+}
 
+function hideLoading() {
+    loadingOverlay.classList.remove('show');
+}
 
 
 // Login
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+    showLoading();
     hideMessage();
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
@@ -50,10 +58,14 @@ loginForm.addEventListener('submit', async (e) => {
     userInfoDiv.classList.remove('hidden');
     userEmailSpan.textContent = user.email;
         // Redirect after successful login
+          hideLoading();
          window.location.href = redirectURL;
+
+
 
   } catch(error){
     showMessage(error.message, true);
+     hideLoading();
   }
 });
 
@@ -69,6 +81,9 @@ logoutButton.addEventListener('click', async () => {
 auth.onAuthStateChanged((user) => {
     if(user){
          // Redirect after successful login
-         window.location.href = redirectURL;
+             showLoading();
+              window.location.href = redirectURL;
+             hideLoading();
+
     }
 });

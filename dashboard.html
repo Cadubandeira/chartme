@@ -1,96 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Assessments</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <style>
-        body {
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             justify-content: flex-start;
-
-         }
-        .card-container{
-           display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            width: 100%;
-             max-width: 1200px;
-        }
-          .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            width: 250px;
-            cursor: pointer;
-            transition: transform 0.3s;
-             display: flex;
-            flex-direction: column;
-            align-items: center;
-             justify-content: center;
-             color: #573065;
-             text-decoration: none;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .card.disabled {
-             opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-         .card.disabled:hover {
-            transform: none;
-        }
-
-        .card h2 {
-            margin-bottom: 10px;
-        }
-        .card p {
-            color: #777;
-        }
-        #logout-button-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-        }
-         h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #573065;
-           }
-    </style>
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
+      <div class="loading-overlay" id="loading-overlay">
+         <div class="loader"></div>
+     </div>
     <div id="logout-button-container">
          <button id="logout-icon-button" onclick="handleLogout()">
             <i class="material-icons">logout</i>
         </button>
     </div>
-    <h1>Selecione o teste que você gostaria de realizar</h1>
-    <div class="card-container">
+       <div class="card-container">
         <a href="assessment1.html" class="card">
-            <h2>Índice de Magnetismo Pessoal</h2>
-            <p>Descubra sua personalidade</p>
+		<h2> Índice de Magnetismo Pessoal</h2>
+            <p>Avalie seu Magnetismo Pessoal e Profissional e Atraia Oportunidades</p>
         </a>
         <div class="card disabled">
-            <h2>Coming Soon</h2>
-            <p>New Test</p>
+            <h2>Teste de Personalidade</h2>
+            <p>Em Breve</p>
         </div>
         <div class="card disabled">
-            <h2>Coming Soon</h2>
-            <p>New Test</p>
+            <h2>Eneagrama</h2>
+            <p>Em Breve</p>
         </div>
     </div>
     <script>
@@ -114,6 +53,11 @@
                          console.log(error.message);
                    }
             }
+         const loadingOverlay = document.getElementById('loading-overlay');
+           function hideLoading() {
+              loadingOverlay.classList.remove('show');
+             }
+        hideLoading();
         </script>
 </body>
 </html>

@@ -9,29 +9,19 @@
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        #logout-button-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-        }
-         #home-button-container {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-        }
-
-
-    </style>
-</head>
+   </head>
 <body>
-     <div id="home-button-container">
-         <button id="home-icon-button" onclick="handleHome()">
+      <div class="loading-overlay" id="loading-overlay">
+         <div class="loader"></div>
+        <p id="loading-message" class="loading-message"></p>
+     </div>
+
+  <div id="menu-button-container">
+         <button id="menu-icon-button" onclick="handleHome()">
             <i class="material-icons">home</i>
         </button>
     </div>
+
     <div id="logout-button-container">
          <button id="logout-icon-button" onclick="handleLogout()">
             <i class="material-icons">logout</i>

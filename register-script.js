@@ -18,7 +18,7 @@
         const confirmPasswordInput = document.getElementById('register-confirm-password');
        const confirmPasswordError = document.getElementById('confirm-password-error');
         const emailAlreadyRegisteredError = document.getElementById('email-already-registered');
-
+         const loadingOverlay = document.getElementById('loading-overlay');
            function showError(id, show, mandatory = false, message = ''){
                 const errorElement = document.getElementById(id);
                 errorElement.innerText = message;
@@ -34,6 +34,13 @@
       messageDiv.innerText = message;
       messageDiv.style.color = isError ? 'red' : 'green';
       messageDiv.style.display = 'block';
+    }
+    function showLoading() {
+        loadingOverlay.classList.add('show');
+    }
+
+    function hideLoading() {
+        loadingOverlay.classList.remove('show');
     }
 
 
@@ -68,6 +75,7 @@
       });
         registerForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                     showLoading();
                  const email = document.getElementById('register-email').value;
                  const password = registerPassword.value;
                 const confirmPassword = confirmPasswordInput.value;
@@ -76,6 +84,7 @@
             if (password !== confirmPassword) {
                  confirmPasswordInput.classList.add('error');
                   showError('confirm-password-error', true, false, "Senhas não conferem");
+                     hideLoading();
                 return;
             } else{
                 confirmPasswordInput.classList.remove('error');
@@ -92,6 +101,7 @@
                     if (!isPasswordValid) {
                        passwordRequirements.classList.add('visible');
                         showMessage('Please make sure the password meets all the requirements', true);
+                        hideLoading();
                         return;
                     }
              try {
@@ -104,5 +114,7 @@
                        }  else{
                             showMessage(error.message, true);
                        }
+                } finally{
+                    hideLoading();
                 }
         });

@@ -99,12 +99,25 @@ function showError(id, show, mandatory = false, message = ''){
     }
 }
 
+ const loadingOverlay = document.getElementById('loading-overlay');
+        const loadingMessage = document.getElementById('loading-message');
+ function showLoading() {
+        loadingOverlay.classList.add('show');
+    }
 
+    function hideLoading() {
+        loadingOverlay.classList.remove('show');
+    }
 
-function startTest() {
+async function startTest() {
+    showLoading();
+    loadingMessage.innerText = "Grandes descobertas começam com um primeiro passo"
+     await new Promise(resolve => setTimeout(resolve, 2500));
     document.getElementById('test-container').classList.remove('hidden');
      document.removeEventListener('keypress', handleEnterTest);
-    loadQuestion();
+    await loadQuestion();
+      hideLoading();
+
 }
 
 
@@ -116,7 +129,7 @@ function handleEnterTest(event) {
 }
 
 
-function loadQuestion() {
+async function loadQuestion() {
     document.getElementById('question-number').innerText = `Questão ${currentStep + 1} de ${questions.length}`;
     const currentQuestion = questions[currentStep];
     document.getElementById('question-text').innerText = currentQuestion.text;
@@ -141,6 +154,7 @@ function loadQuestion() {
        }
     // Attach enter listener only when options are loaded
     document.addEventListener('keypress', handleEnterTest);
+    await new Promise(resolve => setTimeout(resolve, 100));
 }
 
 function nextQuestion() {
@@ -217,9 +231,24 @@ function calculateScores() {
 }
 
 
-function showResults() {
-    document.getElementById('test-container').classList.add('hidden');
-    document.getElementById('results-container').classList.remove('hidden');
+async function showResults() {
+       showLoading();
+        document.getElementById('test-container').classList.add('hidden');
+
+        const messages = [
+           "Estamos juntando as peças do quebra-cabeça.",
+            "Falta pouco!\nSeu resultado está quase pronto.",
+             "Prepare-se para se conhecer melhor!"
+        ]
+
+       for (const message of messages) {
+              loadingMessage.innerText = message;
+             await new Promise(resolve => setTimeout(resolve, 3000));
+         }
+       hideLoading();
+
+
+        document.getElementById('results-container').classList.remove('hidden');
     document.querySelector('#results-container h2').innerText = ` ${userName}, aqui está o resultado do seu teste de personalidade`;
 
     let scores = calculateScores();
@@ -347,5 +376,7 @@ function validateEmail(email){
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
-
-startTest();
+const start = async () => {
+    await startTest();
+}
+start();

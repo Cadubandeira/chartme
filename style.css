@@ -1,16 +1,22 @@
 body {
     font-family: sans-serif;
-    margin: 0;
+    margin:0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(45deg, #f3e0fa, #e0faf2);
+	//background: linear-gradient(45deg, #f3e0fa, #e0faf2);
+background: linear-gradient(45deg, #FC5C7D, #6A82FB);
 }
+
+
 
 .container {
     background-color: white;
     padding: 40px;
+    margin-top: 80px;
+    margin-bottom: 80px;
     border-radius: 24px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 80%;
@@ -98,36 +104,158 @@ button:hover {
 }
 
 #share-button {
-padding: 10px 15px;
-background-color: #25D366;
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-margin-top: 20px;
-transition: background-color 0.3s;
+    padding: 12px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 700;
 }
 
 #share-button:hover {
-background-color: #128C7E;
+    background-color: #3d8d3d;
 }
+
 #logout-icon-button {
-    background-color: rgba(87, 48, 101, 0.1); /* Tonal color */
+    background-color: transparent;
     border: none;
     border-radius: 24px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: transform 0.3s;
     font-size: 2rem; /* Increased icon size */
-    color:  #573065; /* set the main color*/
+    color:  white; /* set the main color*/
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
     width: 2.5rem; /* Set a fixed width */
      height: 2.5rem;  /* Set a fixed height */
+  position: fixed;   /* Make container positioned relative to viewport */
+  top: 24px;          /* Distance from the top */
+  right: 24px;        /* Distance from the right */
+  z-index: 100;       /* Ensure button is above other content */
 }
 
 
 #logout-icon-button:hover {
     background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
 }
+
+#menu-icon-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-size: 2rem; /* Increased icon size */
+    color:  white; /* set the main color*/
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    width: 2.5rem; /* Set a fixed width */
+     height: 2.5rem;  /* Set a fixed height */
+  position: fixed;   /* Make container positioned relative to viewport */
+  top: 24px;          /* Distance from the top */
+  left: 24px;        /* Distance from the left */
+  z-index: 100;       /* Ensure button is above other content */
+}
+
+
+#menu-icon-button:hover {
+    background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
+}
+
+
+
+        .card-container{
+           display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+        }
+          .card {
+            background-color: white;
+            border-radius: 24px;
+ 		box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            text-align: center;
+            width: 25%;
+            cursor: pointer;
+            transition: transform 0.3s;
+             display: flex;
+            flex-direction: column;
+            align-items: center;
+             justify-content: center;
+             color: #573065;
+             text-decoration: none;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card.disabled {
+             opacity: 0.6;
+		cursor: default;
+            transform: none;
+        }
+         .card.disabled:hover {
+            transform: none;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+        .card p {
+            color: #777;
+        }
+
+         h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #573065;
+           }
+          .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.25); /* Black overlay with 25% opacity */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+             display: none; /* Hidden by default */
+            }
+            .loading-overlay.show{
+              display: flex;
+            }
+
+        .loader {
+             border: 8px solid #f3f3f3;
+             border-top: 8px solid #573065; /* Purple spinner */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+         .loading-message {
+            text-align: center;
+            color: white;
+            font-size: 1.1rem;
+             font-weight: 700;
+            padding: 20px;
+            background-color: #573065;
+            border-radius: 10px;
+        }
