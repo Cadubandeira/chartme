@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,11 @@
     <div class="container">
         <div id="email-form" class="form-step">
             <h1>Bem-vindo(a)</h1>
-            <h3>Entre e descubra mais sobre si</h3>
+            <h2>Para começar a usar o teste, faça login.</h2>
             <form id="login-form" class="form-step">
                 <input type="email" id="login-email" placeholder="Digite seu e-mail" required>
                 <input type="password" id="login-password" placeholder="Digite sua senha" required>
+                 <div id="snackbar"></div>
                 <span id="email-error" class="error-message hidden">Por favor, digite seu e-mail e senha</span>
                 <br>
                 <button type="submit">Entrar</button>
@@ -24,12 +25,9 @@
             </form>
         </div>
         <div id="message"></div>
-        <div id="user-info" class="hidden">
-            <h2>You are logged in!</h2>
-            <p>Welcome, <span id="user-email"></span>!</p>
-            <button id="logout-button">Logout</button>
-        </div>
+
     </div>
+
     <!-- Add this BEFORE your script.js file-->
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>

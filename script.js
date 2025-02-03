@@ -24,6 +24,9 @@ const userEmailSpan = document.getElementById('user-email');
 const logoutButton = document.getElementById('logout-button');
 const redirectURL = 'dashboard.html'; // Changed the redirect to dashboard
  const loadingOverlay = document.getElementById('loading-overlay');
+    const snackbar = document.getElementById('snackbar');
+      const body = document.body;
+
 
 function showMessage(message, isError=false){
   messageDiv.innerText = message;
@@ -42,29 +45,50 @@ function hideMessage(){
 function hideLoading() {
     loadingOverlay.classList.remove('show');
 }
+ function showSnackbar(message, isError = false) {
+       if(!snackbar){
+           return;
+        }
+      snackbar.innerHTML = `${message} <button onclick="hideSnackbar()">Fechar</button>`;
+        snackbar.classList.add('show');
+        snackbar.classList.toggle('error', isError);
+         setTimeout(() => {
+        snackbar.classList.remove('show');
+        snackbar.classList.remove('error');
+         }, 3000);
+    }
+
+
+   function hideSnackbar() {
+       if(snackbar){
+             snackbar.classList.remove('show');
+            snackbar.classList.remove('error');
+       }
+
+    }
 
 
 // Login
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-    showLoading();
     hideMessage();
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
 
   try {
       const userCredential = await auth.signInWithEmailAndPassword(email, password);
-    const user = userCredential.user;
-    userInfoDiv.classList.remove('hidden');
-    userEmailSpan.textContent = user.email;
         // Redirect after successful login
           hideLoading();
          window.location.href = redirectURL;
 
 
-
   } catch(error){
-    showMessage(error.message, true);
+      if (error.code === 'auth/invalid-credential') {
+           showSnackbar('Usuário ou senha incorretos.', true);
+         } else {
+           showMessage(error.message, true);
+            showLoading();
+         }
      hideLoading();
   }
 });
@@ -84,6 +108,9 @@ auth.onAuthStateChanged((user) => {
              showLoading();
               window.location.href = redirectURL;
              hideLoading();
-
     }
+      body.classList.add('gradient-1'); // set initial gradient
 });
+    body.classList.add('gradient-1'); // set initial gradient
+        document.getElementById('login-email').addEventListener('input', hideSnackbar);
+        document.getElementById('login-password').addEventListener('input', hideSnackbar);

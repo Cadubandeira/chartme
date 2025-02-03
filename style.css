@@ -6,10 +6,52 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-	//background: linear-gradient(45deg, #f3e0fa, #e0faf2);
-background: linear-gradient(45deg, #FC5C7D, #6A82FB);
+	background: linear-gradient(45deg, #FC5C7D, #6A82FB);
 }
 
+
+        .card-container{
+           display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+        }
+          .card {
+            background-color: white;
+            border-radius: 24px;
+ 		box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            text-align: center;
+            width: 25%;
+            cursor: pointer;
+            transition: transform 0.3s;
+             display: flex;
+            flex-direction: column;
+            align-items: center;
+             justify-content: center;
+             color: #573065;
+             text-decoration: none;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card.disabled {
+             opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+         .card.disabled:hover {
+            transform: none;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+        .card p {
+            color: #777;
+        }
 
 
 .container {
@@ -115,9 +157,8 @@ button:hover {
 }
 
 #share-button:hover {
-    background-color: #3d8d3d;
+background-color: #3d8d3d;
 }
-
 #logout-icon-button {
     background-color: transparent;
     border: none;
@@ -168,51 +209,6 @@ button:hover {
     background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
 }
 
-
-
-        .card-container{
-           display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 24px;
-            width: 100%;
-            max-width: 1200px;
-        }
-          .card {
-            background-color: white;
-            border-radius: 24px;
- 		box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 40px;
-            text-align: center;
-            width: 25%;
-            cursor: pointer;
-            transition: transform 0.3s;
-             display: flex;
-            flex-direction: column;
-            align-items: center;
-             justify-content: center;
-             color: #573065;
-             text-decoration: none;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .card.disabled {
-             opacity: 0.6;
-		cursor: default;
-            transform: none;
-        }
-         .card.disabled:hover {
-            transform: none;
-        }
-
-        .card h2 {
-            margin-bottom: 10px;
-        }
-        .card p {
-            color: #777;
-        }
-
          h1 {
             text-align: center;
             margin-top: 20px;
@@ -224,7 +220,7 @@ button:hover {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.25); /* Black overlay with 25% opacity */
+            background-color: rgba(0, 0, 0, 0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -254,8 +250,63 @@ button:hover {
             text-align: center;
             color: white;
             font-size: 1.1rem;
+            margin-top: 10px;
              font-weight: 700;
             padding: 20px;
             background-color: #573065;
             border-radius: 10px;
+        }
+          #snackbar {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 4px;
+          padding: 16px;
+           display: flex;
+            align-items: center;
+            justify-content: space-between;
+          position: fixed;
+          z-index: 1;
+          left: 50%;
+          bottom: 30px;
+        }
+
+        #snackbar.show {
+            visibility: visible;
+           -webkit-animation: fadein 0.5s, fadeout 0.5s;
+           animation: fadein 0.5s, fadeout 0.5s;
+        }
+
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+           to {bottom: 30px; opacity: 1;}
+        }
+
+       @keyframes fadein {
+          from {bottom: 0; opacity: 0;}
+         to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+         @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+             to {bottom: 0; opacity: 0;}
+        }
+       #snackbar button {
+          background: transparent;
+           color: white;
+           border:none;
+           cursor: pointer;
+        }
+
+        #snackbar.error {
+             background-color: #ff3d00; /* Red for error */
+
         }
