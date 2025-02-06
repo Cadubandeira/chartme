@@ -280,7 +280,7 @@ function hideLoading() {
 }
  async function startTest() {
     showLoading();
-    loadingMessage.innerText = "Prepare-se para avaliar sua influência"
+    loadingMessage.innerText = "Prepare-se para avaliar seu magnetismo pessoal"
      await new Promise(resolve => setTimeout(resolve, 2500));
     document.getElementById('initial-modal').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
