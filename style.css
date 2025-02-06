@@ -80,8 +80,10 @@ body {
 }
 
 hr.solid {
-  border-top: 12px dotted #573065;
-width: 60%;
+	    margin-top: 24px;
+    margin-bottom: 24px;
+    border-top: 7px dotted #573065;
+    width: 6%;
 }
 
 button {
