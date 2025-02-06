@@ -80,7 +80,7 @@ body {
 }
 
 hr.solid {
-  border-top: 3px solid #bbb;
+  border-top: 12px dotted #573065;
 width: 60%;
 }
 
