@@ -522,15 +522,10 @@ async function shareOnWhatsApp() {
 
  document.addEventListener('DOMContentLoaded', () => {
          const startButton = document.getElementById('start-test-button');
-         const closeModalButton = document.getElementById('close-modal-button');
          const initialModal = document.getElementById('initial-modal');
             if (startButton) {
                startButton.addEventListener('click', startTest);
            }
-           if(closeModalButton){
-               closeModalButton.addEventListener('click', ()=>{
-                initialModal.classList.add('hidden');
-              });
-           }
+
          initialModal.classList.remove('hidden');
     });
