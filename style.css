@@ -16,6 +16,8 @@ body {
     gap: 24px;
     width: 100%;
     max-width: 1200px;
+	position: absolute;
+	top:13%;
 }
   .card {
     background-color: white;
@@ -32,6 +34,7 @@ body {
      justify-content: center;
      color: #573065;
      text-decoration: none;
+	  min-width: 240px;
 }
 .card:hover {
     transform: scale(1.05);
