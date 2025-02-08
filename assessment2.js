@@ -541,13 +541,13 @@ new Chart(ctxRadar, {
     const finalReflection = document.getElementById('final-reflection');
   // Final Message
 
-  finalMessageTitle.innerText = "RESULTADO FINAL GERAL";
+  finalMessageTitle.innerText = "Índice de Magnetismo Pessoal";
     finalMessage.innerText =
       "Analise cuidadosamente seus resultados. Eles mostram um panorama de suas habilidades atuais no mundo do networking, considere a presença que você entrega em tudo o que faz. Enxergue seus pontos fortes e célebres, mas também não ignore as áreas que indicam espaço para crescimento. Entenda que esta avaliação é um retrato do momento, não um veredicto final sobre sua capacidade. Você é plenamente capaz de evoluir, se adaptar e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.\n\n“Hoje, praticar networking não é mais apenas um complemento, mas uma necessidade essencial para o desenvolvimento pessoal e profissional.” - Paulo Cruz, fundador do Inner Networking.\n\nDe forma geral, o Índice de Magnetismo Pessoal (IMP) do seu Networking reflete o desempenho integrado das cinco dimensões essenciais – Agradabilidade, Expertise, Confiança, Colaboração e Visibilidade – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking, abrindo portas para novas oportunidades e parcerias estratégicas. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar seu magnetismo pessoal e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking. O seu resultado final foi de:";
 
 
  // Total Result
-  totalResultTitle.innerText = "O seu resultado final foi de:";
+  totalResultTitle.innerText = "Seu Índice de Magnetismo Pessoal foi de:";
   //totalResult.innerText = totalScore; // Remova esta linha
 
   // Calcule o número máximo de pontos possíveis (assumindo que seja 100, ajuste se necessário)
