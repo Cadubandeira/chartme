@@ -109,6 +109,7 @@ const sections = [
     ],
   },
   {
+
     title: "3. CONFIANÇA",
     instruction:
       "A confiança refere-se à qualidade que uma pessoa tem de transmitir integridade, segurança e presença em todas as suas interações pessoais e profissionais. Pessoas confiáveis ​​são reconhecidas como profissionais coerentes entre discurso e ação, e são também cumpridoras de suas palavras, metas e compromissos, seja dentro da organização em que atuam ou em relações externas. Por essa razão, elas estabelecem relacionamentos e alianças consistentes e fidedignas, consolidam parcerias de longo prazo e são valorizadas como referências em seriedade, sendo vistas como escolhas indispensáveis para projetos, desafios, cooperação e amizades pessoais e estratégicas.",
@@ -161,7 +162,6 @@ const sections = [
     ],
   },
   {
-
     title: "4. COLABORAÇÃO",
     instruction:
       "A virtude da colaboração diz respeito à disposição de um profissional em oferecer contribuições benéficas a outros, sem necessariamente esperar uma retribuição imediata. São pessoas cooperativas, engajadas, receptivas às demandas de ajuda e apoio, baseando-se no princípio da reciprocidade com aqueles a quem prestam apoio. Demonstram disposição e participam sempre que possível de atividades que agregam valor para colegas, clientes, parceiros de negócios e outros profissionais do mercado. Tal interação colaborativa se traduz em ações como mentoria, aconselhamento, compartilhamento de conhecimentos, insights e diálogos enriquecedores com as pessoas envolvidas.",
@@ -419,7 +419,7 @@ async function loadQuestion() {
   window.scrollTo(0, 0);
 }
 
-function nextQuestion() {
+async function nextQuestion() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
 
      if(!selectedOption){
@@ -431,19 +431,30 @@ function nextQuestion() {
     document.removeEventListener('keypress', handleEnterTest);
   testAnswers.push(parseInt(selectedOption.value));
   currentStep++;
-  if (currentStep < sections[currentSection].questions.length) {
-    loadQuestion();
-  } else {
-    currentStep = 0;
-    currentSection++;
-    if (currentSection < sections.length) {
-      loadSectionInstructions(); // Load next section's instructions
+
+    showLoading();
+    loadingMessage.innerText = "Carregando"; // Loading message
+
+    await new Promise(resolve => setTimeout(resolve, 500));  // simulate saving
+
+    if (currentStep < sections[currentSection].questions.length) {
+        await loadQuestion();
     } else {
-      showResults();
+        currentStep = 0;
+        currentSection++;
+        if (currentSection < sections.length) {
+            loadingMessage.innerText = "Prepare-se para a próxima seção";
+            await loadSectionInstructions(); // Load next section's instructions
+        } else {
+            loadingMessage.innerText = "Calculando resultados...";
+            await showResults();
+        }
     }
-  }
-  // Scroll to top
-  window.scrollTo(0, 0);
+
+    hideLoading();  // Hide loading after the next step is loaded
+
+    // Scroll to top
+    window.scrollTo(0, 0);
 }
 
 function showError(id, show, mandatory = false, message = "") {
@@ -496,7 +507,7 @@ const sectionInterpretations = {
     good:
       "Bom: Suas habilidades e conhecimentos são sólidos, mas há oportunidades para uma aplicação mais sistemática e consistente, especialmente no compartilhamento de suas experiências. Ações recomendadas: Fortaleça sua rotina de atualização e organize melhor o compartilhamento dos seus conhecimentos, buscando proativamente feedback para aprimorar suas práticas.\n\nPara saber mais sobre a expertise e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
     average:
-      "Oportunidades de Melhoria: Há desafios na aplicação regular das suas competências e na busca por atualização, o que impacta o compartilhamento de aprendizados. Ações recomendadas: Participe de cursos e seminários na sua área e estimule trocas de experiências com colegas para elevar sua prática profissional.\n\nPara saber mais sobre a expertise e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
+      "Oportunidades de Melhoria: Você apresenta desafios na aplicação regular das suas competências e na busca por atualização, o que impacta o compartilhamento de aprendizados. Ações recomendadas: Participe de cursos e seminários na sua área e estimule trocas de experiências com colegas para elevar sua prática profissional.\n\nPara saber mais sobre a expertise e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
     bad:
       "Necessário Investir Intensamente: Sua pontuação indica dificuldades significativas em aplicar suas habilidades de forma consistente, com pouca iniciativa para atualização e compartilhamento. Ações recomendadas: Invista fortemente em autodesenvolvimento por meio de treinamentos, mentorias e leituras especializadas para construir uma base sólida e aplicá-la regularmente.\n\nPara saber mais sobre a expertise e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
   },
@@ -535,6 +546,18 @@ const sectionInterpretations = {
 async function showResults() {
   showLoading();
   document.getElementById("test-container").classList.add("hidden");
+
+  const messages = [
+       "Analisando suas respostas",
+        "Conferindo sua capacidade de gerar conexões",
+        "Calculando seu Índice de Magnetismo Pessoal",
+       "Prepare-se para descobrir seu poder de atração no networking..."
+  ];
+
+  for (const message of messages) {
+        loadingMessage.innerText = message;
+        await new Promise(resolve => setTimeout(resolve, 4000)); // Adjust the delay as needed
+    }
 
   const { totalScore, sectionScores } = calculateScores();
 
