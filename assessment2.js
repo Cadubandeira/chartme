@@ -269,6 +269,62 @@ const sections = [
 
 const sectionScores = [];
 
+// Configuração do gráfico de radar
+const radarChartConfig = {
+  type: 'radar',
+  data: {
+    labels: ['Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade'],
+    datasets: [{
+      label: 'Dimensões do Networking',
+      data: [],
+      fill: true,
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgb(255, 99, 132)',
+      pointBackgroundColor: 'rgb(255, 99, 132)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(255, 99, 132)'
+    }]
+  },
+  options: {
+    scales: {
+      r: {
+        min: 0,
+        max: 20, // Escala de 0 a 20 (pontuação máxima por seção)
+        ticks: {
+          stepSize: 4 // Define o intervalo entre os valores exibidos
+        }
+      }
+    },
+    elements: {
+      line: {
+        borderWidth: 3
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top'
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            let label = context.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed && context.parsed.r !== null) {
+              label += context.parsed.r;
+            }
+            return label;
+          }
+        }
+      }
+    }
+  }
+};
+
+
 const loadingOverlay = document.getElementById("loading-overlay");
 const loadingMessage = document.getElementById("loading-message");
 function showLoading() {
@@ -441,6 +497,43 @@ async function showResults() {
 
   const finalMessageTitle = document.getElementById("final-message-title");
   const finalMessage = document.getElementById("final-message");
+// Criar o gráfico de radar
+const ctxRadar = document.getElementById('radarChart').getContext('2d');
+new Chart(ctxRadar, {
+  type: 'radar',
+  data: {
+    labels: ['Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade'],
+    datasets: [{
+      label: 'Pontos',
+      data: sectionScores,
+      fill: true,
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgb(255, 99, 132)',
+      pointBackgroundColor: 'rgb(255, 99, 132)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(255, 99, 132)'
+    }]
+  },
+  options: {
+ responsive: true, // Enables responsiveness
+    maintainAspectRatio: true, // Keeps the aspect ratio 
+    scales: {
+      r: {
+        min: 0,
+        max: 20,
+        ticks: { stepSize: 2 }
+      }
+    },
+    elements: {
+      line: { borderWidth: 3 }
+    },
+    plugins: {
+      legend: { display: false }
+    }
+  }
+});
+
   const totalResultTitle = document.getElementById("total-result-title");
   const totalResult = document.getElementById("total-result");
   const totalResultInterpretation = document.getElementById("total-result-interpretation");
@@ -512,6 +605,7 @@ async function showResults() {
    const shareButton = document.getElementById('share-button');
     shareButton.addEventListener('click', () => shareOnWhatsApp());
   hideLoading();
+
 }
 async function shareOnWhatsApp() {
    const message = `Olá! Acabei de fazer um teste de Inner Networking incrível e olha só o resultado:  ${document.getElementById('final-message').innerText}. \n\n ${document.getElementById('total-result-title').innerText} ${document.getElementById('total-result').innerText} \n ${document.getElementById('total-result-interpretation').innerText} \n\n Veja meus resultados completos em https://cadubandeira.github.io/chartme/.`;
