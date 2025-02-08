@@ -579,7 +579,7 @@ new Chart(ctxRadar, {
         sectionTitle.innerText = section.title;
         sectionResultDiv.appendChild(sectionTitle);
     const sectionScore = document.createElement("p");
-    sectionScore.innerHTML = `O seu resultado total para esse atributo foi: ${sectionScores[index]} de 15 pontos possíveis`;
+    sectionScore.innerHTML = `${sectionScores[index]} de 15 pontos possíveis`;
        sectionResultDiv.appendChild(sectionScore);
 
     let sectionInterpretation = "";
