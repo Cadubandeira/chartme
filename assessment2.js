@@ -334,14 +334,15 @@ function showLoading() {
 function hideLoading() {
   loadingOverlay.classList.remove("show");
 }
- async function startTest() {
+
+async function startTest() {
     showLoading();
     loadingMessage.innerText = "Prepare-se para avaliar seu magnetismo pessoal"
      await new Promise(resolve => setTimeout(resolve, 2500));
     document.getElementById('initial-modal').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
     document.removeEventListener('keypress', handleEnterTest);
-    await loadQuestion();
+    await loadSectionInstructions(); // Load instructions first
       hideLoading();
 }
 
@@ -351,9 +352,39 @@ function handleEnterTest(event) {
   }
 }
 
+async function loadSectionInstructions() {
+  document.getElementById("question-number").innerText = "";
+  document.getElementById("question-text").innerText = "";
+  const section = sections[currentSection];
+    document.getElementById("section-title").innerText = section.title;
+    document.getElementById("section-instruction").innerText = section.instruction;
+
+    const answerOptionsDiv = document.getElementById("answer-options");
+    answerOptionsDiv.innerHTML = "";
+
+    const continueButton = document.querySelector('#test-container button');
+    continueButton.onclick = loadQuestion;
+    continueButton.innerText = "Continuar";
+
+ // Remove any existing section background classes
+  document.body.classList.remove(
+    "bg-section-1",
+    "bg-section-2",
+    "bg-section-3",
+    "bg-section-4",
+    "bg-section-5"
+  );
+
+  // Add the background class for the current section
+  document.body.classList.add(`bg-section-${currentSection + 1}`);
+
+  // Scroll to top
+  window.scrollTo(0, 0);
+
+}
 async function loadQuestion() {
   document.getElementById("section-title").innerText = sections[currentSection].title;
-  document.getElementById("section-instruction").innerText = sections[currentSection].instruction;
+  document.getElementById("section-instruction").innerText = ""; // Clear instruction after initial load
   document.getElementById("question-number").innerText = `Questão ${currentStep + 1} de ${sections[currentSection].questions.length}`;
   const currentQuestion = sections[currentSection].questions[currentStep];
   document.getElementById("question-text").innerText = currentQuestion.text;
@@ -370,13 +401,22 @@ async function loadQuestion() {
     label.setAttribute("for", `option-${index}`);
     label.insertBefore(input, label.firstChild);
     answerOptionsDiv.appendChild(label);
+
   });
   const firstRadioButton = document.querySelector('input[name="answer"]');
   if (firstRadioButton) {
     firstRadioButton.focus();
   }
   document.addEventListener("keypress", handleEnterTest);
+
+  // Modify button behavior for questions
+  const continueButton = document.querySelector('#test-container button');
+  continueButton.onclick = nextQuestion;
+  continueButton.innerText = "Continuar";
+
   await new Promise((resolve) => setTimeout(resolve, 100));
+  // Scroll to top
+  window.scrollTo(0, 0);
 }
 
 function nextQuestion() {
@@ -397,11 +437,13 @@ function nextQuestion() {
     currentStep = 0;
     currentSection++;
     if (currentSection < sections.length) {
-      loadQuestion();
+      loadSectionInstructions(); // Load next section's instructions
     } else {
       showResults();
     }
   }
+  // Scroll to top
+  window.scrollTo(0, 0);
 }
 
 function showError(id, show, mandatory = false, message = "") {
@@ -442,7 +484,7 @@ const sectionInterpretations = {
     excellent:
       "Excelente: Você demonstra uma alta capacidade de ser receptivo(a), cordial e empático(a) em suas interações, estabelecendo vínculos com facilidade e criando um ambiente de relacionamento positivo. Ações recomendadas: Mantenha seu comportamento receptivo, diversifique suas interações, lidere conversas construtivas e continue cultivando relacionamentos.\n\nPara saber mais sobre a agradabilidade e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
     good:
-      "Bom: Suas habilidades interpessoais são sólidas, embora haja pequenas variações na consistência da sua receptividade e atenção. Ações recomendadas: Procure aprimorar a escuta ativa e mantenha a abertura em todas as interações, reforçando a consistência no contato com diferentes perfis.\n\nPara saber mais sobre a agradabilidade e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
+      "Bom: Suas habilidades interpessoais são sólidas, embora haja pequenas variações na consistência da sua receptividade e atenção. Ações recomendadas: Procure aprimorar a escuta ativa e mantenha a abertura em todas as interações, reforçando a consistência no contato com diferentes perfis.\n\nPara saber mais sobre a agradabilidade e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no sitewww.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
     average:
       "Oportunidades de Melhoria: Você apresenta desafios em manter uma postura consistentemente receptiva e atenta, o que pode afetar a qualidade dos vínculos. Ações recomendadas: Invista em treinamentos de comunicação, participe de eventos de networking e pratique técnicas de empatia e escuta ativa para fortalecer suas relações.\n\nPara saber mais sobre a agradabilidade e o IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site www.innernetworking.com.br. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.",
     bad:
@@ -518,7 +560,7 @@ new Chart(ctxRadar, {
   },
   options: {
  responsive: true, // Enables responsiveness
-    maintainAspectRatio: true, // Keeps the aspect ratio 
+    maintainAspectRatio: true, // Keeps the aspect ratio
     scales: {
       r: {
         min: 0,

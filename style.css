@@ -9,6 +9,26 @@ body {
 	background: linear-gradient(45deg, #FC5C7D, #6A82FB);
 }
 
+.bg-section-1 {
+   background: linear-gradient(45deg, #FF9A8B, #F5E6C4) !important;
+}
+
+.bg-section-2 {
+   background: linear-gradient(45deg, #1E3A5F, #4A4A4A) !important;
+}
+
+.bg-section-3 {
+   background: linear-gradient(45deg, #0057B7, #F2F2F2) !important;
+}
+
+.bg-section-4 {
+   background: linear-gradient(45deg, #2ECC71, #FFD166) !important;
+}
+
+.bg-section-5 {
+   background: linear-gradient(45deg, #FF6F00, #6A0DAD) !important;
+}
+
 .card-container{
    display: flex;
     flex-wrap: wrap;
@@ -384,6 +404,10 @@ margin-left: 24px;
 }
 #register-confirm-password.error {
     border-color: red;
+}
+
+#section-instruction {
+	text-align: left;
 }
 
  #email-already-registered {
