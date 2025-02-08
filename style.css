@@ -250,6 +250,7 @@ h1 {
     justify-content: center;
     z-index: 1000;
      display: none; /* Hidden by default */
+backdrop-filter: blur(2px);
     }
 .loading-overlay.show{
     display: flex;
