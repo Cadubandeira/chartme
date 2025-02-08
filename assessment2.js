@@ -627,6 +627,10 @@ async function shareOnWhatsApp() {
             if (startButton) {
                startButton.addEventListener('click', startTest);
            }
+ 	const saveResultsButton = document.getElementById('save-results-button');
+    		  if (saveResultsButton) {
+             saveResultsButton.addEventListener('click', generatePDF);
+      }
 
          initialModal.classList.remove('hidden');
     });

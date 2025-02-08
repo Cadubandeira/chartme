@@ -9,6 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
      <div class="loading-overlay" id="loading-overlay">
@@ -52,7 +54,8 @@
             <div id="section-results">
             </div>
 		    <p id="final-reflection"></p>
-		    <button id="share-button">Compartilhar no WhatsApp</button>
+		    <button id="share-button" style="margin-top:32px;">Compartilhar no WhatsApp</button>
+  		<button id="save-results-button" style="margin-top:16px;">Baixar PDF</button>
         </div>
           <div id="initial-modal" class="modal hidden">
             <div class="modal-content">
@@ -77,6 +80,7 @@
             </div>
           </div>
     </div>
+<script src="pdf-generator.js"></script>
     <script src="assessment2.js"></script>
       <script>
             // Your web app's Firebase configuration
