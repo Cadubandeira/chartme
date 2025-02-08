@@ -106,13 +106,14 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 20px;
+	margin-top:16px;
+    margin-bottom: 32px;
    width: fit-content;
 }
 
 #answer-options label{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
     text-align: left;
 
@@ -371,6 +372,12 @@ margin-left: 24px;
 
 #password-requirements li.valid {
     color: green;
+}
+
+#question-number {
+    font-size: 1em;
+    margin-block: 0;
+    margin-top: 16px;
 }
 #register-confirm-password.error {
     border-color: red;
