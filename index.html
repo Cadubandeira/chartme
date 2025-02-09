@@ -36,5 +36,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+          const body = document.body;
+        body.classList.add('gradient-1'); // set initial gradient
+        document.getElementById('login-email').addEventListener('input', hideSnackbar);
+        document.getElementById('login-password').addEventListener('input', hideSnackbar);
+    });
+</script>
 </body>
 </html>

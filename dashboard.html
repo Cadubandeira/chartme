@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script> <!-- ADDED Firestore -->
 
     <!-- Material Design Components -->
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
@@ -60,8 +60,6 @@
             visibility: hidden;
             transition: opacity 0.3s, visibility 0.3s;
             z-index: 1000;
-	backdrop-filter: blur(2px);
-
             }
 
         .mdc-drawer-scrim--open {
@@ -72,11 +70,11 @@
         body {
             margin: 0; /* Reset body margin */
         }
-		/* Add this style to force visibility */
-		.mdc-drawer--open + .mdc-drawer-scrim {
-			visibility: visible;
-			opacity: 1;
-		}
+        /* Add this style to force visibility */
+        .mdc-drawer--open + .mdc-drawer-scrim {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -133,7 +131,7 @@
         </div>
     </div>
 
-    <script>
+       <script>
         // Initialize Material Design Components
         const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
         const scrim = document.querySelector('.mdc-drawer-scrim');
@@ -165,16 +163,29 @@
             }
         }
 
-        const loadingOverlay = document.getElementById('loading-overlay');
-        function hideLoading() {
-            loadingOverlay.classList.remove('show');
-        }
-        hideLoading();
-
         function openHistorySideSheet() {
             drawer.open = true;
             loadAssessmentHistory();
         }
+
+        function translateResultInterpretation(resultInterpretation) {
+        switch (resultInterpretation) {
+           case 'excellent':
+              return  'Excelente';
+               break;
+            case 'good':
+              return  'Bom';
+               break;
+            case 'average':
+              return  'Oportunidades de Melhoria';
+               break;
+            case 'bad':
+             return   'Necessário Investir Intensamente';
+              break;
+             default:
+              return  'Não Disponível';
+    }
+}
 
         async function loadAssessmentHistory() {
             const historyList = document.getElementById('history-list');
@@ -194,33 +205,15 @@
                         const assessment = doc.data();
                         let resultDisplay = '';
 
-                        if (assessment.assessmentName === 'Índice de Magnetismo Pessoal' && assessment.result) {
-                            let resultInterpretation = '';
-                            switch (assessment.resultInterpretation) {
-                                case 'excellent':
-                                    resultInterpretation = 'Excelente';
-                                    break;
-                                case 'good':
-                                    resultInterpretation = 'Bom';
-                                    break;
-                                case 'average':
-                                    resultInterpretation = 'Oportunidades de Melhoria';
-                                    break;
-                                case 'bad':
-                                    resultInterpretation = 'Necessário Investir Intensamente';
-                                    break;
-                                default:
-                                    resultInterpretation = 'Não Disponível';
-                            }
-
-                            resultDisplay = `Resultado: ${assessment.result} - ${resultInterpretation}`;
-                        } else if (assessment.assessmentName === 'Teste de Personalidade' && assessment.result) {
+                         if (assessment.assessmentName === 'Índice de Magnetismo Pessoal' && assessment.result) {
+                          resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
+                         } else if (assessment.assessmentName === 'Teste de Personalidade' && assessment.result) {
                             resultDisplay = `Resultado: ${assessment.result}`;
                         } else {
                             resultDisplay = 'Resultado: Não Disponível';
                         }
 
-                        const date = assessment.timestamp ? new Date(assessment.timestamp.seconds * 1000).toLocaleDateString() : 'Data Indisponível';
+                        const date = assessment.timestamp ? new Date(assessment.timestamp.seconds * 1000).toLocaleString('pt-BR') : 'Data Indisponível';
                         const listItem = document.createElement('li');
                         listItem.classList.add('mdc-list-item');
                         listItem.setAttribute('tabindex', '0'); // Make the list item focusable
@@ -239,6 +232,14 @@
                 }
             } else {
                 historyList.innerHTML = '<li class="mdc-list-item" tabindex="0">Usuário não autenticado.</li>';
+            }
+        }
+
+        const handleHome = async () => {
+            try {
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.log(error.message);
             }
         }
 
