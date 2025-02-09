@@ -53,12 +53,9 @@
         }
 
         .mdc-list-title {
-            cursor:default;
-            background: none;
-        }
-        .mdc-list-title:hover {
-            cursor:default;
-            background: none;
+            padding-left:16px;
+            font-style: var(--mdc-typography-subtitle1-font-family, var(--mdc-typography-font-family, Roboto, sans-serif))
+    
         }
         
           .mdc-top-app-bar--fixed-adjust {
@@ -132,9 +129,9 @@
     <!-- Side Sheet (Drawer) -->
     <aside class="mdc-drawer mdc-drawer--modal">
         <div class="mdc-drawer__content">
+            <div class="mdc-list-title">Histórico de Assessments</div>
             <nav class="mdc-list">
-                <span class="mdc-list-item" tabindex="0">
-                    <span class="mdc-list-title">Assessments realizados</span>
+                <hr>
                 </span>
                 <ul id="history-list" class="mdc-list">
                     <!-- Assessment history will be loaded here -->
