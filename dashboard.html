@@ -193,7 +193,7 @@
             const user = auth.currentUser;
             if (user) {
                 try {
-                    const historyRef = db.collection('assessmentHistory').where('userId', '==', user.uid);
+                    const historyRef = db.collection('assessmentHistory').where('userId', '==', user.uid).orderBy('timestamp', 'desc');
                     const snapshot = await historyRef.get();
 
                     if (snapshot.empty) {
