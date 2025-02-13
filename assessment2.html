@@ -7,11 +7,68 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script> <!-- ADDED Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script type=module src="pdf-generator.js"></script>
+    <script type=module src="assessment2.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+            authDomain: "chartme-2c4aa.firebaseapp.com",
+            projectId: "chartme-2c4aa",
+            storageBucket: "chartme-2c4aa.firebasestorage.app",
+            messagingSenderId: "1000796548418",
+            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+            measurementId: "G-T2686T1ETY"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        async function handleHome() {
+            try {
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        const saveAssessment = async (assessmentName, result, resultInterpretation, answers) => { // Add answers parameter
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            await db.collection("assessmentHistory").add({
+                userId: user.uid,
+                assessmentName: assessmentName,
+                result: result,
+                resultInterpretation: resultInterpretation,
+                answers: answers, // Save the answers
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() // Save the server timestamp
+            });
+            console.log("Assessment saved successfully!");
+        } catch (error) {
+            console.error("Error saving assessment: ", error);
+        }
+    } else {
+        console.log("User is not logged in.");
+    }
+}
+    </script>
+
 </head>
 <body>
      <div class="loading-overlay" id="loading-overlay">
@@ -84,59 +141,6 @@
 
 
 
-<script src="pdf-generator.js"></script>
-    <script src="assessment2.js"></script>
-     <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
-            authDomain: "chartme-2c4aa.firebaseapp.com",
-            projectId: "chartme-2c4aa",
-            storageBucket: "chartme-2c4aa.firebasestorage.app",
-            messagingSenderId: "1000796548418",
-            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
-            measurementId: "G-T2686T1ETY"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
 
-        async function handleLogout() {
-            try {
-                await auth.signOut();
-                window.location.href = 'index.html';
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
-
-        async function handleHome() {
-            try {
-                window.location.href = 'dashboard.html';
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
-
-        const saveAssessment = async (assessmentName, result, resultInterpretation) => {
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    await db.collection("assessmentHistory").add({
-                        userId: user.uid,
-                        assessmentName: assessmentName,
-                        result: result,
-                        resultInterpretation: resultInterpretation,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp() // Save the server timestamp
-                    });
-                    console.log("Assessment saved successfully!");
-                } catch (error) {
-                    console.error("Error saving assessment: ", error);
-                }
-            } else {
-                console.log("User is not logged in.");
-            }
-        }
-    </script>
 </body>
 </html>

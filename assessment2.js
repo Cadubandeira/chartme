@@ -429,7 +429,13 @@ async function nextQuestion() {
         showError('answer-error', false);
     }
     document.removeEventListener('keypress', handleEnterTest);
-    testAnswers.push(parseInt(selectedOption.value));
+
+    // ADD the question index
+    testAnswers.push({
+        questionIndex: getQuestionNumber(),
+        answerIndex: parseInt(selectedOption.value)
+    });
+    console.log("testAnswers:", testAnswers);
     currentStep++;
 
     showLoading();
@@ -448,6 +454,7 @@ async function nextQuestion() {
         } else {
             loadingMessage.innerText = "Calculando resultados...";
             await showResults();
+            console.log("Final testAnswers:", testAnswers);
         }
     }
 
@@ -455,6 +462,13 @@ async function nextQuestion() {
 
     // Scroll to top
     window.scrollTo(0, 0);
+}
+function getQuestionNumber() {
+    let counter = 0;
+    for (let i = 0; i < currentSection; i++) {
+        counter += sections[i].questions.length;
+    }
+    return counter + currentStep;
 }
 
 function showError(id, show, mandatory = false, message = "") {
@@ -472,10 +486,23 @@ function calculateScores() {
     let totalScore = 0;
     sections.forEach((section, sectionIndex) => {
         let sectionScore = 0;
-        section.questions.forEach((question, questionIndex) => {
-            const answerValue = testAnswers[questionIndex + (sectionIndex * section.questions.length)];
-            sectionScore += (4 - answerValue);
-        });
+        // Iterate through the *questions* in this *section*
+        for (let questionIndex = 0; questionIndex < section.questions.length; questionIndex++) {
+            // Get the index of the answer that *corresponds* to this question
+            const answerIndexForQuestion = (sectionIndex * section.questions.length) + questionIndex;
+            if (answerIndexForQuestion < testAnswers.length) {
+                // Get the *answer object* from the testAnswers array
+                const answerObject = testAnswers[answerIndexForQuestion];
+
+                 // Extract the *answerIndex* from the object
+                 const answerValue = answerObject.answerIndex;
+
+                 console.log(`AnswerValue: ${answerValue}`);
+
+                 sectionScore += (4 - answerValue);
+
+            }
+        }
         sectionScores.push(sectionScore);
         totalScore += sectionScore;
     });
@@ -629,34 +656,18 @@ async function showResults() {
 De forma geral, o Índice de Magnetismo Pessoal (IMP) do seu Networking reflete o desempenho integrado das cinco dimensões essenciais – Agradabilidade, Expertise, Confiança, Colaboração e Visibilidade – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking, abrindo portas para novas oportunidades e parcerias estratégicas. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar seu magnetismo pessoal e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking. O seu resultado final foi de:`;
 
 
-    // Total Result
-    totalResultTitle.innerText = "Seu Índice de Magnetismo Pessoal foi de:";
-    //totalResult.innerText = totalScore; // Remova esta linha
+totalResultTitle.innerText = "Seu Índice de Magnetismo Pessoal foi de:";
+totalResult.innerText = `${totalScore} de ${100} pontos possíveis`;
 
-    // Calcule o número máximo de pontos possíveis (assumindo que seja 100, ajuste se necessário)
-    const maxScore = 100;
+let interpretation = getResultInterpretation(totalScore);
+totalResultInterpretation.innerText = totalResultInterpretations[interpretation];
 
-    // Atualize o texto para mostrar a pontuação e o máximo possível
-    totalResult.innerText = `${totalScore} de ${maxScore} pontos possíveis`;
-
-    let interpretation = "";
-    if (totalScore >= 81) {
-      interpretation = totalResultInterpretations.excellent;
-    } else if (totalScore >= 61) {
-      interpretation = totalResultInterpretations.good;
-    } else if (totalScore >= 41) {
-      interpretation = totalResultInterpretations.average;
-    } else {
-      interpretation = totalResultInterpretations.bad;
-    }
-    totalResultInterpretation.innerText = interpretation;
-
-   // Save the assessment results
-    saveAssessment("Índice de Magnetismo Pessoal", totalScore, getResultInterpretation(totalScore));
+//  saveAssessment("Índice de Magnetismo Pessoal", totalScore, getResultInterpretation(totalScore)); - OLD CALL
+await saveAssessment("Índice de Magnetismo Pessoal", totalScore, interpretation, testAnswers);
      
 
     //Section Results
-    sectionResultsDiv.innerHTML = ""; // Clear any previous content
+    sectionResultsDiv.innerHTML = "";
     sections.forEach((section, index) => {
         const sectionResultDiv = document.createElement("div");
         sectionResultDiv.classList.add("section-result");
@@ -697,10 +708,10 @@ Lembre-se: seu potencial de Networking não é estático; ele pode ser moldado e
 
 Boa sorte em sua jornada de crescimento profissional!`;
 
-    document.getElementById("results-container").classList.remove("hidden");
-    const shareButton = document.getElementById('share-button');
-    shareButton.addEventListener('click', () => shareOnWhatsApp());
-    hideLoading();
+document.getElementById("results-container").classList.remove("hidden");
+const shareButton = document.getElementById('share-button');
+shareButton.addEventListener('click', () => shareOnWhatsApp());
+hideLoading();
 }
 
 async function shareOnWhatsApp() {
@@ -725,8 +736,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const saveResultsButton = document.getElementById('save-results-button');
     if (saveResultsButton) {
-        saveResultsButton.addEventListener('click', generatePDF);
+        saveResultsButton.addEventListener('click', () => {
+            if (auth.currentUser) {
+                const { totalScore, sectionScores } = calculateScores();
+                const resultInterpretation = getResultInterpretation(totalScore);
+                generatePDF(auth.currentUser.uid, testAnswers, totalScore, resultInterpretation);
+            } else {
+                console.log("User is not logged in.");
+                alert("User is not logged in. Please log in to generate the PDF.");
+            }
+        });
     }
 
     initialModal.classList.remove('hidden');
 });
+// Make these functions globally accessible
+window.showLoading = showLoading;
+window.hideLoading = hideLoading;
+window.loadingMessage = loadingMessage; // Also expose the loadingMessage element
