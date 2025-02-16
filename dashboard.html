@@ -14,87 +14,6 @@
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
-    <style>
-        /* Side Sheet Styles */
-        .mdc-drawer {
-            position: fixed; /* Changed from absolute to fixed */
-            top: 0;
-            left: 0;
-            height: 100vh;
-            z-index: 1001; /* Ensure it's on top */
-        }
-
-        .mdc-drawer--modal {
-                max-width: 300px;
-                width: 77%;
-             z-index: 1001;
-              background-color: white; /* Set background color for the drawer */
-             box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-
-        }
-
-        .mdc-drawer__content {
-            padding-top:32px;
-            padding: 16px;
-        }
-        .mdc-list {
-            padding-top:16px;
-            padding: 0;
-        }
-
-        .mdc-list-item {
-            padding: 8px 16px;
-            border-bottom: 1px solid #eee;
-            border-radius: 12px;
-        }
-      .mdc-list-item:hover {
-            padding: 8px 16px;
-            border-bottom: 1px solid #eee;
-           border-radius: 12px;
-            background-color: #caabd5;
-        }
-
-        .mdc-list-title {
-            padding-left:16px;
-            font-size: 1.2em;
-            font-family: roboto, sans-serif;
-        }
-        
-          .mdc-top-app-bar--fixed-adjust {
-                position: relative;
-          }
-
-        .mdc-list-item:last-child {
-            border-bottom: none;
-        }
-
-        .mdc-drawer-scrim {
-           position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-            z-index: 1000;
-            }
-
-        .mdc-drawer-scrim--open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        body {
-            margin: 0; /* Reset body margin */
-        }
-        /* Add this style to force visibility */
-        .mdc-drawer--open + .mdc-drawer-scrim {
-            visibility: visible;
-            opacity: 1;
-        }
-    </style>
 </head>
 <body>
     <div class="loading-overlay" id="loading-overlay">
@@ -208,7 +127,7 @@
     }
 }
 
-        async function loadAssessmentHistory() {
+async function loadAssessmentHistory() {
             const historyList = document.getElementById('history-list');
             historyList.innerHTML = ''; // Clear previous content
             const user = auth.currentUser;
@@ -238,12 +157,15 @@
                         const listItem = document.createElement('li');
                         listItem.classList.add('mdc-list-item');
                         listItem.setAttribute('tabindex', '0'); // Make the list item focusable
+                       // ADD THE LINK TO ASSESSMENT PAGE
                         listItem.innerHTML = `
+                            <a href="assessment_result.html?assessmentId=${doc.id}" style="text-decoration:none; color:inherit;">
                             <span class="mdc-list-item__text">
                                 <strong>${assessment.assessmentName}</strong><br>
                                 ${resultDisplay}<br>
                                 Data: ${date}
                             </span>
+                            </a>
                         `;
                         historyList.appendChild(listItem);
                     });
@@ -264,18 +186,25 @@
             }
         }
 
-        const saveAssessment = async (assessmentName, result, resultInterpretation) => {
+        const saveAssessment = async (assessmentName, result, resultInterpretation, answers) => {  // Add answers as a parameter
             const user = auth.currentUser;
             if (user) {
+                 // Generate a new document reference
+                const assessmentRef = db.collection("assessmentHistory").doc();
                 try {
-                    await db.collection("assessmentHistory").add({
+                    await assessmentRef.set({
                         userId: user.uid,
                         assessmentName: assessmentName,
                         result: result,
                         resultInterpretation: resultInterpretation,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp() // Save the server timestamp
+                        answers: answers, // Save the answers array
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
-                    console.log("Assessment saved successfully!");
+                  console.log("Assessment saved successfully with ID: ", assessmentRef.id);
+                    // Set the assessmentId after the document is successfully created
+                  assessmentId = assessmentRef.id;
+
+
                 } catch (error) {
                     console.error("Error saving assessment: ", error);
                 }

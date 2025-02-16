@@ -1,3 +1,12 @@
+.assessment-details-container {
+    background-color: white;
+    border-radius: 24px;
+    padding: 40px;
+    text-align: left;
+    color: #573065;
+    margin-top: 20px;
+}
+
 #assessments-history-button {
  background-color: transparent;
     border: none;
@@ -52,6 +61,18 @@ body {
 .bg-section-5 {
    background: linear-gradient(45deg, #FF6F00, #6A0DAD) !important;
 }
+
+blockquote {
+    margin-inline-start: 40px;
+    margin-inline-end: 40px;
+  }
+  
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    blockquote {
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+    }
+  }
 
 .card-container{
    display: flex;
@@ -112,6 +133,24 @@ body {
     text-align: center;
     color: #573065;
 }
+
+details {
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#email-already-registered {
+    color: red;
+     font-size: 0.9em;
+     text-align: left;
+     margin-top: 5px;
+     display: none;
+  
+   }
+  
+
 
 .form-step {
     display: flex;
@@ -233,6 +272,87 @@ background-color: #3d8d3d;
     background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
 }
 
+/* Side Sheet Styles */
+.mdc-drawer {
+    position: fixed; /* Changed from absolute to fixed */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1001; /* Ensure it's on top */
+}
+
+.mdc-drawer--modal {
+        max-width: 300px;
+        width: 77%;
+        z-index: 1001;
+        background-color: white; /* Set background color for the drawer */
+        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+
+}
+
+.mdc-drawer__content {
+    padding-top:32px;
+    padding: 16px;
+}
+.mdc-list {
+    padding-top:16px;
+    padding: 0;
+}
+
+.mdc-list-item {
+    margin-bottom:24px;
+    padding: 8px 16px;
+    border-radius: 12px;
+}
+
+.mdc-list-item:hover {
+    margin-bottom:24px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background-color: #caabd5;
+}
+
+.mdc-list-title {
+    padding-left:16px;
+    font-size: 1.2em;
+    font-family: roboto, sans-serif;
+}
+
+    .mdc-top-app-bar--fixed-adjust {
+        position: relative;
+    }
+
+.mdc-list-item:last-child {
+    border-bottom: none;
+}
+
+.mdc-drawer-scrim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+    }
+
+.mdc-drawer-scrim--open {
+    opacity: 1;
+    visibility: visible;
+}
+
+body {
+    margin: 0; /* Reset body margin */
+}
+/* Add this style to force visibility */
+.mdc-drawer--open + .mdc-drawer-scrim {
+    visibility: visible;
+    opacity: 1;
+}
+
 #menu-icon-button {
     background-color: transparent;
     border: none;
@@ -330,25 +450,7 @@ backdrop-filter: blur(2px);
    animation: fadein 0.5s, fadeout 0.5s;
 }
 
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-   to {bottom: 30px; opacity: 1;}
-}
 
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
- to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
-}
-
- @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-     to {bottom: 0; opacity: 0;}
-}
 #snackbar button {
   background: transparent;
    color: white;
@@ -424,24 +526,88 @@ margin-left: 24px;
     color: green;
 }
 
+.question-answer {
+    padding: 16px;
+    border-top: 1px solid #eee;
+}
+
+.question-answer p {
+    margin-bottom: 8px;
+}
+
 #question-number {
     font-size: 1em;
     margin-block: 0;
     margin-top: 16px;
 }
+
 #register-confirm-password.error {
     border-color: red;
 }
+
 
 #section-instruction {
 	text-align: left;
 }
 
- #email-already-registered {
-  color: red;
-   font-size: 0.9em;
-   text-align: left;
-   margin-top: 5px;
-   display: none;
+.section-result {
+    margin-bottom:62px;
 
- }
+}
+
+summary {
+    padding: 16px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-weight: bold;
+}
+ summary::marker {
+    font-size: 0.8em; /* Adjust the size of the arrow */
+}
+
+summary:focus {
+     outline: none;
+    box-shadow: 0 0 0 2px #caabd5;  /* Adjust color to match your theme */
+}
+
+#total-result-interpretation {
+    margin-bottom:64px;
+}
+ 
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+   to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+ to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+ @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+     to {bottom: 0; opacity: 0;}
+}
+
+  /* Hide scrollbar track */
+::-webkit-scrollbar {
+    width: 6px; /* Thin scrollbar */
+    height: 6px;
+  }
+  
+  /* Style scrollbar thumb */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3); /* Subtle color */
+    border-radius: 6px; /* Rounded edges */
+  }
+  
+  /* Hide scrollbar when not scrolling */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
