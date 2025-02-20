@@ -115,7 +115,7 @@ async function loadAssessmentHistory() {
                 const assessment = doc.data();
                 let resultDisplay = '';
 
-                if (assessment.assessmentName === 'Índice de Magnetismo Pessoal' && assessment.result) {
+                if (assessment.assessmentName === 'Índice de Magnetismo Profissional' && assessment.result) {
                     resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
                 } else if (assessment.assessmentName === 'Teste de Personalidade' && assessment.result) {
                     resultDisplay = `Resultado: ${assessment.result}`;
