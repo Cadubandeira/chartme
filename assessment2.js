@@ -337,7 +337,7 @@ function hideLoading() {
 
 async function startTest() {
     showLoading();
-    loadingMessage.innerText = "Prepare-se para avaliar seu magnetismo pessoal"
+    loadingMessage.innerText = "Prepare-se para avaliar seu magnetismo profissional"
     await new Promise(resolve => setTimeout(resolve, 2500));
     document.getElementById('initial-modal').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
@@ -510,9 +510,9 @@ function calculateScores() {
 }
 
 const totalResultInterpretations = {
-    excellent: "Excelente IMP: Você demonstra um desempenho excepcional em todas as áreas do networking. A combinação de suas habilidades de agradabilidade, expertise, confiança, colaboração e visibilidade demonstra um nível atual altíssimo de Magnetismo Pessoal de Networking. Sua capacidade de construir relacionamentos sólidos, comunicar seus conhecimentos e promover suas conquistas reflete um alto “valuation” pessoal e profissional. Continue investindo no aprimoramento contínuo para manter e expandir essa excelência, pois seu magnetismo pessoal é um diferencial competitivo poderoso.",
-    good: "Bom IMP: Seu índice indica que você possui boas habilidades de networking e já alcançou uma base sólida em diversas dimensões do seu Magnetismo Pessoal de Networking. No entanto, existem oportunidades de aprimoramento em alguns atributos para que você atinja um nível ainda mais elevado. Analise quais dimensões tiveram pontuações mais baixas e concentre seus esforços em desenvolver essas áreas por meio de conteúdos, treinamentos, feedbacks e práticas direcionadas.",
-    average: "Médio: IMP: Sua pontuação média em seu Nível de Magnetismo Pessoal sugere que, embora você apresente competências em networking, há desafios importantes a serem superados. Identifique os atributos em que seu desempenho é menos consistente e busque estratégias práticas (como mentorias, cursos ou mudanças de comportamento e novos hábitos) para aprimorar sua atuação. Investir no desenvolvimento dessas habilidades permirá transformar seus relacionamentos profissionais e ampliar suas oportunidades.",
+    excellent: "Excelente IMP: Você demonstra um desempenho excepcional em todas as áreas do networking. A combinação de suas habilidades de agradabilidade, expertise, confiança, colaboração e visibilidade demonstra um nível atual altíssimo de Magnetismo Profissional de Networking. Sua capacidade de construir relacionamentos sólidos, comunicar seus conhecimentos e promover suas conquistas reflete um alto “valuation” pessoal e profissional. Continue investindo no aprimoramento contínuo para manter e expandir essa excelência, pois seu magnetismo pessoal é um diferencial competitivo poderoso.",
+    good: "Bom IMP: Seu índice indica que você possui boas habilidades de networking e já alcançou uma base sólida em diversas dimensões do seu Magnetismo Profissional de Networking. No entanto, existem oportunidades de aprimoramento em alguns atributos para que você atinja um nível ainda mais elevado. Analise quais dimensões tiveram pontuações mais baixas e concentre seus esforços em desenvolver essas áreas por meio de conteúdos, treinamentos, feedbacks e práticas direcionadas.",
+    average: "Médio: IMP: Sua pontuação média em seu Nível de Magnetismo Profissional sugere que, embora você apresente competências em networking, há desafios importantes a serem superados. Identifique os atributos em que seu desempenho é menos consistente e busque estratégias práticas (como mentorias, cursos ou mudanças de comportamento e novos hábitos) para aprimorar sua atuação. Investir no desenvolvimento dessas habilidades permirá transformar seus relacionamentos profissionais e ampliar suas oportunidades.",
     bad: "Baixo IMP: Seu índice aponta para desafios significativos no desenvolvimento das habilidades de networking. É essencial trabalhar de forma consistente e direcionada em todas as dimensões – desde a receptividade e colaboração até a visibilidade e demonstração de resultados. Procure treinamentos, mentorias, leituras e práticas que estimulem seu crescimento pessoal e profissional, a fim de fortalecer suas conexões e expandir seu magnetismo no ambiente de trabalho."
 
 };
