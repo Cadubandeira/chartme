@@ -58,16 +58,14 @@
 
             <!-- Admin Filters (Conditionally Rendered) -->
             <div id="admin-filters" style="display:none; padding: 16px;">
-                <div>
-                    <label for="assessment-filter">Filtrar por Avaliação:</label>
+                <div style="margin-bottom:16px;">
                     <select id="assessment-filter" class="mdc-select__native-control outlined-select">
-                        <option value="">Todas</option>
+                        <option value="">Todos os Assessments</option>
                         <option value="Índice de Magnetismo Pessoal">Índice de Magnetismo Pessoal</option>
                         <!-- Add other assessment options here -->
                     </select>
                 </div>
                 <div>
-                    <label for="user-select">Filtrar por Usuário:</label>
                     <select id="user-select" class="mdc-select__native-control outlined-select">
                         <option value="">Todos os Usuários</option>
                         <!-- User options will be loaded here -->
@@ -93,6 +91,7 @@
             <!-- Your page content goes here -->
         </div>
     </div>
+    <div id="snackbar" class="success"></div>
 
     <script>
         // Initialize Material Design Components
@@ -179,7 +178,45 @@
             }
         }
     </script>
+<script>
+    // In dashboard-admin.js (or within a script tag in dashboard.html)
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registrationSuccess') === 'true') {
+          showSnackbar("Cadastro realizado. Seja bem-vindo!", false);
+        
+            // Remove the query parameter from the URL
+            history.replaceState(null, null, window.location.pathname);
+        }
+    });
+
+  function showSnackbar(message, isError = false) {
+       const snackbar = document.getElementById('snackbar');
+       if(!snackbar){
+           return;
+        }
+      snackbar.innerHTML = `${message} <button onclick="hideSnackbar()">Fechar</button>`;
+        snackbar.classList.add('show');
+        snackbar.classList.toggle('error', isError);
+         setTimeout(() => {
+        snackbar.classList.remove('show');
+        snackbar.classList.remove('error');
+         }, 3000);
+    }
+
+
+   function hideSnackbar() {
+       const snackbar = document.getElementById('snackbar');
+       if(snackbar){
+             snackbar.classList.remove('show');
+            snackbar.classList.remove('error');
+       }
+
+    }
+</script>
     <script src="dashboard-admin.js"></script>
+
 </body>
 
 </html>

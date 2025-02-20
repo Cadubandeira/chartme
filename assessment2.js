@@ -715,7 +715,7 @@ hideLoading();
 }
 
 async function shareOnWhatsApp() {
-    const message = `Olá! Acabei de fazer um teste de Inner Networking incrível e olha só o resultado:  ${document.getElementById('final-message').innerText}. \n\n ${document.getElementById('total-result-title').innerText} ${document.getElementById('total-result').innerText} \n ${document.getElementById('total-result-interpretation').innerText} \n\n Veja meus resultados completos em https://cadubandeira.github.io/chartme/.`;
+    const message = `Olá! Acabei de fazer um teste de Inner Networking incrível e olha só o resultado:`;
     const encodedMessage = encodeURIComponent(message);
 
 
