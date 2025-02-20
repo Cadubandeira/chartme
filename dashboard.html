@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script> <!-- ADDED Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- ADDED Firestore -->
 
     <!-- Material Design Components -->
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-
 </head>
+
 <body>
     <div class="loading-overlay" id="loading-overlay">
         <div class="loader"></div>
@@ -37,7 +39,7 @@
             <h2>Índice de Magnetismo Pessoal</h2>
             <p>Avalie seu Magnetismo Pessoal e Profissional e Atraia Oportunidades</p>
         </a>
-       <!--
+        <!--
         <a href="assessment1.html" class="card">
             <h2>Teste de Personalidade</h2>
             <p>Exemplo de teste de personalidade</p>
@@ -53,9 +55,30 @@
     <aside class="mdc-drawer mdc-drawer--modal">
         <div class="mdc-drawer__content">
             <div class="mdc-list-title">Histórico de Resultados</div>
+
+            <!-- Admin Filters (Conditionally Rendered) -->
+            <div id="admin-filters" style="display:none; padding: 16px;">
+                <div>
+                    <label for="assessment-filter">Filtrar por Avaliação:</label>
+                    <select id="assessment-filter" class="mdc-select__native-control outlined-select">
+                        <option value="">Todas</option>
+                        <option value="Índice de Magnetismo Pessoal">Índice de Magnetismo Pessoal</option>
+                        <!-- Add other assessment options here -->
+                    </select>
+                </div>
+                <div>
+                    <label for="user-select">Filtrar por Usuário:</label>
+                    <select id="user-select" class="mdc-select__native-control outlined-select">
+                        <option value="">Todos os Usuários</option>
+                        <!-- User options will be loaded here -->
+                    </select>
+                </div>
+            </div>
+
             <nav class="mdc-list">
                 <hr>
-                </span>
+                <span id="results-count"></span>
+                <!-- Results count will be loaded here -->
                 <ul id="history-list" class="mdc-list">
                     <!-- Assessment history will be loaded here -->
                 </ul>
@@ -71,7 +94,7 @@
         </div>
     </div>
 
-       <script>
+    <script>
         // Initialize Material Design Components
         const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
         const scrim = document.querySelector('.mdc-drawer-scrim');
@@ -103,78 +126,23 @@
             }
         }
 
-        function openHistorySideSheet() {
+        async function openHistorySideSheet() {
             drawer.open = true;
-            loadAssessmentHistory();
+            await loadAssessmentHistory();
         }
 
         function translateResultInterpretation(resultInterpretation) {
-        switch (resultInterpretation) {
-           case 'excellent':
-              return  'Excelente';
-               break;
-            case 'good':
-              return  'Bom';
-               break;
-            case 'average':
-              return  'Oportunidades de Melhoria';
-               break;
-            case 'bad':
-             return   'Necessário Investir Intensamente';
-              break;
-             default:
-              return  'Não Disponível';
-    }
-}
-
-async function loadAssessmentHistory() {
-            const historyList = document.getElementById('history-list');
-            historyList.innerHTML = ''; // Clear previous content
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    const historyRef = db.collection('assessmentHistory').where('userId', '==', user.uid).orderBy('timestamp', 'desc');
-                    const snapshot = await historyRef.get();
-
-                    if (snapshot.empty) {
-                        historyList.innerHTML = '<li class="mdc-list-item" tabindex="0">Nenhuma avaliação encontrada.</li>';
-                        return;
-                    }
-
-                    snapshot.forEach(doc => {
-                        const assessment = doc.data();
-                        let resultDisplay = '';
-
-                         if (assessment.assessmentName === 'Índice de Magnetismo Pessoal' && assessment.result) {
-                          resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
-                         } else if (assessment.assessmentName === 'Teste de Personalidade' && assessment.result) {
-                            resultDisplay = `Resultado: ${assessment.result}`;
-                        } else {
-                            resultDisplay = 'Resultado: Não Disponível';
-                        }
-
-                        const date = assessment.timestamp ? new Date(assessment.timestamp.seconds * 1000).toLocaleString('pt-BR') : 'Data Indisponível';
-                        const listItem = document.createElement('li');
-                        listItem.classList.add('mdc-list-item');
-                        listItem.setAttribute('tabindex', '0'); // Make the list item focusable
-                       // ADD THE LINK TO ASSESSMENT PAGE
-                        listItem.innerHTML = `
-                            <a href="assessment_result.html?assessmentId=${doc.id}" style="text-decoration:none; color:inherit;">
-                            <span class="mdc-list-item__text">
-                                <strong>${assessment.assessmentName}</strong><br>
-                                ${resultDisplay}<br>
-                                Data: ${date}
-                            </span>
-                            </a>
-                        `;
-                        historyList.appendChild(listItem);
-                    });
-                } catch (error) {
-                    console.error("Erro ao carregar o histórico:", error);
-                    historyList.innerHTML = '<li class="mdc-list-item" tabindex="0">Erro ao carregar o histórico.</li>';
-                }
-            } else {
-                historyList.innerHTML = '<li class="mdc-list-item" tabindex="0">Usuário não autenticado.</li>';
+            switch (resultInterpretation) {
+                case 'excellent':
+                    return 'Excelente';
+                case 'good':
+                    return 'Bom';
+                case 'average':
+                    return 'Oportunidades de Melhoria';
+                case 'bad':
+                    return 'Necessário Investir Intensamente';
+                default:
+                    return 'Não Disponível';
             }
         }
 
@@ -186,10 +154,9 @@ async function loadAssessmentHistory() {
             }
         }
 
-        const saveAssessment = async (assessmentName, result, resultInterpretation, answers) => {  // Add answers as a parameter
+        const saveAssessment = async (assessmentName, result, resultInterpretation, answers) => {
             const user = auth.currentUser;
             if (user) {
-                 // Generate a new document reference
                 const assessmentRef = db.collection("assessmentHistory").doc();
                 try {
                     await assessmentRef.set({
@@ -197,12 +164,11 @@ async function loadAssessmentHistory() {
                         assessmentName: assessmentName,
                         result: result,
                         resultInterpretation: resultInterpretation,
-                        answers: answers, // Save the answers array
+                        answers: answers,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
-                  console.log("Assessment saved successfully with ID: ", assessmentRef.id);
-                    // Set the assessmentId after the document is successfully created
-                  assessmentId = assessmentRef.id;
+                    console.log("Assessment saved successfully with ID: ", assessmentRef.id);
+                    assessmentId = assessmentRef.id;
 
 
                 } catch (error) {
@@ -213,5 +179,7 @@ async function loadAssessmentHistory() {
             }
         }
     </script>
+    <script src="dashboard-admin.js"></script>
 </body>
+
 </html>

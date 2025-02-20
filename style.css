@@ -8,118 +8,132 @@
 }
 
 #assessments-history-button {
- background-color: transparent;
+    background-color: transparent;
     border: none;
     border-radius: 24px;
     cursor: pointer;
     transition: transform 0.3s;
-    font-size: 2rem; /* Increased icon size */
-    color:  white; /* set the main color*/
+    font-size: 2rem;
+    /* Increased icon size */
+    color: white;
+    /* set the main color*/
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    width: 2.5rem; /* Set a fixed width */
-     height: 2.5rem;  /* Set a fixed height */
-  position: fixed;   /* Make container positioned relative to viewport */
-  top: 24px;          /* Distance from the top */
-  left: 24px;        /* Distance from the right */
-  z-index: 100;       /* Ensure button is above other content */
+    width: 2.5rem;
+    /* Set a fixed width */
+    height: 2.5rem;
+    /* Set a fixed height */
+    position: fixed;
+    /* Make container positioned relative to viewport */
+    top: 24px;
+    /* Distance from the top */
+    left: 24px;
+    /* Distance from the right */
+    z-index: 100;
+    /* Ensure button is above other content */
 }
 
 #assessments-history-button:hover {
-    background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
+    background-color: rgba(87, 48, 101, 0.3);
+    /* slightly darker on hover */
 }
 
 body {
     font-family: sans-serif;
-    margin:0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-	background: linear-gradient(45deg, #FC5C7D, #6A82FB);
+    background: linear-gradient(45deg, #FC5C7D, #6A82FB);
 }
 
 .bg-section-1 {
-   background: linear-gradient(45deg, #FF9A8B, #F5E6C4) !important;
+    background: linear-gradient(45deg, #FF9A8B, #F5E6C4) !important;
 }
 
 .bg-section-2 {
-   background: linear-gradient(45deg, #1E3A5F, #4A4A4A) !important;
+    background: linear-gradient(45deg, #1E3A5F, #4A4A4A) !important;
 }
 
 .bg-section-3 {
-   background: linear-gradient(45deg, #0057B7, #F2F2F2) !important;
+    background: linear-gradient(45deg, #0057B7, #F2F2F2) !important;
 }
 
 .bg-section-4 {
-   background: linear-gradient(45deg, #2ECC71, #FFD166) !important;
+    background: linear-gradient(45deg, #2ECC71, #FFD166) !important;
 }
 
 .bg-section-5 {
-   background: linear-gradient(45deg, #FF6F00, #6A0DAD) !important;
+    background: linear-gradient(45deg, #FF6F00, #6A0DAD) !important;
 }
 
 blockquote {
     margin-inline-start: 40px;
     margin-inline-end: 40px;
-  }
-  
-@media (max-width: 768px) { /* Adjust breakpoint as needed */
-    blockquote {
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-    }
-  }
+}
 
-.card-container{
-   display: flex;
+@media (max-width: 768px) {
+    /* Adjust breakpoint as needed */
+    blockquote {
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+    }
+}
+
+.card-container {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 24px;
     width: 100%;
     max-width: 1200px;
-	position: absolute;
-	top:13%;
+    position: absolute;
+    top: 13%;
 }
-  .card {
+
+.card {
     background-color: white;
     border-radius: 24px;
-	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 40px;
     text-align: center;
     width: 25%;
     cursor: pointer;
     transition: transform 0.3s;
-     display: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
-     justify-content: center;
-     color: #573065;
-     text-decoration: none;
-	  min-width: 240px;
+    justify-content: center;
+    color: #573065;
+    text-decoration: none;
+    min-width: 240px;
 }
+
 .card:hover {
     transform: scale(1.05);
 }
+
 .card.disabled {
-     opacity: 0.6;
+    opacity: 0.6;
     cursor: default;
     transform: none;
 }
- .card.disabled:hover {
+
+.card.disabled:hover {
     transform: none;
 }
 
 .card h2 {
     margin-bottom: 10px;
 }
+
 .card p {
     color: #777;
 }
-
 
 .container {
     background-color: white;
@@ -127,7 +141,7 @@ blockquote {
     margin-top: 80px;
     margin-bottom: 80px;
     border-radius: 24px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 600px;
     text-align: center;
@@ -143,14 +157,11 @@ details {
 
 #email-already-registered {
     color: red;
-     font-size: 0.9em;
-     text-align: left;
-     margin-top: 5px;
-     display: none;
-  
-   }
-  
-
+    font-size: 0.9em;
+    text-align: left;
+    margin-top: 5px;
+    display: none;
+}
 
 .form-step {
     display: flex;
@@ -158,13 +169,12 @@ details {
     align-items: stretch;
 }
 
-
 .hidden {
     display: none;
 }
 
 hr.solid {
-	    margin-top: 24px;
+    margin-top: 24px;
     margin-bottom: 24px;
     border-top: 7px dotted #573065;
     width: 6%;
@@ -184,26 +194,26 @@ button {
 button:hover {
     background-color: #3d8d3d;
 }
-#answers-wrapper{
+
+#answers-wrapper {
     display: flex;
     width: 100%;
 }
-#answer-options{
+
+#answer-options {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-	margin-top:16px;
+    margin-top: 16px;
     margin-bottom: 32px;
-   width: fit-content;
+    width: fit-content;
 }
 
-#answer-options label{
+#answer-options label {
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
     text-align: left;
-
-
 }
 
 #answer-options label input[type="radio"] {
@@ -219,16 +229,16 @@ button:hover {
 }
 
 .mandatory-error {
-  color: red;
-  font-size: 0.9em;
-  display: block;
+    color: red;
+    font-size: 0.9em;
+    display: block;
     text-align: left;
-  position: relative;
-  margin-top: 10px;
+    position: relative;
+    margin-top: 10px;
 }
 
-#results-container{
-    text-align:left;
+#results-container {
+    text-align: left;
 }
 
 #share-button {
@@ -243,84 +253,101 @@ button:hover {
 }
 
 #share-button:hover {
-background-color: #3d8d3d;
+    background-color: #3d8d3d;
 }
 
-	
 #logout-icon-button {
     background-color: transparent;
     border: none;
     border-radius: 24px;
     cursor: pointer;
     transition: transform 0.3s;
-    font-size: 2rem; /* Increased icon size */
-    color:  white; /* set the main color*/
+    font-size: 2rem;
+    /* Increased icon size */
+    color: white;
+    /* set the main color*/
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    width: 2.5rem; /* Set a fixed width */
-     height: 2.5rem;  /* Set a fixed height */
-  position: fixed;   /* Make container positioned relative to viewport */
-  top: 24px;          /* Distance from the top */
-  right: 24px;        /* Distance from the right */
-  z-index: 100;       /* Ensure button is above other content */
+    width: 2.5rem;
+    /* Set a fixed width */
+    height: 2.5rem;
+    /* Set a fixed height */
+    position: fixed;
+    /* Make container positioned relative to viewport */
+    top: 24px;
+    /* Distance from the top */
+    right: 24px;
+    /* Distance from the right */
+    z-index: 100;
+    /* Ensure button is above other content */
 }
 
-
 #logout-icon-button:hover {
-    background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
+    background-color: rgba(87, 48, 101, 0.3);
+    /* slightly darker on hover */
 }
 
 /* Side Sheet Styles */
 .mdc-drawer {
-    position: fixed; /* Changed from absolute to fixed */
+    position: fixed;
+    /* Changed from absolute to fixed */
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 1001; /* Ensure it's on top */
+    z-index: 1001;
+    /* Ensure it's on top */
 }
 
 .mdc-drawer--modal {
-        max-width: 300px;
-        width: 77%;
-        z-index: 1001;
-        background-color: white; /* Set background color for the drawer */
-        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-
+    /* max-width: 300px; */
+    width: 77%;
+    z-index: 1001;
+    background-color: white;
+    /* Set background color for the drawer */
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    /* Add a subtle shadow */
 }
+
+@media (min-width: 1000px) { /* Adjust breakpoint as needed */
+    .mdc-drawer--modal.mdc-drawer--open {
+      width: 360px; /* Larger size for bigger screens */
+    }
+  }
 
 .mdc-drawer__content {
-    padding-top:32px;
+    padding-top: 32px;
     padding: 16px;
 }
+
 .mdc-list {
-    padding-top:16px;
+    padding-top: 16px;
     padding: 0;
 }
 
 .mdc-list-item {
-    margin-bottom:24px;
+    margin-bottom: 24px;
     padding: 8px 16px;
     border-radius: 12px;
 }
 
 .mdc-list-item:hover {
-    margin-bottom:24px;
+    margin-bottom: 24px;
     padding: 8px 16px;
     border-radius: 12px;
     background-color: #caabd5;
 }
 
 .mdc-list-title {
-    padding-left:16px;
+    padding-left: 16px;
     font-size: 1.2em;
     font-family: roboto, sans-serif;
 }
 
-    .mdc-top-app-bar--fixed-adjust {
-        position: relative;
-    }
+.mdc-top-app-bar--fixed-adjust {
+    position: relative;
+}
 
 .mdc-list-item:last-child {
     border-bottom: none;
@@ -337,7 +364,7 @@ background-color: #3d8d3d;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
     z-index: 1000;
-    }
+}
 
 .mdc-drawer-scrim--open {
     opacity: 1;
@@ -345,10 +372,12 @@ background-color: #3d8d3d;
 }
 
 body {
-    margin: 0; /* Reset body margin */
+    margin: 0;
+    /* Reset body margin */
 }
+
 /* Add this style to force visibility */
-.mdc-drawer--open + .mdc-drawer-scrim {
+.mdc-drawer--open+.mdc-drawer-scrim {
     visibility: visible;
     opacity: 1;
 }
@@ -359,23 +388,31 @@ body {
     border-radius: 24px;
     cursor: pointer;
     transition: transform 0.3s;
-    font-size: 2rem; /* Increased icon size */
-    color:  white; /* set the main color*/
+    font-size: 2rem;
+    /* Increased icon size */
+    color: white;
+    /* set the main color*/
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    width: 2.5rem; /* Set a fixed width */
-     height: 2.5rem;  /* Set a fixed height */
-  position: fixed;   /* Make container positioned relative to viewport */
-  top: 24px;          /* Distance from the top */
-  left: 24px;        /* Distance from the left */
-  z-index: 100;       /* Ensure button is above other content */
+    width: 2.5rem;
+    /* Set a fixed width */
+    height: 2.5rem;
+    /* Set a fixed height */
+    position: fixed;
+    /* Make container positioned relative to viewport */
+    top: 24px;
+    /* Distance from the top */
+    left: 24px;
+    /* Distance from the left */
+    z-index: 100;
+    /* Ensure button is above other content */
 }
 
-
 #menu-icon-button:hover {
-    background-color: rgba(87, 48, 101, 0.3); /* slightly darker on hover */
+    background-color: rgba(87, 48, 101, 0.3);
+    /* slightly darker on hover */
 }
 
 h1 {
@@ -383,6 +420,7 @@ h1 {
     margin-top: 20px;
     color: #573065;
 }
+
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -395,16 +433,19 @@ h1 {
     align-items: center;
     justify-content: center;
     z-index: 1000;
-     display: none; /* Hidden by default */
-backdrop-filter: blur(2px);
-    }
-.loading-overlay.show{
+    display: none;
+    /* Hidden by default */
+    backdrop-filter: blur(2px);
+}
+
+.loading-overlay.show {
     display: flex;
 }
 
 .loader {
-     border: 8px solid #f3f3f3;
-     border-top: 8px solid #573065; /* Purple spinner */
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #573065;
+    /* Purple spinner */
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -413,104 +454,117 @@ backdrop-filter: blur(2px);
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
- .loading-message {
+
+.loading-message {
     text-align: center;
     color: white;
     font-size: 1.1rem;
     margin-top: 10px;
-     font-weight: 700;
+    font-weight: 700;
     padding: 20px;
     background-color: #573065;
     border-radius: 10px;
 }
+
 #snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 4px;
-  padding: 16px;
-   display: flex;
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
 }
 
 #snackbar.show {
     visibility: visible;
-   -webkit-animation: fadein 0.5s, fadeout 0.5s;
-   animation: fadein 0.5s, fadeout 0.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s;
+    animation: fadein 0.5s, fadeout 0.5s;
 }
 
-
 #snackbar button {
-  background: transparent;
-   color: white;
-   border:none;
-   cursor: pointer;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 #snackbar.error {
-     background-color: #ff3d00; /* Red for error */
-
+    background-color: #ff3d00;
+    /* Red for error */
 }
-        /* outlined style*/
+
+/* outlined style*/
 .outlined-input-container {
     position: relative;
     margin-bottom: 20px;
-      width: 100%;
+    width: 100%;
 }
+
 .outlined-input-container input {
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 16px;
-      padding-top: 20px;
+    padding-top: 20px;
     width: 100%;
     outline: none;
     transition: border-color 0.2s;
     font-size: 1rem;
-      box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 .outlined-input-container label {
     position: absolute;
     left: 8px;
-     top: 50%; /* Center the label vertically initially */
-    transform: translateY(-50%); /* Center the label vertically initially */
+    top: 50%;
+    /* Center the label vertically initially */
+    transform: translateY(-50%);
+    /* Center the label vertically initially */
     background-color: white;
-      padding-left: 4px;
-      padding-right: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
     pointer-events: none;
     font-size: 1rem;
-     transition: transform 0.2s, font-size 0.2s, color 0.2s, top 0.2s;
-        color: #777;
+    transition: transform 0.2s, font-size 0.2s, color 0.2s, top 0.2s;
+    color: #777;
 }
 
-.outlined-input-container input:focus + label,
- .outlined-input-container input:not(:placeholder-shown) + label {
-  top: 0px; /* Move the label to the top */
-  transform: translateY(-50%) translateX(-14px) scale(0.75);
+.outlined-input-container input:focus+label,
+.outlined-input-container input:not(:placeholder-shown)+label {
+    top: 0px;
+    /* Move the label to the top */
+    transform: translateY(-50%) translateX(-14px) scale(0.75);
     font-size: 1.3rem;
-	font-weight: 700;
-     color: #573065;
+    font-weight: 700;
+    color: #573065;
 }
 
 .outlined-input-container input:focus {
-    border-color: #573065; /* Example focus color */
+    border-color: #573065;
+    /* Example focus color */
 }
 
 /* Styles specific to register.html */
 
 #password-requirements {
     text-align: left;
-margin-left: 24px;
+    margin-left: 24px;
     margin-top: 5px;
     font-size: 1em;
     padding-left: 8px;
@@ -518,7 +572,7 @@ margin-left: 24px;
     display: none;
 }
 
-#password-requirements.visible{
+#password-requirements.visible {
     display: block;
 }
 
@@ -545,14 +599,12 @@ margin-left: 24px;
     border-color: red;
 }
 
-
 #section-instruction {
-	text-align: left;
+    text-align: left;
 }
 
 .section-result {
-    margin-bottom:62px;
-
+    margin-bottom: 62px;
 }
 
 summary {
@@ -561,53 +613,111 @@ summary {
     cursor: pointer;
     font-weight: bold;
 }
- summary::marker {
-    font-size: 0.8em; /* Adjust the size of the arrow */
+
+summary::marker {
+    font-size: 0.8em;
+    /* Adjust the size of the arrow */
 }
 
 summary:focus {
-     outline: none;
-    box-shadow: 0 0 0 2px #caabd5;  /* Adjust color to match your theme */
+    outline: none;
+    box-shadow: 0 0 0 2px #caabd5;
+    /* Adjust color to match your theme */
 }
 
 #total-result-interpretation {
-    margin-bottom:64px;
+    margin-bottom: 64px;
 }
- 
+
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-   to {bottom: 30px; opacity: 1;}
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
- to {bottom: 30px; opacity: 1;}
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }
 
- @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-     to {bottom: 0; opacity: 0;}
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }
 
-  /* Hide scrollbar track */
+/* Hide scrollbar track */
 ::-webkit-scrollbar {
-    width: 6px; /* Thin scrollbar */
+    width: 6px;
+    /* Thin scrollbar */
     height: 6px;
-  }
-  
-  /* Style scrollbar thumb */
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3); /* Subtle color */
-    border-radius: 6px; /* Rounded edges */
-  }
-  
-  /* Hide scrollbar when not scrolling */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Style scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    /* Subtle color */
+    border-radius: 6px;
+    /* Rounded edges */
+}
+
+/* Hide scrollbar when not scrolling */
+::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
-  }
+}
+
+.outlined-select {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.user-suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    width: 90%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
