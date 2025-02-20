@@ -141,7 +141,7 @@ async function generatePDF(userId, answers, totalScore, resultInterpretation) {
             await userDocRef.set({
               userId: userId,
               answers: answers,
-               assessmentName: "IMP - Índice de Magnetismo Pessoal",
+               assessmentName: "IMP - Índice de Magnetismo Profissional",
                result: totalScore,
                 resultInterpretation: resultInterpretation,
               pdfDownloadURL: pdfDownloadURL,
