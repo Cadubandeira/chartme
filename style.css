@@ -327,16 +327,18 @@ button:hover {
 }
 
 .mdc-list-item {
-    margin-bottom: 24px;
-    padding: 8px 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
     border-radius: 12px;
+    height: 96px;
 }
 
 .mdc-list-item:hover {
-    margin-bottom: 24px;
-    padding: 8px 16px;
     border-radius: 12px;
     background-color: #caabd5;
+    height: 96px;
 }
 
 .mdc-list-title {
