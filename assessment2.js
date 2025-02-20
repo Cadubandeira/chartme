@@ -592,7 +592,7 @@ async function showResults() {
     const messages = [
         "Analisando suas respostas",
         "Conferindo sua capacidade de gerar conexões",
-        "Calculando seu Índice de Magnetismo Pessoal",
+        "Calculando seu Índice de Magnetismo Profissional",
         "Prepare-se para descobrir seu poder de atração no networking..."
     ];
 
@@ -649,21 +649,21 @@ async function showResults() {
     const finalReflection = document.getElementById('final-reflection');
     // Final Message
 
-    finalMessageTitle.innerText = "IMP - Índice de Magnetismo Pessoal";
+    finalMessageTitle.innerText = "IMP - Índice de Magnetismo Profissional";
     finalMessage.innerHTML =
         `Analise cuidadosamente seus resultados. Eles mostram um panorama de suas habilidades atuais no mundo do networking, considere a presença que você entrega em tudo o que faz. Enxergue seus pontos fortes e célebres, mas também não ignore as áreas que indicam espaço para crescimento. Entenda que esta avaliação é um retrato do momento, não um veredicto final sobre sua capacidade. Você é plenamente capaz de evoluir, se adaptar e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.<br>
 <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Hoje, praticar networking não é mais apenas um complemento, mas uma necessidade essencial para o desenvolvimento pessoal e profissional.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
-De forma geral, o Índice de Magnetismo Pessoal (IMP) do seu Networking reflete o desempenho integrado das cinco dimensões essenciais – Agradabilidade, Expertise, Confiança, Colaboração e Visibilidade – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking, abrindo portas para novas oportunidades e parcerias estratégicas. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar seu magnetismo pessoal e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking. O seu resultado final foi de:`;
+De forma geral, o Índice de Magnetismo Profissional (IMP) do seu Networking reflete o desempenho integrado das cinco dimensões essenciais – Agradabilidade, Expertise, Confiança, Colaboração e Visibilidade – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking, abrindo portas para novas oportunidades e parcerias estratégicas. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar seu magnetismo pessoal e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking. O seu resultado final foi de:`;
 
 
-totalResultTitle.innerText = "Seu Índice de Magnetismo Pessoal foi de:";
+totalResultTitle.innerText = "Seu Índice de Magnetismo Profissional foi de:";
 totalResult.innerText = `${totalScore} de ${100} pontos possíveis`;
 
 let interpretation = getResultInterpretation(totalScore);
 totalResultInterpretation.innerText = totalResultInterpretations[interpretation];
 
-//  saveAssessment("Índice de Magnetismo Pessoal", totalScore, getResultInterpretation(totalScore)); - OLD CALL
-await saveAssessment("Índice de Magnetismo Pessoal", totalScore, interpretation, testAnswers);
+//  saveAssessment("Índice de Magnetismo Profissional", totalScore, getResultInterpretation(totalScore)); - OLD CALL
+await saveAssessment("Índice de Magnetismo Profissional", totalScore, interpretation, testAnswers);
      
 
     //Section Results
@@ -696,7 +696,7 @@ await saveAssessment("Índice de Magnetismo Pessoal", totalScore, interpretation
         sectionResultsDiv.appendChild(sectionResultDiv);
     });
     finalReflection.innerHTML = `<h3>APROFUNDAMENTO</h3><br>
-Para saber mais sobre o seu IMP (Índice de Magnetismo Pessoal), você pode acessar os materiais de aprofundamento gratuitos no site 
+Para saber mais sobre o seu IMP (Índice de Magnetismo Profissional), você pode acessar os materiais de aprofundamento gratuitos no site 
 <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>. 
 Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.<br>
 
