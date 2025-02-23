@@ -1,3 +1,30 @@
+.admin-dashboard {
+    width: 90%; /* Default width for small screens */
+    max-width: 600px; /* Prevent it from getting too large on small screens */
+    margin: 0 auto; /* Center it */
+    padding: 20px;
+  }
+  
+  @media (min-width: 1024px) { 
+    /* Adjust when screen is larger than 1024px */
+    .admin-dashboard {
+      width: 80%; /* Increase width */
+      max-width: 1200px; /* Allow it to grow more */
+    }
+  }
+
+#assessment-summary {
+    border-radius: 24px;
+  }
+
+#overall-results {
+    border-radius: 24px;
+  }
+
+  #leaderboard {
+    border-radius: 24px;
+  }
+
 .assessment-details-container {
     background-color: white;
     border-radius: 24px;
@@ -36,6 +63,47 @@
 }
 
 #assessments-history-button:hover {
+    background-color: rgba(87, 48, 101, 0.3);
+    /* slightly darker on hover */
+}
+#assessments-history-button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+
+#admin-dashboard-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-size: 2rem;
+    /* Increased icon size */
+    color: white;
+    /* set the main color*/
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0.8rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom:0.5rem;
+    width: auto;
+    /* Set a fixed width */
+    height: 2.5rem;
+    /* Set a fixed height */
+    position: fixed;
+    /* Make container positioned relative to viewport */
+    top: 24px;
+    /* Distance from the top */
+    left: 72px;
+    /* Distance from the right */
+    z-index: 100;
+    /* Ensure button is above other content */
+}
+
+#admin-dashboard-button:hover {
     background-color: rgba(87, 48, 101, 0.3);
     /* slightly darker on hover */
 }
@@ -83,6 +151,31 @@ blockquote {
         margin-inline-end: 0;
     }
 }
+
+.tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgb(104, 10, 112);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease-in-out;
+}
+      
+
+.icon-button-label {
+    font-size: 14px;
+    color: #fff;
+    padding-left: 0.5rem;
+  }
+
+
 
 .card-container {
     display: flex;
@@ -289,6 +382,12 @@ button:hover {
     /* slightly darker on hover */
 }
 
+#logout-icon-button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+
 /* Side Sheet Styles */
 .mdc-drawer {
     position: fixed;
@@ -296,7 +395,7 @@ button:hover {
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 1001;
+    z-index: 1001 !important;
     /* Ensure it's on top */
 }
 
@@ -332,13 +431,13 @@ button:hover {
     padding-top: 8px !important;
     padding-bottom: 8px !important;
     border-radius: 12px;
-    height: 96px;
+    height: auto;
 }
 
 .mdc-list-item:hover {
     border-radius: 12px;
     background-color: #caabd5;
-    height: 96px;
+    height: auto;
 }
 
 .mdc-list-title {
@@ -371,11 +470,6 @@ button:hover {
 .mdc-drawer-scrim--open {
     opacity: 1;
     visibility: visible;
-}
-
-body {
-    margin: 0;
-    /* Reset body margin */
 }
 
 /* Add this style to force visibility */
@@ -415,6 +509,11 @@ body {
 #menu-icon-button:hover {
     background-color: rgba(87, 48, 101, 0.3);
     /* slightly darker on hover */
+}
+
+#menu-icon-button:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
 }
 
 h1 {
@@ -637,6 +736,11 @@ summary:focus {
     margin-bottom: 64px;
 }
 
+
+#user-count {
+    text-align: center;
+}
+
 @-webkit-keyframes fadein {
     from {
         bottom: 0;
@@ -728,4 +832,22 @@ summary:focus {
     z-index: 1000;
     width: 90%;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-table th.sorted-asc i::after {
+    content: 'arrow_upward';
+    font-family: 'Material Icons';
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.leaderboard-table th.sorted-desc i::after {
+    content: 'arrow_downward';
+    font-family: 'Material Icons';
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    vertical-align: middle;
 }

@@ -25,14 +25,25 @@
     <div id="logout-button-container">
         <button id="logout-icon-button" onclick="handleLogout()">
             <i class="material-icons">logout</i>
+            <span class="tooltip">Sair</span>
         </button>
     </div>
 
     <div id="assessments-history-container">
         <button id="assessments-history-button" onclick="openHistorySideSheet()">
             <i class="material-icons">history</i>
+            <span class="tooltip">Histórico</span>
         </button>
     </div>
+
+    <!-- Admin Dashboard Link (Conditionally Rendered) -->
+    <div id="admin-dashboard-button-container" style="display: none;">
+        <button id="admin-dashboard-button" onclick="handleAdminDashboard()">
+            <i class="material-icons">bar_chart</i>
+            <span class="icon-button-label">Painel de dados</span>
+        </button>
+    </div>
+
 
     <div class="card-container">
         <a href="assessment2.html" class="card">

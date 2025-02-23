@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Your Firebase configuration here (same as other pages)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+            authDomain: "chartme-2c4aa.firebaseapp.com",
+            projectId: "chartme-2c4aa",
+            storageBucket: "chartme-2c4aa.firebasestorage.app",
+            messagingSenderId: "1000796548418",
+            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+            measurementId: "G-T2686T1ETY"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        .admin-dashboard {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        /* Styled Select Field */
+        .select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-container select {
+            /* Reset appearance for cross-browser consistency */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            /* Basic styles */
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 1rem;
+            box-sizing: border-box;
+
+            /* Add a bit of space for the custom arrow */
+            padding-right: 32px;
+            
+        }
+
+        .select-container::after {
+            /* Custom arrow */
+            content: '\25BC';
+            /* Unicode character for a down arrow */
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #777;
+        }
+
+        .select-container select:focus {
+            border-color: #573065;
+            /* Example focus color */
+        }
+
+        .data-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px 40px 20px 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Impactful Assessment Summary */
+
+        .assessment-summary .user-count {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #573065;
+            line-height: 1;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .assessment-summary {
+            position: relative; /* Create a positioning context */
+            }
+    
+
+        .chart-container {
+            align-content: center;
+            text-align: center;
+            width: 100%;
+            /* Responsive width */
+            max-width: 600px;
+            /* Max width to avoid stretching */
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        /* Modern Leaderboard Table */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard-table th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+        }
+
+        .leaderboard-table th:nth-child(1) {
+            width: 14px; /* IMP */
+        }
+
+        .leaderboard-table th:nth-child(2) {
+            width: 200px; /* Or whatever max width you desire */
+        }
+
+        .leaderboard-table td:nth-child(2) {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .leaderboard-table td:nth-child(2):hover .tooltip{
+            visibility: visible;  /* Show the entire text on hover */
+            opacity: 1;
+        }
+
+        .leaderboard-table th:nth-child(3) {
+            width: 72px; /* IMP */
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            .chart-container,
+            .leaderboard-table {
+                overflow-x: auto;
+                display: block;
+            }
+
+            .admin-dashboard {
+                padding: 10px;
+            }
+
+            /* Other adjustments as needed */
+        }
+
+        #menu-button-container {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 100;
+        }
+
+        #logout-button-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+        }
+
+        /* General Styles for buttons */
+        #menu-icon-button,
+        #logout-icon-button {
+            background-color: transparent;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 2rem;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        #menu-icon-button:hover,
+        #logout-icon-button:hover {
+            background-color: rgba(87, 48, 101, 0.3);
+        }
+
+        #section-charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+        
+
+        .section-card {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Date Input Field Styles */
+
+
+        .date-range-container {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        /* Style the Flatpickr input elements */
+        .date-range-container input[type="text"] {
+            /* Reset appearance for cross-browser consistency */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            /* Basic styles */
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 1rem;
+            box-sizing: border-box;
+            width: 120px;
+            margin-left:12px;
+        }
+        .date-range-container input[type="text"]:focus {
+            border-color:#573065;
+        }
+
+        .date-range-container label {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing:1px;
+            margin-left:12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu-button-container">
+        <button id="menu-icon-button" onclick="handleHome()">
+            <i class="material-icons">home</i>
+            <span class="tooltip">Início</span>
+        </button>
+    </div>
+
+    <div id="logout-button-container">
+        <button id="logout-icon-button" onclick="handleLogout()">
+            <i class="material-icons">logout</i>
+            <span class="tooltip">Sair</span>
+        </button>
+    </div>
+    <div class="admin-dashboard">
+        <div style="grid-template-columns: repeat(2, 1fr); gap: 10px; display: grid;">
+        <!-- Assessment Select and Date Range Inputs -->
+            <div>
+                <!-- Assessment Select -->
+                    <div class="select-container">
+                        <select id="assessment-select" onchange="loadAssessmentData()">
+                            <option value="Índice de Magnetismo Profissional" selected>Índice de Magnetismo Profissional</option>
+                            <!-- Add other assessment options here -->
+                        </select>
+                    </div>
+            </div>
+            <div class="date-range-container">
+                <input type="text" id="start-date">
+        
+                <label for="end-date">até</label>
+                <input type="text" id="end-date">
+            </div>
+        </div>
+        <!-- Assessment Summary -->
+        <div id="assessment-summary" class="data-card assessment-summary">
+            <h3>Participantes</h3>
+            <div class="user-count" id="user-count">0</div>
+        </div>
+
+        <!-- Overall Results -->
+        <div id="overall-results" class="data-card">
+            <h3>Resultado geral do IMP</h3>
+            <div class="chart-container">
+                <canvas id="overall-pie-chart"></canvas>
+            </div>
+        </div>
+
+        <div id="leaderboard" class="data-card">
+            <h3>Resultados detalhados</h3>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th onclick="sortTable(0)">Usuário</th>
+                        <th onclick="sortTable(1)">IMP</th>
+                        <th onclick="sortTable(2)">Agradabilidade</th>
+                        <th onclick="sortTable(3)">Expertise</th>
+                        <th onclick="sortTable(4)">Confiança</th>
+                        <th onclick="sortTable(5)">Colaboração</th>
+                        <th onclick="sortTable(6)">Visibilidade</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-list">
+                    <!-- Leaderboard entries will go here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section Charts and Leaderboards -->
+        <div id="section-charts-container">
+            <!-- Section charts and leaderboards will be added here -->
+        </div>
+    </div>
+    <script>
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        async function handleHome() {
+            try {
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+    </script>
+    <script src="admin_dashboard.js"></script>
+</body>
+
+</html>

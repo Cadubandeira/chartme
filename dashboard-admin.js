@@ -8,6 +8,7 @@ auth.onAuthStateChanged(async (user) => {
             if (userDoc.exists) {
                 const userData = userDoc.data();
                 if (userData.isAdmin === true) {
+                    document.getElementById('admin-dashboard-button-container').style.display = 'block';
                     document.getElementById('admin-filters').style.display = 'block';
                     await populateUserSelect(); // Populate the select element
                 }
@@ -243,4 +244,13 @@ function debouncedSearchUsers(searchTerm) {
     searchTimeoutId = setTimeout(() => {
         searchUsers(searchTerm);
     }, 300); // 300ms debounce
+}
+
+// Function to handle navigation to the admin dashboard
+async function handleAdminDashboard() {
+    try {
+        window.location.href = 'admin_dashboard.html';
+    } catch (error) {
+        console.log(error.message);
+    }
 }
