@@ -1,3 +1,21 @@
+
+ul {
+    padding-left: 16px; /* Ajuste conforme necessário */
+    text-align: left;
+  }
+  ol {
+    padding-left: 16px;
+    text-align: left;
+  }
+li {
+    margin-bottom: 12px;
+}
+.equation::before {
+    content: "IMR = P (Proximidade) + F (Frequência) + S (Sintonia de Interesses)";
+    font-size: 20px;
+    font-weight: bold;
+  }
+
 .admin-dashboard {
     width: 90%; /* Default width for small screens */
     max-width: 600px; /* Prevent it from getting too large on small screens */
@@ -128,7 +146,7 @@ body {
 }
 
 .bg-section-3 {
-    background: linear-gradient(45deg, #0057B7, #F2F2F2) !important;
+    background: linear-gradient(45deg, #0057B7, #4ad6e0) !important;
 }
 
 .bg-section-4 {

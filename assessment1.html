@@ -3,79 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Personalidade</title>
-     <link rel="stylesheet" href="style.css">
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <title>IMR - Índice de Maturidade Relacional</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script type=module src="pdf-generator.js"></script>
+    <script type=module src="assessment1.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+            authDomain: "chartme-2c4aa.firebaseapp.com",
+            projectId: "chartme-2c4aa",
+            storageBucket: "chartme-2c4aa.firebasestorage.app",
+            messagingSenderId: "1000796548418",
+            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+            measurementId: "G-T2686T1ETY"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        async function handleHome() {
+            try {
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        const saveAssessment = async (assessmentName, result, resultInterpretation, answers) => { // Add answers parameter
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            await db.collection("assessmentHistory").add({
+                userId: user.uid,
+                assessmentName: assessmentName,
+                result: result,
+                resultInterpretation: resultInterpretation,
+                answers: answers, // Save the answers
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() // Save the server timestamp
+            });
+            console.log("Assessment saved successfully!");
+        } catch (error) {
+            console.error("Error saving assessment: ", error);
+        }
+    } else {
+        console.log("User is not logged in.");
+    }
+}
+    </script>
+
+</head>
 <body>
-      <div class="loading-overlay" id="loading-overlay">
+     <div class="loading-overlay" id="loading-overlay">
          <div class="loader"></div>
         <p id="loading-message" class="loading-message"></p>
      </div>
 
-  <div id="menu-button-container">
-         <button id="menu-icon-button" onclick="handleHome()">
+    <div id="menu-button-container">
+        <button id="menu-icon-button" onclick="handleHome()"  style="position:absolute; top:24px; left:24px;">
             <i class="material-icons">home</i>
+            <span class="tooltip">Início</span>
         </button>
     </div>
 
     <div id="logout-button-container">
-         <button id="logout-icon-button" onclick="handleLogout()">
+        <button id="logout-icon-button" onclick="handleLogout()" style="position:absolute; top:24px; right:24px;">
             <i class="material-icons">logout</i>
+            <span class="tooltip">Sair</span>
         </button>
     </div>
-     <div class="container">
 
+    <div class="container">
 
-        <div id="test-container" class="form-step">
+        <div id="test-container" class="form-step hidden">
+            <h3 id="section-title"></h3>
+            <p id="section-instruction"></p>
             <h3 id="question-number"></h3>
-            <h2 id="question-text"></h2>
+            <h3 id="question-text" style="font-size:1.1em;"></h3>
              <div id="answers-wrapper">
-                 <div id="answer-options"></div>
+                <div id="answer-options"></div>
+                <span id="answer-error" class="error-message hidden">Por favor, escolha uma opção para continuar</span>
             </div>
             <button onclick="nextQuestion()">Continuar</button>
         </div>
 
         <div id="results-container" class="form-step hidden">
-             <h2 id="results-title"></h2>
-            <canvas id="radarChart"></canvas>
-             <p id="personality-summary"></p>
-		<button id="share-button">Compartilhar no WhatsApp</button>
+           <h2 id="final-message-title"></h2>
+             <p id="final-message"></p>
+                           <canvas id="radarChart"    width: 100%; max-width: 600px; height: auto; display: flex; justify-content: center;align-items: center;"></canvas>
+             <h2 id="total-result-title"></h2>
+             <p id="total-result" style="font-weight: 600;"></p>
+             <p id="total-result-interpretation"></p>
+            <div id="section-results">
+            </div>
+		    <p id="final-reflection"></p>
+		    <button id="share-button" style="margin-top:32px;">Compartilhar no WhatsApp</button>
+  		<button id="save-results-button" style="margin-top:16px;">Baixar PDF</button>
         </div>
+          <div id="initial-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="assessment-title">IMR - Índice de Maturidade Relacional</h2>
+		    <br>
+            <h3>Introdução</h3>
+		    <p style="text-align:left; line-height:1.3em;">
+                Maturidade Relacional é um fator essencial para a construção de conexões estratégicas e duradouras. No ambiente profissional, as relações de networking são muito mais do que contatos ocasionais, sendo conexões vivas e significativas que evoluem ao longo do tempo.
+                <br><br>
+                O <strong>IMR</strong> — <strong>Índice de Maturidade Relacional</strong> foi desenvolvido com o propósito de avaliar a qualidade de uma relação de networking específica e identificar pontos de melhoria. Ele mede a maturidade relacional de uma conexão em três dimensões essenciais:
+                <br><br>
+                <p class="equation"></p>
+                <br><br>
+                <ol>
+                <li><strong>Proximidade:</strong> O quanto você se envolve ativamente nessa relação, demonstrando presença e interesse genuíno.</li>
+                <li><strong>Frequência:</strong> O nível de consistência e regularidade na interação, mantendo a conexão ativa.</li>
+                <li><strong>Sintonia de Interesses:</strong> O alinhamento de valores, interesses e benefícios mútuos dentro da relação.</li>
+                </ol>
+                A proposta deste índice é simples e prática: escolha  uma relação de networking com uma pessoa específica e responda ao questionário para obter um diagnóstico claro sobre a maturidade dessa conexão.
+            </p>
+            <hr class="solid">
+               <h3>Instruções</h3>
+		    <p style="text-align:left; line-height:1.3em;">
+                <ul>
+                <li><strong>Escolha uma relação de networking com uma pessoa específica. Exemplo:</strong>
+                    <br>Colega de trabalho, mentor, líder, cliente, parceiro de negócios, etc.</li>
+                <li><strong>Responda a cada afirmação com base exclusivamente nessa relação.</strong></li>
+                <li><strong>Utilize a seguinte escala de pontuação:</strong>
+                    <br>
+                    Sempre 
+                    <br>
+                    Frequentemente 
+                    <br>
+                    Ocasionalmente
+                    <br>
+                    Raramente </li>
+                </ul>
+		    </p>
+		    <hr class="solid">
+                <h3>Importante!</h3>
+		    <p style="text-align:left; line-height:1.3em;">
+                Caso você trabalhe com essa pessoa e a veja regularmente, considere aqui apenas interações que tenham um valor significativo para o networking, indo além de contatos operacionais ou rotineiros. Considere conversas e conexões que contribuem para fortalecer a relação profissional, gerar oportunidades ou aprofundar a colaboração estratégica, e que vão além da rotina de trabalho cotidiana.
+		    </p>
+               <div class="modal-buttons">
+                   <button id="start-test-button">Começar</button>
+               </div>
+            </div>
+          </div>
     </div>
 
-    <script src="assessment1.js"></script>
-      <script>
-            // Your web app's Firebase configuration
-            const firebaseConfig = {
-                  apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
-                authDomain: "chartme-2c4aa.firebaseapp.com",
-                projectId: "chartme-2c4aa",
-                storageBucket: "chartme-2c4aa.firebasestorage.app",
-                messagingSenderId: "1000796548418",
-                appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
-                measurementId: "G-T2686T1ETY"
-            };
-            firebase.initializeApp(firebaseConfig);
-             const auth = firebase.auth();
-            async function handleLogout(){
-                 try {
-                        await auth.signOut();
-                        window.location.href = 'index.html';
-                    } catch (error) {
-                         console.log(error.message);
-                   }
-            }
-             async function handleHome(){
-                 try {
-                        window.location.href = 'dashboard.html';
-                    } catch (error) {
-                         console.log(error.message);
-                   }
-            }
-        </script>
+
+
+
 </body>
 </html>
