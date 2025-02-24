@@ -118,8 +118,8 @@ async function loadAssessmentHistory() {
 
                 if (assessment.assessmentName === 'Índice de Magnetismo Profissional' && assessment.result) {
                     resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
-                } else if (assessment.assessmentName === 'Teste de Personalidade' && assessment.result) {
-                    resultDisplay = `Resultado: ${assessment.result}`;
+                } else if (assessment.assessmentName === 'Fórmula do Networking' && assessment.result) {
+                    resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
                 } else {
                     resultDisplay = 'Resultado: Não Disponível';
                 }

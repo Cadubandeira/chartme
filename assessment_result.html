@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assessment Result</title>
+    <title>Resultado da Avaliação</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -13,6 +13,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        /* Added to constrain radar chart height */
+        #radarChartContainer {
+            max-height: 400px;
+            /* Adjust as needed */
+            overflow: hidden;
+        }
+    </style>
     <script>
         async function handleLogout() {
             try {
@@ -51,8 +59,9 @@
         <div id="results-container">
             <h2 id="final-message-title"></h2>
             <p id="final-message"></p>
-            <canvas id="radarChart" width: 100%; max-width: 600px; height: auto; display: flex;
-                justify-content: center;align-items: center;"></canvas>
+            <div id="radarChartContainer">
+                <canvas id="radarChart" width="400" height="400" style="max-width: 600px;"></canvas>
+            </div>
             <h2 id="total-result-title"></h2>
             <p id="total-result" style="font-weight: 600;"></p>
             <p id="total-result-interpretation"></p>
@@ -82,12 +91,24 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Get the save button
+            const saveResultsButton = document.getElementById('save-results-button');
+
+            //Event Listener
+            if (saveResultsButton) {
+                saveResultsButton.addEventListener('click', () => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const assessmentId = urlParams.get('assessmentId');
+                    loadAssessmentDetailsToGeneratePDF(assessmentId); // Pass assessmentId
+                });
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const assessmentId = urlParams.get('assessmentId');
             if (assessmentId) {
                 loadAssessmentDetails(assessmentId);
             } else {
-                document.getElementById('assessment-details').innerText = 'Assessment ID not found in URL.';
+                document.getElementById('results-container').innerText = 'Assessment ID not found in URL.';
             }
         });
 
@@ -100,15 +121,32 @@
                     const assessment = doc.data();
                     displayAssessmentDetails(assessment);
                 } else {
-                    document.getElementById('assessment-details').innerText = 'Assessment not found.';
+                    document.getElementById('results-container').innerText = 'Assessment not found.';
                 }
             } catch (error) {
                 console.error("Error loading assessment details:", error);
-                document.getElementById('assessment-details').innerText = 'Error loading assessment details.';
+                document.getElementById('results-container').innerText = 'Error loading assessment details.';
             }
         }
 
-        function displayAssessmentDetails(assessment) {
+        async function loadAssessmentDetailsToGeneratePDF(assessmentId) {
+            try {
+                const docRef = db.collection("assessmentHistory").doc(assessmentId);
+                const doc = await docRef.get();
+
+                if (doc.exists) {
+                    const assessment = doc.data();
+                    generatePDF(auth.currentUser.uid, assessment.answers, assessment.result, assessment.resultInterpretation, assessment.assessmentName);
+                } else {
+                    document.getElementById('results-container').innerText = 'Assessment not found.';
+                }
+            } catch (error) {
+                console.error("Error loading assessment details:", error);
+                document.getElementById('results-container').innerText = 'Error loading assessment details.';
+            }
+        }
+
+        async function displayAssessmentDetails(assessment) {
             const finalMessageTitle = document.getElementById("final-message-title");
             const finalMessage = document.getElementById("final-message");
             const totalResultTitle = document.getElementById("total-result-title");
@@ -117,67 +155,146 @@
             const sectionResultsDiv = document.getElementById("section-results");
             const finalReflection = document.getElementById('final-reflection');
 
-            // Set static content
-            finalMessageTitle.innerText = "IMP - Índice de Magnetismo Profissional";
-            finalMessage.innerHTML = `Analise cuidadosamente seus resultados. Eles mostram um panorama de suas habilidades atuais no mundo do networking, considere a presença que você entrega em tudo o que faz. Enxergue seus pontos fortes e célebres, mas também não ignore as áreas que indicam espaço para crescimento. Entenda que esta avaliação é um retrato do momento, não um veredicto final sobre sua capacidade. Você é plenamente capaz de evoluir, se adaptar e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.<br>
-    <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Hoje, praticar networking não é mais apenas um complemento, mas uma necessidade essencial para o desenvolvimento pessoal e profissional.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
-    De forma geral, o Índice de Magnetismo Profissional (IMP) do seu Networking reflete o desempenho integrado das cinco dimensões essenciais – Agradabilidade, Expertise, Confiança, Colaboração e Visibilidade – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking, abrindo portas para novas oportunidades e parcerias estratégicas. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar seu magnetismo profissional e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking. O seu resultado final foi de:`;
-            totalResultTitle.innerText = "Seu Índice de Magnetismo Profissional foi de:";
-            totalResult.innerText = `${assessment.result} de 100 pontos possíveis`;
+            // Set static content based on assessment type
+            let assessmentType = '';
+            let sectionLabels = [];
+            let sectionsConfig = [];
 
-            if (assessment.resultInterpretation) {
-                // Access the correct interpretation string from totalResultInterpretations
+            if (assessment.assessmentName === "Fórmula do Networking") {
+                assessmentType = 'fn';
+                sectionLabels = ['Proximidade', 'Frequência', 'Sintonia de interesses'];
+                sectionsConfig = [
+                    {
+                        title: "1. PROXIMIDADE", questions: [{}, {}, {}, {}, {}]
+                    },
+                    {
+                        title: "2. FREQUÊNCIA", questions: [{}, {}, {}, {}, {}]
+                    },
+                    {
+                        title: "3. SINTONIA DE INTERESSES", questions: [{}, {}, {}, {}, {}]
+                    }
+                ];
+
+                finalMessageTitle.innerText = "FN - Fórmula do Networking";
+                finalMessage.innerHTML = `Analise cuidadosamente seus resultados. Eles oferecem um panorama claro sobre a <strong>maturidade da sua relação de networking</strong>, ajudando a compreender como essa conexão se desenvolve e onde há espaço para crescimento. Identifique os pontos fortes que tornam essa relação valiosa, mas também reconheça os aspectos que podem ser aprimorados. Você é plenamente capaz de evoluir, se adaptar e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.
+        <br>Lembre-se: este é um retrato do momento, não um diagnóstico definitivo sobre a qualidade dessa conexão. As relações evoluem e, com pequenas ações intencionais, é possível fortalecer laços, criar maior alinhamento e transformar conexões em oportunidades significativas.
+        <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">"Networking é a ciência, a arte e a prática do relacionamento profissional."</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address>
+        <br>O <strong>Fórmula do Networking (FN)</strong> reflete o equilíbrio entre <strong>Proximidade, Frequência e Sintonia de Interesses</strong>, três dimensões essenciais para avaliar a profundidade e o impacto de uma conexão profissional. Sua pontuação final, resultante da soma desses fatores, indica o nível de maturidade dessa relação e o quanto ela contribui para seu crescimento profissional.
+        <br><p class="equation"></p>
+        <ul>
+        <li><strong>Uma pontuação alta</strong> sugere que essa é uma conexão bem estabelecida, com interações significativas, frequentes e alinhadas.</li>
+        <li><strong>Uma pontuação intermediária</strong> aponta para uma relação existente, mas que pode ser fortalecida com ajustes específicos.</li>
+        <li><strong>Uma pontuação baixa</strong> indica que essa conexão pode estar enfraquecida, seja por falta de interação, desalinhamento de interesses ou ausência de um vínculo consistente.</li>
+        </ul>
+        A seguir, veja a interpretação detalhada do seu resultado e como utilizá-lo para aprimorar sua abordagem no networking.`;
+
+                finalReflection.innerHTML = `<h3>REFLEXÃO FINAL</h3><br>
+        As conexões profissionais não são estáticas – elas evoluem conforme o tempo, as interações e o valor que cada parte deposita na relação. A Fórmula do Networking (FN) oferece um diagnóstico do momento, mas a construção e a manutenção de relações de qualidade são processos contínuos, que dependem de intenção, consistência e autenticidade. Como próximos passos:
+        <ul>
+        <li>Reflita sobre suas relações estratégicas: Quais conexões você quer fortalecer? Quais precisam de mais atenção?</li>
+        <li>Defina pequenas ações: Um simples contato, um convite para um café ou um compartilhamento de oportunidade podem reativar laços valiosos.</li>
+        <li>Expanda sua mentalidade de networking: Construir relações maduras e produtivas leva tempo. Invista de forma intencional, autêntica e estratégica.</li>
+        </ul>
+        <strong>Lembre-se: seu potencial de Networking não é estático; ele pode ser moldado e aprimorado com dedicação, prática e estratégia.</strong>Use essas informações como uma bússola para fortalecer seus pontos fortes e trabalhar nas áreas que chamam mais atenção. Ao fazer isso, você não apenas aprimorará seu desempenho em networking, mas também abrirá portas para <strong>avanços inovadores em sua carreira</strong> e para a construção de relacionamentos profissionais sólidos e enriquecedores.
+        <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Seus conhecimentos e habilidades abrem portas, mas são seus relacionamentos que dirão até onde você pode ir.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
+        Boa sorte em sua jornada de crescimento profissional!
+        <br><br>
+        Para saber mais sobre a FN (Fórmula do Networking), você pode acessar os materiais de aprofundamento gratuitos no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu resultado e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.
+        <br><br>
+        Caso deseje adquirir a análise de perfil completa, entre em contato conosco no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>`;
+
+            } else if (assessment.assessmentName === "Índice de Magnetismo Profissional") {
+                assessmentType = 'imp';
+                sectionLabels = ['Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade'];
+                sectionsConfig = [
+                    {
+                        title: "1. AGRADABILIDADE", questions: [{}, {}, {}, {}, {}]
+                    },
+                    {
+                        title: "2. EXPERTISE", questions: [{}, {}, {}, {}, {}]
+                    },
+                    {
+                        title: "3. CONFIANÇA", questions: [{}, {}, {}, {}, {}]
+                    },
+                    {
+                        title: "4. COLABORAÇÃO", questions: [{}, {}, {}, {}, {}]
+                    },
+                    {
+                        title: "5. VISIBILIDADE", questions: [{}, {}, {}, {}, {}]
+                    }
+                ];
+
+                finalMessageTitle.innerText = "IMP - Índice de Magnetismo Profissional";
+                finalMessage.innerHTML = `Analise cuidadosamente seus resultados. Eles mostram um panorama de suas habilidades atuais no mundo do networking, considere a presença que você entrega em tudo o que faz. Enxergue seus pontos fortes e célebres, mas também não ignore as áreas que indicam espaço para crescimento. Entenda que esta avaliação é plenamente capaz de evoluir, de adaptar se e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.<br>
+    <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Hoje, praticar networking não é mais apenas um complemento, mas uma necessidade essencial para o desenvolvimento pessoal e profissional.</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
+    De forma geral, o Índice de Magnetismo Profissional (IMP) do seu Networking reflete o desempenho integrado das cinco dimensões essenciais – Agradabilidade, Expertise, Confiança, Colaboração e Visibilidade – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking, abrindo portas para novas oportunidades e associações estratégicas. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aperfeiçoadas, podem potencializar seu magnetismo profissional e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e melhorar suas práticas de networking. O seu resultado final foi de:`;
+
+                finalReflection.innerHTML = `<h3>APROFUNDAMENTO</h3><br>
+        Para saber mais sobre o seu IMP (Índice de Magnetismo Profissional), você pode acessar os materiais de aprofundamento gratuitos no site
+        <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>.
+        Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.<br>
+
+        <h3>REFLEXÃO FINAL</h3><br>
+
+        Lembre-se: seu potencial de Networking não é estático; ele pode ser moldado e aprimorado com dedicação, prática e estratégia. Use essas informações como uma bússola para fortalecer seus pontos fortes e trabalhar nas áreas que chamam mais atenção. Ao fazer isso, você não apenas aprimorará seu desempenho em networking, mas também abrirá portas para avanços inovadores em sua carreira e para a construção de relacionamentos profissionais sólidos e enriquecedores.<br>
+
+        <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Seus conhecimentos e habilidades abrem portas, mas são seus relacionamentos que dirão até onde você pode ir.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
+
+        Boa sorte em sua jornada de crescimento profissional!`;
+            }
+
+            totalResultTitle.innerText = "Seu índice total foi de:";
+            totalResult.innerText = `${assessment.result} pontos`;
+
+            // Access the correct interpretation string from totalResultInterpretations
+            if (assessment.resultInterpretation && totalResultInterpretations[assessment.resultInterpretation]) {
                 totalResultInterpretation.innerText = totalResultInterpretations[assessment.resultInterpretation];
             } else {
                 totalResultInterpretation.innerText = "Interpretação não disponível";
             }
 
-            finalReflection.innerHTML = `<h3>APROFUNDAMENTO</h3>Para saber mais sobre o seu IMP (Índice de Magnetismo Profissional), você pode acessar os materiais de aprofundamento gratuitos no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu IMP e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.<br><h3>REFLEXÃO FINAL</h3>Lembre-se: seu potencial de Networking não é estático; ele pode ser moldado e aprimorado com dedicação, prática e estratégia. Use essas informações como uma bússola para fortalecer seus pontos fortes e trabalhar nas áreas que chamam mais atenção. Ao fazer isso, você não apenas aprimorará seu desempenho em networking, mas também abrirá portas para avanços inovadores em sua carreira e para a construção de relacionamentos profissionais sólidos e enriquecedores.<br><blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Seus conhecimentos e habilidades abrem portas, mas são seus relacionamentos que dirão até onde você pode ir.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>Boa sorte em sua jornada de crescimento profissional!`;
+            // Calculate scores based on the assessment type
+            const sectionScores = calculateScoresFromAnswers(assessment.answers, assessmentType);
 
-            const sectionScores = calculateScoresFromAnswers(assessment.answers);
-            generateRadarChart(sectionScores);
-            displaySectionResults(sectionResultsDiv, sections, assessment, sectionScores);
+            // Generate Radar Chart
+            generateRadarChart(sectionScores, sectionLabels);
+
+            // Display Section Results
+            displaySectionResults(sectionResultsDiv, sectionsConfig, assessment, sectionScores, assessmentType);
+
+           document.getElementById('save-results-button').addEventListener('click', () => {
+                generatePDF(auth.currentUser.uid, assessment.answers, assessment.result, assessment.resultInterpretation, assessmentType);
+            });
 
         }
 
-        function calculateScoresFromAnswers(answers) {
+        function calculateScoresFromAnswers(answers, assessmentType) {
             const sectionScores = [];
+            let sectionsConfig = [];
 
-            const sections = [{
-                    title: "1. AGRADABILIDADE",
-                    questions: [{}, {}, {}, {}, {}, ],
-                },
-                {
-                    title: "2. EXPERTISE",
-                    questions: [{}, {}, {}, {}, {}, ],
-                },
-                {
-                    title: "3. CONFIANÇA",
-                    questions: [{}, {}, {}, {}, {}, ],
-                },
-                {
-                    title: "4. COLABORAÇÃO",
-                    questions: [{}, {}, {}, {}, {}, ],
-                },
-                {
-                    title: "5. VISIBILIDADE",
-                    questions: [{}, {}, {}, {}, {}, ],
-                },
-            ];
+            if (assessmentType === 'fn') {
+                sectionsConfig = [
+                    { title: "1. PROXIMIDADE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+                    { title: "2. FREQUÊNCIA", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+                    { title: "3. SINTONIA DE INTERESSES", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
+                ];
+            } else if (assessmentType === 'imp') {
+                sectionConfigs = [
+                    { title: "1. AGRADABILIDADE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+                    { title: "2. EXPERTISE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+                    { title: "3. CONFIANÇA", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+                    { title: "4. COLABORAÇÃO", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+                    { title: "5. VISIBILIDADE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
+                ];
+            }
 
-            sections.forEach((section, sectionIndex) => {
+            sectionsConfig.forEach((section, sectionIndex) => {
                 let sectionScore = 0;
-                for (
-                    let questionIndex = 0; questionIndex < section.questions.length; questionIndex++
-                ) {
-                    const answerIndexForQuestion =
-                        sectionIndex * section.questions.length + questionIndex;
-                    const answer = answers.find(
-                        (ans) => ans.questionIndex === answerIndexForQuestion
-                    );
-
+                for (let questionIndex = 0; questionIndex < section.questions.length; questionIndex++) {
+                    const answerIndexForQuestion = sectionIndex * section.questions.length + questionIndex;
+                    const answer = answers.find(ans => ans.questionIndex === answerIndexForQuestion);
                     if (answer) {
-                        sectionScore += 4 - answer.answerIndex; // Calculate score for the answer
+                        sectionScore += (4 - answer.answerIndex);
                     }
                 }
                 sectionScores.push(sectionScore);
@@ -186,12 +303,12 @@
             return sectionScores;
         }
 
-        function generateRadarChart(sectionScores) {
+        function generateRadarChart(sectionScores, sectionLabels) {
             const ctxRadar = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctxRadar, {
+            const newChart = new Chart(ctxRadar, {
                 type: 'radar',
                 data: {
-                    labels: ['Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade'],
+                    labels: sectionLabels,
                     datasets: [{
                         label: 'Pontos',
                         data: sectionScores,
@@ -206,13 +323,13 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     scales: {
                         r: {
                             min: 0,
                             max: 20,
                             ticks: {
-                                stepSize: 2
+                                stepSize: 4
                             }
                         }
                     },
@@ -228,11 +345,79 @@
                     }
                 }
             });
+
         }
 
-        function displaySectionResults(sectionResultsDiv, sections, assessment, sectionScores) {
-            sectionResultsDiv.innerHTML = ""; // Clear any previous content
-            sections.forEach((section, sectionIndex) => {
+        function displaySectionResults(sectionResultsDiv, sections, assessment, sectionScores, assessmentType) {
+            sectionResultsDiv.innerHTML = "";
+
+            let sectionConfigs = [];
+            let questions = [];
+
+            if (assessmentType === 'fn') {
+                sectionConfigs = [
+                    { title: "1. PROXIMIDADE", questions: [{}, {}, {}, {}, {}] },
+                    { title: "2. FREQUÊNCIA", questions: [{}, {}, {}, {}, {}] },
+                    { title: "3. SINTONIA DE INTERESSES", questions: [{}, {}, {}, {}, {}] }
+                ];
+
+                questions = [
+                    "Busca ativa por interações presenciais",
+                    "Profundidade das conversas",
+                    "Uso de canais digitais para manter o vínculo",
+                    "Disponibilidade e suporte ativo",
+                    "Interesse genuíno e reciprocidade na relação",
+                    "Regularidade das interações",
+                    "Tempo de Duração da Relação",
+                    "Retomada da conexão após períodos sem contato",
+                    "Evolução da relação ao longo do tempo",
+                    "Impacto da relação no seu desenvolvimento",
+                    "Alinhamento de interesses",
+                    "Troca de informações e oportunidades",
+                    "Confiança e transparência na relação",
+                    "Grau de colaboração e suporte mútuo",
+                    "Visão de futuro na relação"
+                ];
+
+            } else if (assessmentType === 'imp') {
+                sectionConfigs = [
+                    { title: "1. AGRADABILIDADE", questions: [{}, {}, {}, {}, {}] },
+                    { title: "2. EXPERTISE", questions: [{}, {}, {}, {}, {}] },
+                    { title: "3. CONFIANÇA", questions: [{}, {}, {}, {}, {}] },
+                    { title: "4. COLABORAÇÃO", questions: [{}, {}, {}, {}, {}] },
+                    { title: "5. VISIBILIDADE", questions: [{}, {}, {}, {}, {}] }
+                ];
+
+                questions = [
+                    "Receptividade, atenção e compreensão para com os outros",
+                    "Abordagem e início de conversas",
+                    "Atenção ao escutar",
+                    "Estabelecimento de vínculos",
+                    "Adaptação a diferentes públicos",
+                    "Aplicação de habilidades cognitivas, técnicas e comportamentais",
+                    "Busca por conhecimento e atualização",
+                    "Uso do compartilhamento para potencializar meus conhecimentos e experiências",
+                    "Responsabilidade e cumprimento de compromissos, metas e resultados",
+                    "Proatividade na aprendizagem e autodesenvolvimento",
+                    "Coerência entre palavra e ação",
+                    "Estabelecimento de relacionamentos confiáveis",
+                    "Manutenção da confidencialidade ao lidar com informações reservadas",
+                    "Consolidação de parcerias de longo prazo",
+                    "Integridade e reconhecimento",
+                    "Disposição em contribuir sem retribuição imediata",
+                    "Receptividade às demandas de ajuda e apoio",
+                    "Participação ativa em atividades que agregam valor",
+                    "Mentoria, incentivo, recomendações e conselhos",
+                    "Compartilhamento de insights e fomento a diálogos enriquecedores",
+                    "Promoção das próprias realizações e habilidades",
+                    "Participação em eventos e oportunidades de exposição",
+                    "Uso de redes sociais e plataformas profissionais",
+                    "Demonstração de resultados",
+                    "Reconhecimento como referência ou especialista"
+                ];
+            }
+
+            sectionConfigs.forEach((section, sectionIndex) => {
                 const sectionResultDiv = document.createElement("div");
                 sectionResultDiv.classList.add("section-result");
 
@@ -245,83 +430,143 @@
                 sectionResultDiv.appendChild(sectionScore);
 
                 // Add section interpretation
-                const sectionInterpretation = getSectionInterpretation(section.title, sectionScores[sectionIndex]);
+                const sectionInterpretation = getSectionInterpretation(section.title, sectionScores[sectionIndex], assessmentType);
                 const sectionInterpretationText = document.createElement('p');
-                sectionInterpretationText.innerText = sectionInterpretation;
+                sectionInterpretationText.innerHTML = sectionInterpretation;
                 sectionResultDiv.appendChild(sectionInterpretationText);
 
                 // Create and append accordion for questions and answers
-                const accordionHTML = createAccordionHTML(section, assessment.answers, sectionIndex);
+                const accordionHTML = createAccordionHTML(section, assessment.answers, sectionIndex, assessmentType, questions);
                 sectionResultDiv.innerHTML += accordionHTML;
 
                 sectionResultsDiv.appendChild(sectionResultDiv);
             });
         }
 
-        function getSectionInterpretation(sectionTitle, sectionScore) {
-            let sectionInterpretation = "";
-            const sectionInterpretations = {
-                "1. AGRADABILIDADE": {
-                    excellent: "Excelente: Você demonstra uma alta capacidade de ser receptivo(a), cordial e empático(a) em suas interações, estabelecendo vínculos com facilidade e criando um ambiente de relacionamento positivo. Ações recomendadas: Mantenha seu comportamento receptivo, diversifique suas interações, lidere conversas construtivas e continue cultivando relacionamentos.",
-                    good: "Bom: Suas habilidades interpessoais são sólidas, embora haja pequenas variações na consistência da sua receptividade e atenção. Ações recomendadas: Procure aprimorar a escuta ativa e mantenha a abertura em todas as interações, reforçando a consistência no contato com diferentes perfis.",
-                    average: "Oportunidades de Melhoria: Você apresenta desafios em manter uma postura consistentemente receptiva e atenta, o que pode afetar a qualidade dos vínculos. Ações recomendadas: Invista em treinamentos de comunicação, participe de eventos de networking e pratique técnicas de empatia e escuta ativa para fortalecer suas relações.",
-                    bad: "Necessário Investir Intensamente: Sua pontuação indica dificuldade significativa em demonstrar receptividade e estabelecer vínculos positivos, prejudicando seu networking. Ações recomendadas: Busque conteúdos, workshops e mentorias focadas em comunicação eficaz e relacionamento interpessoal, e esforce-se para interagir com pessoas fora do seu círculo habitual, adotando novos hábitos de vida.",
-                },
-                "2. EXPERTISE": {
-                    excellent: "Excelente: Você utiliza suas competências de forma consistente para inovar, atingir metas e superar desafios, mantendo-se sempre atualizado(a) e compartilhando conhecimentos de maneira estratégica. Ações recomendadas: Continue investindo em sua atualização e compartilhe seus aprendizados para consolidar sua reputação profissional.",
-                    good: "Bom: Suas habilidades e conhecimentos são sólidos, mas há oportunidades para uma aplicação mais sistemática e consistente, especialmente no compartilhamento de suas experiências. Ações recomendadas: Fortaleça sua rotina de atualização e organize melhor o compartilhamento dos seus conhecimentos, buscando proativamente feedback para aprimorar suas práticas.",
-                    average: "Oportunidades de Melhoria: Você apresenta desafios na aplicação regular das suas competências e na busca por atualização, o que impacta o compartilhamento de aprendizados. Ações recomendadas: Participe de cursos e seminários na sua área e estimule trocas de experiências com colegas para elevar sua prática profissional.",
-                    bad: "Necessário Investir Intensamente: Sua pontuação indica dificuldades significativas em aplicar suas habilidades de forma consistente, com pouca iniciativa para atualização e compartilhamento. Ações recomendadas: Invista fortemente em autodesenvolvimento por meio de treinamentos, mentorias e leituras especializadas para construir uma base sólida e aplicá-la regularmente.",
-                },
-                "3. CONFIANÇA": {
-                    excellent: "Excelente: Você demonstra ser altamente confiável, alinhando suas palavras e ações com transparência e integridade, o que se reflete em relacionamentos sólidos e no cumprimento consistente de seus compromissos. Ações recomendadas: Mantenha essa postura exemplar e continue buscando feedback para aperfeiçoar ainda mais sua integridade e consistência.",
-                    good: "Bom: Sua postura é geralmente íntegra e consistente, embora existam oportunidades para aumentar a transparência em situações desafiadoras. Ações recomendadas: Trabalhe para alinhar ainda mais suas ações com seu discurso, solicitando feedback de colegas e aprimorando sua comunicação nos momentos difíceis.",
-                    average: "Oportunidades de Melhoria: Você enfrenta desafios para manter uma postura íntegra e consistente, o que impacta a percepção de sua confiabilidade. Ações recomendadas: Invista em estratégias para fortalecer sua comunicação e ética profissional, buscando novos hábitos que ajudem a alinhar seus compromissos com suas ações.",
-                    bad: "Necessário Investir Intensamente: Sua pontuação sugere dificuldades significativas em demonstrar confiabilidade e integridade, prejudicando seus relacionamentos e parcerias. Ações recomendadas: Dedique-se a desenvolver a transparência e a consistência, participando de treinamentos em ética e integridade e solicitando feedback regular para ajustar seu comportamento.",
-                },
-                "4. COLABORAÇÃO": {
-                    excellent: "Excelente: Você se destaca pela disposição em contribuir de forma espontânea e pelo engajamento ativo em iniciativas que agregam valor ao coletivo, fortalecendo parcerias e relações de trabalho. Ações recomendadas: Continue se envolvendo em atividades de grupo e incentivando a troca de conhecimentos, reforçando sua influência positiva no ambiente profissional.",
-                    good: "Bom: Sua colaboração é consistente, mas há momentos em que um engajamento mais proativo pode beneficiar ainda mais o coletivo. Ações recomendadas: Busque participar mais ativamente de projetos de equipe e ofereça apoio de forma mais desinteressada para ampliar sua rede de alianças.",
-                    average: "Oportunidades de Melhoria: Você apresenta desafios em oferecer ajuda de forma espontânea e em engajar-se ativamente, o que pode limitar a formação de vínculos sólidos. Ações recomendadas: Participe de projetos colaborativos, pratique oferecer ajuda sem esperar retorno e solicite feedback sobre sua postura colaborativa.",
-                    bad: "Necessário Investir Intensamente: Sua pontuação indica dificuldades significativas em colaborar sem esperar algo em troca, comprometendo o desenvolvimento de parcerias e a percepção de seu valor no grupo. Ações recomendadas: Invista em atividades de grupo, busque trocar sobre colaboração com outras pessoas e desenvolva uma mentalidade de contribuir primeiro para fortalecer sua rede.",
-                },
-                "5. VISIBILIDADE": {
-                    excellent: "Excelente: Você promove suas conquistas e habilidades de forma estratégica e natural, utilizando eventos, redes sociais e outras ferramentas para ampliar sua presença e consolidar sua marca pessoal. Ações recomendadas: Continue ampliando sua visibilidade e explore novas oportunidades de autopromoção e networking para expandir sua influência.",
-                    good: "Bom: Sua capacidade de divulgação é boa, mas pode ser aprimorada com uma abordagem mais sistemática e regular, tanto em eventos quanto nas redes sociais. Ações recomendadas: Atualize seus perfis com maior frequência e planeje sua participação em eventos e publicações para fortalecer sua presença no mercado.",
-                    average: "Oportunidades de Melhoria: Você apresenta desafios em oferecer ajuda de forma espontânea e em engajar-se ativamente, o que pode limitar a formação de vínculos sólidos. Ações recomendadas: Invista em estratégias de autopromoção, atualize regularmente seus canais digitais e participe ativamente de oportunidades para compartilhar seus resultados.",
-                    bad: "Necessário Investir Intensamente: Sua pontuação revela dificuldades em tornar seu trabalho conhecido, prejudicando o reconhecimento de suas competências e limitando oportunidades de crescimento. Ações recomendadas: Dedique-se a desenvolver sua marca pessoal, mantendo perfis profissionais atualizados, participando de eventos relevantes e buscando oportunidades para falar sobre seus projetos e conquistas.",
-                },
-            };
-            if (sectionScore >= 17) {
-                sectionInterpretation = sectionInterpretations[sectionTitle].excellent;
-            } else if (sectionScore >= 13) {
-                sectionInterpretation = sectionInterpretations[sectionTitle].good;
-            } else if (sectionScore >= 9) {
-                sectionInterpretation = sectionInterpretations[sectionTitle].average;
-            } else {
-                sectionInterpretation = sectionInterpretations[sectionTitle].bad;
+        function getSectionInterpretation(sectionTitle, sectionScore, assessmentType) {
+            let interpretation = "";
+
+            if (assessmentType === 'fn') {
+                const imrSectionInterpretations = {
+                    "1. PROXIMIDADE": {
+                        excellent: "<strong>Alta Proximidade</strong>: Você mantém uma <strong>conexão forte e ativa</strong>, investindo tempo e energia para fortalecer esse vínculo. Seu networking não é apenas circunstancial, mas <strong>estrategicamente construído</strong>, seja por meio de interações presenciais frequentes, trocas profundas e sustentação digital. Você demonstra interesse genuíno na relação e tende a ser <strong>proativo na criação de oportunidades de contato</strong>, o que fortalece a conexão. ➡ <strong>Ações recomendadas</strong>: Continue aprofundando essa relação, buscando expandir ainda mais a troca de valor. Explore novas formas de colaboração, como parcerias em projetos, mentorias ou indicações. Se possível, diversifique os canais de contato para aumentar a qualidade da proximidade, integrando interações presenciais e digitais.",
+                        good: "<strong>Boa proximidade</strong>: Sua relação apresenta um bom nível de conexão, mas pode haver momentos de distanciamento ou interação mais superficial. Você demonstra interesse e mantém um vínculo ativo, mas há oportunidades para aprofundar as conversas, aumentar a frequência das interações ou equilibrar melhor a reciprocidade da relação. ➡ <strong>Ações recomendadas</strong>: Identifique onde a relação pode ser fortalecida: há pouca interação presencial? O contato digital é esporádico? As conversas são produtivas, mas pouco estratégicas? Pequenos ajustes, como aumentar a regularidade do contato ou buscar interações mais ricas em valor, podem consolidar essa conexão.",
+                        average: "<strong>Proximidade Fraca</strong>: A relação existe, mas está distante ou pouco aprofundada. Pode ser uma conexão que teve momentos mais intensos no passado, mas que não foi sustentada ao longo do tempo. Você pode interagir ocasionalmente, mas sem um padrão previsível ou um envolvimento significativo. Se não houver uma ação consciente para reativá-la, a tendência é que esse vínculo se torne cada vez mais fraco. ➡ <strong>Ações recomendadas</strong>: Avalie se essa é uma relação estratégica para você. Caso seja, tome a iniciativa para reacender a conexão - envie uma mensagem, marque um encontro, busque um ponto de interesse comum para retomar o contato. Se perceber que essa relação já não tem mais um propósito relevante, pode ser o momento de redirecionar sua energia para conexões mais ativas.",
+                        bad: "<strong>Proximidade Muito Baixa</strong>: Essa conexão é superficial ou praticamente inexistente. Pode ser uma relação circunstancial, baseada apenas em interações casuais ou um contato esporádico sem impacto real. Se não houver um esforço consciente de ambas as partes para fortalecer esse vínculo, ele pode ser irrelevante para seu networking. ➡ <strong>Ações recomendadas</strong>: Reflita sobre o valor dessa relação e se vale a pena investir nela. Caso sim, será necessário reconstruí-la do zero, aumentando a frequência das interações e gerando maior envolvimento. Se a relação parecer forçada ou sem propósito claro, talvez seja mais produtivo dedicar seu tempo a conexões mais significativas."
+                    },
+                    "2. FREQUÊNCIA": {
+                        excellent: "<strong>Alta Frequência</strong>: O contato acontece de maneira consistente e fluida, sem grandes oscilações. Essa relação tem um ritmo estável, o que indica que há um esforço ativo de ambas as partes para manter o vínculo vivo. A constância fortalece a confiança e permite que a conexão gere valor contínuo. Mesmo se houver pausas, elas não afetam negativamente a relação, pois há um padrão claro de interação. ➡ <strong>Ações recomendadas</strong>: Continue cultivando essa consistência e, se possível, aprofunde ainda mais a relação. Diversifique os formatos de contato (presencial, digital, chamadas) para enriquecer a troca. Além disso, aproveite essa estabilidade para construir novas oportunidades de colaboração estratégica.",
+                        good: "<strong>Boa Frequência</strong>: A relação é ativa, mas pode haver momentos de menor contato ou períodos mais espaçados de interação. A comunicação ainda ocorre de maneira frequente, mas sem um padrão fixo. Em alguns momentos, a conexão pode parecer forte, enquanto em outros há um distanciamento natural. ➡ <strong>Ações recomendadas</strong>: Busque criar um padrão mais previsível de interação. Pequenos ajustes, como programar encontros regulares ou estabelecer um fluxo de comunicação mais contínuo, podem tornar essa relação ainda mais sólida. Se a relação for estratégica, um esforço intencional para manter a frequência pode evitar que ela perca relevância ao longo do tempo.",
+                        average: "<strong>Frequência Irregular</strong>: O contato acontece de forma esporádica, sem consistência. Há períodos em que a relação parece forte e ativa, mas também longos intervalos sem interação, tornando o vínculo instável. Se não houver um esforço consciente, essa conexão pode perder força gradativamente até se tornar irrelevante. ➡ <strong>Ações recomendadas</strong>: Avalie o que tem causado essa irregularidade. O afastamento é por falta de prioridade, tempo ou interesse mútuo? Se essa relação for importante para você, estabeleça um plano para aumentar a frequência dos contatos e evitar que ela esfrie por longos períodos. Se a conexão for mantida apenas por conveniência ou obrigação, talvez seja o momento de repensar sua relevância no seu networking.",
+                        bad: "<strong>Baixa Frequência</strong>: A relação praticamente não tem contato e a conexão pode estar se tornando irrelevante. Se não há interação regular e a retomada do contato é difícil, essa conexão pode estar no limbo entre um networking ativo e um vínculo perdido. Relações nessa categoria muitas vezes existem apenas no papel ou na lembrança, sem impacto real no presente. ➡ <strong>Ações recomendadas</strong>: Reflita sobre a importância dessa conexão. Se for uma relação estratégica, será necessário um esforço ativo para reacender esse vínculo - isso pode significar enviar uma mensagem, marcar um encontro ou reestabelecer uma troca de valor. Se perceber que essa relação já não faz sentido para sua trajetória profissional, pode ser melhor concentrar seus esforços em conexões mais significativas."
+                    },
+                    "3. SINTONIA DE INTERESSES": {
+                        excellent: "<strong>Alta Sintonia</strong>: Vocês possuem um forte alinhamento de interesses, valores e objetivos, o que torna essa relação uma conexão estratégica e de grande potencial. Há uma troca contínua de valor, seja por meio de informações, oportunidades ou suporte mútuo. A confiança é alta, permitindo um ambiente de transparência e crescimento conjunto. Além disso, há uma visão de longo prazo para a relação, o que demonstra que essa conexão pode continuar se fortalecendo ao longo do tempo. ➡ <strong>Ações recomendadas</strong>: Continue aprofundando essa relação, aproveitando oportunidades para cocriar, colaborar e expandir esse vínculo. Explore formas de aumentar ainda mais a troca de valor, como parcerias, mentorias ou colaborações estratégicas. Se possível, alinhe expectativas futuras para que essa conexão continue gerando impacto positivo para ambas as partes.",
+                        good: "<strong>Boa Sintonia</strong>: Existe um bom nível de alinhamento, mas há aspectos que podem ser aprimorados. Vocês compartilham interesses e objetivos em comum, mas a colaboração pode não ser frequente ou totalmente estruturada. O contato pode ser produtivo, mas há oportunidades para aprofundar a confiança, aumentar o compartilhamento de informações ou definir objetivos mais claros dentro da relação. ➡ <strong>Ações recomendadas</strong>: Identifique quais pontos podem ser fortalecidos. Vocês têm oportunidades de colaboração que ainda não exploraram? Há espaço para maior transparência e confiança? Aprofundar a troca de informações e estabelecer ações concretas pode elevar essa relação para um nível mais estratégico.",
+                        average: "<strong>Sintonia Fraca</strong>: A relação tem poucos pontos de conexão, e o alinhamento de valores ou interesses pode ser superficial ou limitado a interações pontuais. Há momentos em que a conexão parece relevante, mas na maior parte do tempo, falta propósito claro para a manutenção dessa relação. A confiança pode não ser suficientemente forte, e a colaboração é rara ou inexistente. ➡ <strong>Ações recomendadas</strong>: Avalie se essa relação tem potencial para ser fortalecida. Se sim, busque formas de criar pontos de interesse comuns - isso pode envolver conversas mais aprofundadas, maior troca de informações ou oportunidades de colaboração. Caso perceba que a relação não se sustenta por falta de afinidade genuína, pode ser mais produtivo concentrar sua energia em conexões mais estratégicas.",
+                        bad: "<strong>Baixa Sintonia</strong>: Não há um alinhamento significativo de interesses, valores ou objetivos, e a relação parece mais circunstancial do que estratégica. As interações são casuais e não há um fluxo natural de troca de valor. A conexão pode ter sido útil em algum momento, mas não há indícios de que seja sustentável ou relevante no longo prazo. ➡ <strong>Ações recomendadas</strong>: Reflita sobre a real importância dessa relação para sua rede de contatos. Se não há sintonia ou troca de valor, manter essa conexão pode ser um esforço desnecessário. Considere direcionar seu networking para pessoas com maior alinhamento, que possam agregar mais à sua trajetória e com quem haja uma afinidade natural para colaboração e crescimento mútuo."
+                    }
+                };
+
+                if (imrSectionInterpretations[sectionTitle]) {
+                    if (sectionScore >= 17) {
+                        interpretation = imrSectionInterpretations[sectionTitle].excellent;
+                    } else if (sectionScore >= 13) {
+                        interpretation = imrSectionInterpretations[sectionTitle].good;
+                    } else if (sectionScore >= 9) {
+                        interpretation = imrSectionInterpretations[sectionTitle].average;
+                    } else {
+                        interpretation = imrSectionInterpretations[sectionTitle].bad;
+                    }
+                }
+            } else if (assessmentType === 'imp') {
+                const impSectionInterpretations = {
+                    "1. AGRADABILIDADE": {
+                        excellent: "<strong>Excelente</strong>: Você demonstra uma alta capacidade de ser receptivo(a), cordial e empático(a) em suas interações, estabelecendo vínculos com facilidade e criando um ambiente de relacionamento positivo. Ações recomendadas: Mantenha seu comportamento receptivo, diversifique suas interações, lidere conversas construtivas e continue cultivando relacionamentos.",
+                        good: "<strong>Bom</strong>: Suas habilidades interpessoais são sólidas, embora haja pequenas variações na consistência da sua receptividade e atenção. Ações recomendadas: Procure aprimorar a escuta ativa e mantenha a abertura em todas as interações, reforçando a consistência no contato com diferentes perfis.",
+                        average: "<strong>Oportunidades de Melhoria</strong>: Você apresenta desafios em manter uma postura consistentemente receptiva e atenta, o que pode afetar a qualidade dos vínculos. Ações recomendadas: Invista em treinamentos de comunicação, participe de eventos de networking e pratique técnicas de empatia e escuta ativa para fortalecer suas relações.",
+                        bad: "<strong>Necessário Investir Intensamente</strong>: Sua pontuação indica dificuldade significativa em demonstrar receptividade e estabelecer vínculos positivos, prejudicando seu networking. Ações recomendadas: Busque conteúdos, workshops e mentorias focadas em comunicação eficaz e relacionamento interpessoal, e esforce-se para interagir com pessoas fora do seu círculo habitual, adotando novos hábitos de vida."
+                    },
+                    "2. EXPERTISE": {
+                        excellent: "<strong>Excelente</strong>: Você utiliza suas competências de forma consistente para inovar, atingir metas e superar desafios, mantendo-se sempre atualizado(a) e compartilhando conhecimentos de maneira estratégica. Ações recomendadas: Continue investindo em sua atualização e compartilhe seus aprendizados para consolidar sua reputação profissional.",
+                        good: "<strong>Bom</strong>: Suas habilidades e conhecimentos são sólidos, mas há oportunidades para uma aplicação mais sistemática e consistente, especialmente no compartilhamento de suas experiências. Ações recomendadas: Fortaleça sua rotina de atualização e organize melhor o compartilhamento dos seus conhecimentos, buscando proativamente feedback para aprimorar suas práticas.",
+                        average: "<strong>Oportunidades de Melhoria</strong>: Você apresenta desafios na aplicação regular das suas competências e na busca por atualização, o que impacta o compartilhamento de aprendizados. Ações recomendadas: Participe de cursos e seminários na sua área e estimule trocas de experiências com colegas para elevar sua prática profissional.",
+                        bad: "<strong>Necessário Investir Intensamente</strong>: Sua pontuação indica dificuldades significativas em aplicar suas habilidades de forma consistente, com pouca iniciativa para atualização e compartilhamento. Ações recomendadas: Invista fortemente em autodesenvolvimento por meio de treinamentos, mentorias e leituras especializadas para construir uma base sólida e aplicá-la regularmente."
+                    },
+                    "3. CONFIANÇA": {
+                        excellent: "<strong>Excelente</strong>: Você demonstra ser altamente confiável, alinhando suas palavras e ações com transparência e integridade, o que se reflete em relacionamentos sólidos e no cumprimento consistente de seus compromissos. Ações recomendadas: Mantenha essa postura exemplar e continue buscando feedback para aperfeiçoar ainda mais sua integridade e consistência.",
+                        good: "<strong>Bom</strong>: Sua postura é geralmente íntegra e consistente, embora existam oportunidades para aumentar a transparência em situações desafiadoras. Ações recomendadas: Trabalhe para alinhar ainda mais suas ações com seu discurso, solicitando feedback de colegas e aprimorando sua comunicação nos momentos difíceis.",
+                        average: "<strong>Oportunidades de Melhoria</strong>: Você enfrenta desafios para manter uma postura íntegra e consistente, o que impacta a percepção de sua confiabilidade. Ações recomendadas: Invista em estratégias para fortalecer sua comunicação e ética profissional, buscando novos hábitos que ajudem a alinhar seus compromissos com suas ações.",
+                        bad: "<strong>Necessário Investir Intensamente</strong>: Sua pontuação sugere dificuldades significativas em demonstrar confiabilidade e integridade, prejudicando seus relacionamentos e parcerias. Ações recomendadas: Dedique-se a desenvolver a transparência e a consistência, participando de treinamentos em ética e integridade e solicitando feedback regular para ajustar seu comportamento."
+                    },
+                    "4. COLABORAÇÃO": {
+                        excellent: "<strong>Excelente</strong>: Você se destaca pela disposição em contribuir de forma espontânea e pelo engajamento ativo em iniciativas que agregam valor ao coletivo, fortalecendo parcerias e relações de trabalho. Ações recomendadas: Continue se envolvendo em atividades de grupo e incentivando a troca de conhecimentos, reforçando sua influência positiva no ambiente profissional.",
+                        good: "<strong>Bom</strong>: Sua colaboração é consistente, mas há momentos em que um engajamento mais proativo pode beneficiar ainda mais o coletivo. Ações recomendadas: Busque participar mais ativamente de projetos de equipe e ofereça apoio de forma mais desinteressada para ampliar sua rede de alianças.",
+                        average: "<strong>Oportunidades de Melhoria</strong>: Você apresenta desafios em oferecer ajuda de forma espontânea e em engajar-se ativamente, o que pode limitar a formação de vínculos sólidos. Ações recomendadas: Participe de projetos colaborativos, pratique oferecer ajuda sem esperar retorno e solicite feedback sobre sua postura colaborativa.",
+                        bad: "<strong>Necessário Investir Intensamente</strong>: Sua pontuação indica dificuldades significativas em colaborar sem esperar algo em troca, comprometendo o desenvolvimento de parcerias e a percepção de seu valor no grupo. Ações recomendadas: Invista em atividades de grupo, busque trocar sobre colaboração com outras pessoas e desenvolva uma mentalidade de contribuir primeiro para fortalecer sua rede."
+                    },
+                    "5. VISIBILIDADE": {
+                        excellent: "<strong>Excelente</strong>: Você promove suas conquistas e habilidades de forma estratégica e natural, utilizando eventos, redes sociais e outras ferramentas para ampliar sua presença e consolidar sua marca pessoal. Ações recomendadas: Continue ampliando sua visibilidade e explore novas oportunidades de autopromoção e networking para expandir sua influência.",
+                        good: "<strong>Bom</strong>: Sua capacidade de divulgação é boa, mas pode ser aprimorada com uma abordagem mais sistemática e regular, tanto em eventos quanto nas redes sociais. Ações recomendadas: Atualize seus perfis com maior frequência e planeje sua participação em eventos e publicações para fortalecer sua presença no mercado.",
+                        average: "<strong>Oportunidades de Melhoria</strong>: Você apresenta desafios em oferecer ajuda de forma espontânea e em engajar-se ativamente, o que pode limitar a formação de vínculos sólidos. Ações recomendadas: Invista em estratégias de autopromoção, atualize regularmente seus canais digitais e participe ativamente de oportunidades para compartilhar seus resultados.",
+                        bad: "<strong>Necessário Investir Intensamente</strong>: Sua pontuação revela dificuldades em tornar seu trabalho conhecido, prejudicando o reconhecimento de suas competências e limitando oportunidades de crescimento. Ações recomendadas: Dedique-se a desenvolver sua marca pessoal, mantendo perfis profissionais atualizados, participando de eventos relevantes e buscando oportunidades para falar sobre seus projetos e conquistas."
+                    }
+                };
+
+                if (impSectionInterpretations[sectionTitle]) {
+                    if (sectionScore >= 17) {
+                        interpretation = impSectionInterpretations[sectionTitle].excellent;
+                    } else if (sectionScore >= 13) {
+                        interpretation = impSectionInterpretations[sectionTitle].good;
+                    } else if (sectionScore >= 9) {
+                        interpretation = impSectionInterpretations[sectionTitle].average;
+                    } else {
+                        interpretation = impSectionInterpretations[sectionTitle].bad;
+                    }
+                }
             }
-            return sectionInterpretation;
+
+            return interpretation;
         }
 
-        function createAccordionHTML(section, answers, sectionIndex) {
-            return `
-            <details>
-                <summary>Respostas</summary>
-                <div class="question-answer-section">
-                    ${section.questions.map((question, questionIndex) => {
-                        const answer = answers.find(ans => ans.questionIndex === (sectionIndex * section.questions.length) + questionIndex);
-                        const answerText = answer ? question.options[answer.answerIndex] : 'Resposta não encontrada';
-                        return `
-                            <div class="question-answer">
-                                <p><strong>Questão ${questionIndex + 1}:</strong> ${question.text}</p>
-                                <p><strong>Resposta:</strong> ${answerText}</p>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            </details>
-        `;
+        function createAccordionHTML(section, answers, sectionIndex, assessmentType, questions) {
+            let accordionHTML = `
+                <details class="accordion">
+                    <summary>${section.title} - Respostas</summary>
+                    <div class="accordion-content">
+            `;
+
+            for (let i = 0; i < section.questions.length; i++) {
+                const questionIndex = sectionIndex * section.questions.length + i;
+                const answer = answers.find(ans => ans.questionIndex === questionIndex);
+                let answerText = "Resposta não encontrada";
+
+                if (answer) {
+                    let options = [];
+                    if (assessmentType === 'fn') {
+                       options = ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"];
+                    } else if (assessmentType === 'imp') {
+                         options = ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"];
+                    }
+                    answerText = options[answer.answerIndex] || "Opção não encontrada";
+                }
+
+                const questionText = questions[questionIndex] || `Questão ${questionIndex + 1} não encontrada`;
+
+                accordionHTML += `
+                        <div class="question-answer">
+                            <p><strong>${i + 1}. ${questionText}</strong></p>
+                            <p><em>Resposta: ${answerText}</em></p>
+                        </div>
+                `;
+            }
+
+            accordionHTML += `
+                    </div>
+                </details>
+            `;
+
+            return accordionHTML;
         }
     </script>
 </body>

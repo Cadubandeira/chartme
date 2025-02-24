@@ -1,6 +1,6 @@
 // pdf-generator.js
 
-async function generatePDF(userId, answers, totalScore, resultInterpretation) {
+async function generatePDF(userId, answers, totalScore, resultInterpretation, assessmentType) {
     showLoading();
     loadingMessage.innerText = "Gerando PDF dos seus resultados";
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -53,35 +53,37 @@ async function generatePDF(userId, answers, totalScore, resultInterpretation) {
     }
   
     // --- Title ---
-    addText(document.getElementById("final-message-title").innerText, {
-      fontSize: 24, // Larger title
-      fontWeight: "bold",
-      color: primaryColor,
+    const finalMessageTitle = document.getElementById("final-message-title").innerText;
+    addText(finalMessageTitle, {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: primaryColor,
     });
-  
+
     // --- Message ---
-    addText(document.getElementById("final-message").innerText, {
-      fontSize: 14,
-      maxWidth: pageWidth,
-      color: textColor,
+    const finalMessage = document.getElementById("final-message").innerText;
+    addText(finalMessage, {
+        fontSize: 14,
+        maxWidth: pageWidth,
+        color: textColor,
     });
-  
+
     // --- Chart ---
     try {
-      const chartCanvas = document.getElementById("radarChart");
-      const chartDataURL = chartCanvas.toDataURL("image/png");
-      const chartWidth = 1 * pageWidth;
-      const chartHeight = (chartCanvas.height / chartCanvas.width) * chartWidth;
-  
-      if (currentY + chartHeight + margin > pageHeight) {
-        pdf.addPage();
-        currentY = margin;
-      }
-  
-      pdf.addImage(chartDataURL, "PNG", margin, currentY, chartWidth, chartHeight);
-      currentY += chartHeight + margin;
+        const chartCanvas = document.getElementById("radarChart");
+        const chartDataURL = chartCanvas.toDataURL("image/png");
+        const chartWidth = 1 * pageWidth;
+        const chartHeight = (chartCanvas.height / chartCanvas.width) * chartWidth;
+
+        if (currentY + chartHeight + margin > pageHeight) {
+            pdf.addPage();
+            currentY = margin;
+        }
+
+        pdf.addImage(chartDataURL, "PNG", margin, currentY, chartWidth, chartHeight);
+        currentY += chartHeight + margin;
     } catch (error) {
-      console.error("Error capturing chart:", error);
+        console.error("Error capturing chart:", error);
     }
   
     // --- Total Result ---
@@ -130,9 +132,16 @@ async function generatePDF(userId, answers, totalScore, resultInterpretation) {
       maxWidth: pageWidth,
       color: textColor,
     });
+
+      let filename = "Assessment-Resultado.pdf";
+    if (finalMessageTitle.includes("IMR")) {
+        filename = "IMR-Resultado.pdf";
+    } else if (finalMessageTitle.includes("IMP")) {
+        filename = "IMP-Resultado.pdf";
+    }
   
     // Save PDF
-    pdf.save("IMP-Resultado.pdf");
+    pdf.save(filename);
     hideLoading();
   }
   async function saveAssessmentToFirestore(userId, pdfDownloadURL, answers, totalScore, resultInterpretation) {
