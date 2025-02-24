@@ -162,6 +162,9 @@
 
             if (assessment.assessmentName === "Fórmula do Networking") {
                 assessmentType = 'fn';
+                
+                totalResult.innerText = `${assessment.result} de 60 pontos possíveis`;
+
                 sectionLabels = ['Proximidade', 'Frequência', 'Sintonia de interesses'];
                 sectionsConfig = [
                     {
@@ -205,6 +208,7 @@
 
             } else if (assessment.assessmentName === "Índice de Magnetismo Profissional") {
                 assessmentType = 'imp';
+                totalResult.innerText = `${assessment.result} de 100 pontos possíveis`;
                 sectionLabels = ['Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade'];
                 sectionsConfig = [
                     {
@@ -243,9 +247,8 @@
         Boa sorte em sua jornada de crescimento profissional!`;
             }
 
+            
             totalResultTitle.innerText = "Seu índice total foi de:";
-            totalResult.innerText = `${assessment.result} pontos`;
-
             // Access the correct interpretation string from totalResultInterpretations
             if (assessment.resultInterpretation && totalResultInterpretations[assessment.resultInterpretation]) {
                 totalResultInterpretation.innerText = totalResultInterpretations[assessment.resultInterpretation];
