@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
     <div class="loading-overlay" id="loading-overlay">
@@ -14,14 +15,15 @@
         <div id="email-form" class="form-step">
             <h1>Bem-vindo(a)</h1>
 <br>
-                      <form id="login-form" class="form-step">
+            <form id="login-form" class="form-step" action="#" method="post">  <!-- Added action and method -->
                  <div class="outlined-input-container">
-                    <input type="email" id="login-email" placeholder=" " required>
+                    <input type="email" id="login-email" name="email" placeholder=" " required autocomplete="username">  <!-- Added name and appropriate autocomplete -->
                     <label for="login-email">Digite seu e-mail</label>
                 </div>
-                <div class="outlined-input-container">
-                     <input type="password" id="login-password" placeholder=" " required>
+                <div class="outlined-input-container password-container">
+                     <input type="password" id="login-password" name="password" placeholder=" " required autocomplete="current-password"> <!-- Added name and appropriate autocomplete -->
                     <label for="login-password">Digite sua senha</label>
+                    <i class="material-icons password-toggle">visibility</i>
                 </div>
                  <div id="snackbar"></div>
                 <span id="email-error" class="error-message hidden">Por favor, digite seu e-mail e senha</span>
@@ -30,7 +32,6 @@
             </form>
         </div>
         <div id="message"></div>
-
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -43,6 +44,20 @@
         body.classList.add('gradient-1'); // set initial gradient
         document.getElementById('login-email').addEventListener('input', hideSnackbar);
         document.getElementById('login-password').addEventListener('input', hideSnackbar);
+
+        // Password visibility toggle
+        const passwordInput = document.getElementById('login-password');
+        const passwordToggle = document.querySelector('.password-toggle');
+
+        passwordToggle.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.textContent = 'visibility';
+            }
+        });
     });
 </script>
 </body>

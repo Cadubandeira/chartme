@@ -687,6 +687,20 @@ h1 {
 
 /* Styles specific to register.html */
 
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+}
+
 #password-requirements {
     text-align: left;
     margin-left: 24px;
