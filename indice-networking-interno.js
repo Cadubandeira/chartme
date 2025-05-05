@@ -743,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 generatePDF(auth.currentUser.uid, testAnswers, totalScore, resultInterpretation);
             } else {
                 console.log("User is not logged in.");
-                alert("User is not logged in. Please log in to generate the PDF.");
+                alert("Usuário desconectado. Entre novamente para baixar o arquivo.");
             }
         });
     }
