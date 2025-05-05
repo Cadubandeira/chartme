@@ -470,15 +470,15 @@ const totalResultInterpretations = {
 };
 
 const sectionInterpretations = {
-    "1. PROXIMIDADE": {
+    "1. RELACIONAMENTO PRÓXIMO (RP)": {
         excellent:
-            "<strong>Alta Proximidade</strong>:\nVocê mantém uma <strong>conexão forte e ativa</strong>, investindo tempo e energia para fortalecer esse vínculo. Seu networking não é apenas circunstancial, mas <strong>estrategicamente construído</strong>, seja por meio de interações presenciais frequentes, trocas profundas e sustentação digital. Você demonstra interesse genuíno na relação e tende a ser <strong>proativo na criação de oportunidades de contato</strong>, o que fortalece a conexão.\n<strong>Ações recomendadas</strong>: Continue aprofundando essa relação, buscando expandir ainda mais a troca de valor. Explore novas formas de colaboração, como parcerias em projetos, mentorias ou indicações. Se possível, diversifique os canais de contato para aumentar a qualidade da proximidade, integrando interações presenciais e digitais.",
+            "<strong>Excelente</strong>:\nVocê demonstra uma habilidade altamente desenvolvida para construir e fortalecer vínculos com colegas de diferentes áreas e níveis hierárquicos. Suas interações são pautadas por genuíno interesse, empatia e respeito, ampliando sua rede de forma estratégica e natural. Sua presença é reconhecida como construtiva e agregadora dentro da organização.\n<strong>Ações recomendadas</strong>: Mantenha sua postura genuína, amplie ainda mais a diversidade de seus contatos internos, e atue como um facilitador de integração entre áreas. Continue liderando com empatia e abertura, inspirando confiança e colaboração.",
         good:
-            "<strong>Boa proximidade</strong>:\nSua relação apresenta um bom nível de conexão, mas pode haver momentos de distanciamento ou interação mais superficial. Você demonstra interesse e mantém um vínculo ativo, mas há oportunidades para aprofundar as conversas, aumentar a frequência das interações ou equilibrar melhor a reciprocidade da relação.\n<strong>Ações recomendadas</strong>: Identifique onde a relação pode ser fortalecida: há pouca interação presencial? O contato digital é esporádico? As conversas são produtivas, mas pouco estratégicas? Pequenos ajustes, como aumentar a regularidade do contato ou buscar interações mais ricas em valor, podem consolidar essa conexão.",
-        average:
-            "<strong>Proximidade Fraca</strong>:\nA relação existe, mas está distante ou pouco aprofundada. Pode ser uma conexão que teve momentos mais intensos no passado, mas que não foi sustentada ao longo do tempo. Você pode interagir ocasionalmente, mas sem um padrão previsível ou um envolvimento significativo. Se não houver uma ação consciente para reativá-la, a tendência é que esse vínculo se torne cada vez mais fraco.\n<strong>Ações recomendadas</strong>: Avalie se essa é uma relação estratégica para você. Caso seja, tome a iniciativa para reacender a conexão - envie uma mensagem, marque um encontro, busque um ponto de interesse comum para retomar o contato. Se perceber que essa relação já não tem mais um propósito relevante, pode ser o momento de redirecionar sua energia para conexões mais ativas.",
+            "<strong>Bom</strong>:\nVocê possui boas habilidades para estabelecer relações internas, mas em alguns momentos pode haver falta de consistência na aproximação ou profundidade nos vínculos. Em geral, você se conecta bem, mas pode expandir seu alcance estratégico dentro da organização.\n<strong>Ações recomendadas</strong>: Busque diversificar suas conexões, aproximando-se intencionalmente de áreas ou níveis que ainda não fazem parte da sua rede. Pratique maior intencionalidade nas interações informais e esteja atento(a) para manter e aprofundar os vínculos já criados.",
         bad:
-            "<strong>Proximidade Muito Baixa</strong>:\nEssa conexão é superficial ou praticamente inexistente. Pode ser uma relação circunstancial, baseada apenas em interações casuais ou um contato esporádico sem impacto real. Se não houver um esforço consciente de ambas as partes para fortalecer esse vínculo, ele pode ser irrelevante para seu networking.\n<strong>Ações recomendadas</strong>: Reflita sobre o valor dessa relação e se vale a pena investir nela. Caso sim, será necessário reconstruí-la do zero, aumentando a frequência das interações e gerando maior envolvimento. Se a relação parecer forçada ou sem propósito claro, talvez seja mais produtivo dedicar seu tempo a conexões mais significativas.",
+            "<strong>Oportunidades de melhoria</strong>:\nSua capacidade de construir relações próximas é limitada e tende a se restringir a círculos conhecidos ou à sua área imediata. Isso pode diminuir sua capacidade de ampliar perspectivas e abrir portas dentro da organização.\n<strong>Ações recomendadas</strong>: Trabalhe para sair da sua zona de conforto: participe de projetos interdepartamentais, eventos internos e atividades colaborativas. Estabeleça metas de ampliar seu networking interno buscando conhecer novos colegas de diferentes áreas ou níveis hierárquicos.",
+        irrelevant:
+            "<strong>Necessário Investir Intensamente</strong>:\nSua pontuação indica dificuldades significativas em construir e manter relações próximas dentro da empresa. Isso pode impactar diretamente sua visibilidade, colaboração e possibilidades de crescimento interno.\n<strong>Ações recomendadas</strong>: Invista com urgência no fortalecimento de sua rede interna: participe de treinamentos de comunicação interpessoal, aceite convites para eventos internos, aproxime-se de colegas em momentos informais e desenvolva habilidades de aproximação genuína e empática. Networking interno é uma construção diária que começa com pequenas atitudes consistentes.",
     },
     "2. FREQUÊNCIA": {
         excellent:
@@ -524,10 +524,10 @@ async function showResults() {
     document.getElementById("test-container").classList.add("hidden");
 
     const messages = [
-        "Analisando a profundidade da sua conexão",
-        "Desvendando os laços relacionais",
-        "Calculando a Fórmula do Networking",
-        "Agora você descobrirá a qualidade dessa relação de networking..."
+        "Calculando o seu índice de influência e colaboração interna",
+        "Analisando a força e a coesão do seu networking pessoal",
+        "Decifrando alguns padrões",
+        "Apresentamos o seu Índice de Networking Interno..."
     ];
 
     for (const message of messages) {
@@ -544,17 +544,17 @@ async function showResults() {
     new Chart(ctxRadar, {
         type: 'radar',
         data: {
-            labels: ['Proximidade', 'Frequência', 'Sintonia de interesses'],
+            labels: ['Relacionamento Próximo', 'Constância de Fomento', 'Alinhamento de interesses', 'Atuação Estratégica'],
             datasets: [{
                 label: 'Pontos',
                 data: sectionScores,
                 fill: true,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(181, 235, 54)',
+                pointBackgroundColor: 'rgb(181, 235, 54)',
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(54, 162, 235)'
+                pointHoverBorderColor: 'rgb(181, 235, 54)'
             }]
         },
         options: {
@@ -585,17 +585,9 @@ async function showResults() {
 
     finalMessageTitle.innerText = "INI - Índice de Networking Interno";
     finalMessage.innerHTML =
-        `Analise cuidadosamente seus resultados. Eles oferecem um panorama claro sobre a <strong>maturidade da sua relação de networking</strong>, ajudando a compreender como essa conexão se desenvolve e onde há espaço para crescimento. Identifique os pontos fortes que tornam essa relação valiosa, mas também reconheça os aspectos que podem ser aprimorados. Você é plenamente capaz de evoluir, se adaptar e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.
-        <br>Lembre-se: este é um retrato do momento, não um diagnóstico definitivo sobre a qualidade dessa conexão. As relações evoluem e, com pequenas ações intencionais, é possível fortalecer laços, criar maior alinhamento e transformar conexões em oportunidades significativas.
-        <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">"Networking é a ciência, a arte e a prática do relacionamento profissional."</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address>
-        <br>O <strong>Fórmula do Networking (FN)</strong> reflete o equilíbrio entre <strong>Proximidade, Frequência e Sintonia de Interesses</strong>, três dimensões essenciais para avaliar a profundidade e o impacto de uma conexão profissional. Sua pontuação final, resultante da soma desses fatores, indica o nível de maturidade dessa relação e o quanto ela contribui para seu crescimento profissional.
-        <br><p class="INIequation"></p>
-        <ul>
-        <li><strong>Uma pontuação alta</strong> sugere que essa é uma conexão bem estabelecida, com interações significativas, frequentes e alinhadas.</li>
-        <li><strong>Uma pontuação intermediária</strong> aponta para uma relação existente, mas que pode ser fortalecida com ajustes específicos.</li>
-        <li><strong>Uma pontuação baixa</strong> indica que essa conexão pode estar enfraquecida, seja por falta de interação, desalinhamento de interesses ou ausência de um vínculo consistente.</li>
-        </ul>
-        A seguir, veja a interpretação detalhada do seu resultado e como utilizá-lo para aprimorar sua abordagem no networking.`;
+        `Analise cuidadosamente seus resultados. Eles mostram um panorama de suas habilidades atuais de networking dentro da organziação onde você atua. Considere a presença que você entrega em tudo o que faz. Enxergue seus pontos fortes e célebres, mas também não ignore as áreas que indicam espaço para crescimento. Entenda que esta avaliação é um retrato do momento, não um veredito final. Você é plenamente capaz de evoluir, se adaptar e aprender. Atualmente, praticar networking não é mais apenas um complemento, é uma necessidade premente.
+        <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">"Hoje, praticar networking não é mais apenas um complemento mas uma necessidade essencial para o desenvolvimento pessoal e profissional."</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address>
+        <br>De forma geral, o <strong>Índice de Networking Interno (INI)</strong> reflete o desempenho integrado das quatro dimensões essenciais – Relacionamento Próximo (RP), Constância de Fomento (CF), Alinhamento de Interesses (AI) e Atuação Estratégica (AE) – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional dentro da organização. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se relaciona, se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking interno, abrindo portas para novas oportunidades dentro da própria organização e tendo abertura para parcerias estratégicas com pessoas das mais variadas áreas organizacionais. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar sua reputação e performance pessoal e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking interno.`;
 
 
 totalResultTitle.innerText = "Seu resultado foi de:";
