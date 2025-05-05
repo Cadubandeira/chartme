@@ -57,60 +57,60 @@ const sections = [
         ],
     },
     {
-        title: "2. FREQUÊNCIA",
+        title: "2. CONSTÂNCIA DE FOMENTO (CF)",
         instruction:
-            "A frequência consiste na regularidade e no ritmo com que se interage com suas conexões (por exemplo, semanalmente, mensalmente ou trimestralmente), mantendo o relacionamento ativo por meio de contatos presenciais e online, com foco na interação pessoal. A frequência avalia o nível de consistência e a regularidade da interação na interação, mantendo a conexão ativa.",
+            "A Constância de Fomento (CF) diz respeito à capacidade de manter conexões vivas com interações frequentes e relevantes, sempre focado na geração de valor: contribuir de forma útil e fortalecer relações no dia a dia.",
         questions: [
             {
-                text: "Regularidade das interações\nCom que frequência você mantém contato ativo com essa pessoa?",
+                text: "Mantenho contato periódico com colegas, mesmo fora dos projetos em andamento.",
                 options: [
-                    "Sempre: Mantemos contato contínuo e natural, independentemente do meio. A comunicação flui regularmente, seja por mensagens, encontros presenciais ou ligações, sem necessidade de grandes esforços para que aconteça. Nossa conexão tem uma cadência orgânica, e interagimos de maneira regular, sem grandes intervalos de silêncio.",
-                    "Frequentemente: Interagimos regularmente, mas às vezes passamos períodos sem contato. Quando há uma pausa, retomamos naturalmente, mas sem um padrão fixo. Em alguns momentos, o contato é mais intenso, mas pode haver fases de menor interação sem que a relação seja prejudicada.",
-                    "Ocasionalmente: O contato ocorre de forma esporádica, sem um padrão definido. Às vezes, passamos longos períodos sem interação e só retomamos quando há uma necessidade ou evento específico. É comum que a relação tenha altos e baixos, com períodos de proximidade e outros de distanciamento.",
-                    "Raramente: Nossa relação está praticamente inativa, sem trocas consistentes ou interações significativas. Se nos falamos, é por acaso ou porque alguma situação exige. O contato é mínimo e só acontece quando há um fator externo forçando essa interação.",
+                    "Sempre: Mantenho contatos regulares com colegas, mesmo sem necessidades imediatas de trabalho.",
+                    "Frequentemente: Entro em contato com colegas em boa parte do tempo, mas nem sempre de forma planejada.",
+                    "Ocasionalmente: Contato colegas apenas quando surgem projetos ou necessidades específicas.",
+                    "Raramente: Quase nunca mantenho contato com colegas fora de projetos ativos.",
                 ],
             },
             {
-                text: "Tempo de Duração da Relação\nEssa relação tem se mantido ativa ao longo do tempo, ou é algo recente ou passageiro?",
+                text: "Dou retornos rápidos e atenciosos a comunicações internas.",
                 options: [
-                    "Sempre: Essa é uma relação de longa duração, construída ao longo do tempo com consistência. Independentemente de mudanças externas, conseguimos manter a conexão ativa e significativa, preservando o vínculo mesmo diante de novas fases ou desafios.",
-                    "Frequentemente: A relação já existe há algum tempo e tem se mantido relativamente ativa. No entanto, em algumas fases, houve períodos de menor contato, embora a conexão nunca tenha sido completamente perdida.",
-                    "Ocasionalmente: Essa relação é mais recente ou passou por grandes períodos de afastamento. Embora já tenhamos interagido em diferentes momentos, o vínculo não se manteve forte ou contínuo ao longo do tempo.",
-                    "Raramente: A relação é passageira ou surgiu apenas em um contexto específico. Não há um histórico de conexão sólida ou de longa duração, e a interação foi pontual ou restrita a uma fase específica.",
+                    "Sempre: Respondo de maneira rápida e atenciosa às comunicações internas, demonstrando comprometimento.",
+                    "Frequentemente: Geralmente respondo com atenção, embora às vezes possa demorar mais que o ideal.",
+                    "Ocasionalmente: Respondo apenas quando julgo ser absolutamente necessário ou urgente.",
+                    "Raramente: Frequentemente atraso ou deixo de responder às comunicações internas.",
                 ],
             },
             {
-                text: "Retomada da conexão após períodos sem contato\nQuando há um tempo sem contato, como você age?",
+                text: "Participo de eventos, comitês, grupos ou redes internas da organização.",
                 options: [
-                    "Sempre: Retomo o contato naturalmente, independentemente do tempo passado. Não me sinto desconfortável em reaproximar e, sempre que percebo uma oportunidade, envio uma mensagem ou marco uma conversa. Mesmo depois de longos períodos sem contato, a relação continua fluida e sem constrangimentos.",
-                    "Frequentemente: Tento reativar a relação, mas às vezes demoro para tomar essa iniciativa. Se o tempo sem contato for muito longo, fico um pouco hesitante, mas ainda faço o movimento. Geralmente, a retomada do contato depende da situação ou do contexto que nos reúne novamente.",
-                    "Ocasionalmente: Retomo o contato apenas se houver um motivo claro, como uma necessidade específica ou uma situação que exija essa interação. Se não houver um motivo evidente, não faço nada. A relação pode ficar meses ou até anos sem interação até que algo específico justifique o contato.",
-                    "Raramente: Se passamos um tempo sem contato, dificilmente eu retomo a conexão. A relação vai esfriando até desaparecer, a menos que a outra pessoa tome a iniciativa primeiro. A desconexão se torna cada vez mais permanente, tornando improvável qualquer reaproximação futura.",
+                    "Sempre: Participo ativamente e com frequência de eventos e redes internas, aproveitando para fortalecer relações.",
+                    "Frequentemente: Participo de boa parte dos eventos internos, mas nem sempre de forma ativa ou contínua.",
+                    "Ocasionalmente: Compareço a eventos internos apenas esporadicamente, ou somente quando obrigatório, sem grande envolvimento.",
+                    "Raramente: Raramente participo de eventos, redes ou atividades internas da organização.",
                 ],
             },
             {
-                text: "Evolução da relação ao longo do tempo\nComo essa relação tem se desenvolvido?",
+                text: "Agendo conversas para troca de ideias e atualização profissional.",
                 options: [
-                    "Sempre: A confiança e o envolvimento mútuo aumentaram ao longo do tempo, tornando a relação mais sólida e valiosa. Quanto mais interagimos, mais a conexão se fortalece. Existe um histórico de evolução e amadurecimento na forma como nos relacionamos.",
-                    "Frequentemente: A relação se mantém estável, sem grandes avanços, mas sem perder qualidade. Não necessariamente nos tornamos mais próximos, mas há consistência na conexão. O nível de interação não mudou muito desde o início, mas ainda é positivo.",
-                    "Ocasionalmente: A relação tem esfriado com o tempo e há menos troca de valor. Ainda há interação, mas cada vez mais espaçada e menos significativa. Percebo que estamos nos distanciando progressivamente, sem um esforço concreto para reverter isso.",
-                    "Raramente: A conexão perdeu força e praticamente não existe mais. Se comparada ao passado, nossa relação já não tem o mesmo impacto ou importância. O afastamento aconteceu gradualmente, até o ponto em que nos tornamos praticamente desconhecidos novamente.",
+                    "Sempre: Regularmente agendo conversas para troca de ideias, conhecimentos e atualização com colegas.",
+                    "Frequentemente: Costumo ter essas conversas, mas sem tanta constância ou planejamento.",
+                    "Ocasionalmente: Agendo conversas apenas quando há uma necessidade explícita ou um convite direto.",
+                    "Raramente: Raramente marco conversas com colegas para troca de ideias ou atualização profissional.",
                 ],
             },
             {
-                text: "Impacto da relação no seu desenvolvimento\nEssa conexão tem trazido benefícios para você e para a outra pessoa?",
+                text: "Uso canais digitais internos (como chats, intranet, fóruns) para manter relações vivas e produtivas.",
                 options: [
-                    "Sempre: Essa relação tem sido enriquecedora, gerando oportunidades, crescimento profissional e aprendizados constantes. Sinto que tanto eu quanto essa pessoa ganhamos valor a partir dessa conexão. É um relacionamento que fortalece minha trajetória e se traduz em experiências positivas.",
-                    "Frequentemente: Há benefícios na relação, mas nem sempre são tão evidentes ou constantes. Algumas interações são produtivas, mas outras acabam sendo neutras. Embora essa conexão já tenha sido mais relevante, ainda há momentos em que ela agrega valor.",
-                    "Ocasionalmente: Vejo pouco impacto dessa conexão na minha vida profissional. Às vezes, há algo útil, mas na maior parte do tempo não há ganhos relevantes. É uma relação mais social do que estratégica, sem impacto prático na minha evolução.",
-                    "Raramente: Essa relação não traz benefícios nem gera valor para mim. Parece ser apenas uma conexão passiva, sem impacto prático. Não vejo utilidade em manter esse vínculo ativo.",
+                    "Sempre: Utilizo de forma consistente os canais digitais internos para manter relações vivas, produtivas e relevantes.",
+                    "Frequentemente: Uso canais internos com alguma frequência, mas sem planejamento ou regularidade estratégica.",
+                    "Ocasionalmente: Utilizo canais digitais internos apenas de maneira pontual, quando há necessidade específica.",
+                    "Raramente: Quase nunca utilizo canais digitais internos para interação ou manutenção de relações profissionais.",
                 ],
             },
         ],
     },
     {
 
-        title: "3. SINTONIA DE INTERESSES",
+        title: "3. ALINHAMENTO DE INTERESSES (AI)",
         instruction:
             "A Sintonia de Interesses se refere à capacidade de prospectar, identificar e usar objetivos e interesses em comum para fortalecer as relações, compartilhando assuntos, conhecimentos, experiencias, valores ou desafios diversos, priorizando o contato humano e a construção de confiança. Essa dimensão avalia o nível de alinhamento de valores, interesses, objetivos e benefícios mútuos dentro da relação.",
         questions: [
