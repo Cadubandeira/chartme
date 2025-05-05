@@ -583,7 +583,7 @@ async function showResults() {
     const finalReflection = document.getElementById('final-reflection');
     // Final Message
 
-    finalMessageTitle.innerText = "FN - Fórmula do Networking";
+    finalMessageTitle.innerText = "INI - Índice de Networking Interno";
     finalMessage.innerHTML =
         `Analise cuidadosamente seus resultados. Eles oferecem um panorama claro sobre a <strong>maturidade da sua relação de networking</strong>, ajudando a compreender como essa conexão se desenvolve e onde há espaço para crescimento. Identifique os pontos fortes que tornam essa relação valiosa, mas também reconheça os aspectos que podem ser aprimorados. Você é plenamente capaz de evoluir, se adaptar e aprender. Hoje praticar networking não é mais apenas um complemento, é uma necessidade premente.
         <br>Lembre-se: este é um retrato do momento, não um diagnóstico definitivo sobre a qualidade dessa conexão. As relações evoluem e, com pequenas ações intencionais, é possível fortalecer laços, criar maior alinhamento e transformar conexões em oportunidades significativas.
@@ -599,13 +599,13 @@ async function showResults() {
 
 
 totalResultTitle.innerText = "Seu resultado foi de:";
-totalResult.innerText = `${totalScore} de ${60} pontos possíveis`;
+totalResult.innerText = `${totalScore} de ${80} pontos possíveis`;
 
 let interpretation = getResultInterpretation(totalScore);
 totalResultInterpretation.innerHTML = totalResultInterpretations[interpretation];
 
 //  saveAssessment("Fórmula do Networking", totalScore, getResultInterpretation(totalScore)); - OLD CALL
-await saveAssessment("Fórmula do Networking", totalScore, interpretation, testAnswers);
+await saveAssessment("Índice de Networking Interno", totalScore, interpretation, testAnswers);
      
 
     //Section Results
@@ -638,17 +638,11 @@ await saveAssessment("Fórmula do Networking", totalScore, interpretation, testA
         sectionResultsDiv.appendChild(sectionResultDiv);
     });
     finalReflection.innerHTML = `<h3>REFLEXÃO FINAL</h3><br>
-    As conexões profissionais não são estáticas – elas evoluem conforme o tempo, as interações e o valor que cada parte deposita na relação. A Fórmula do Networking (FN) oferece um diagnóstico do momento, mas a construção e a manutenção de relações de qualidade são processos contínuos, que dependem de intenção, consistência e autenticidade. Como próximos passos:
-    <ul>
-    <li>Reflita sobre suas relações estratégicas: Quais conexões você quer fortalecer? Quais precisam de mais atenção?</li>
-    <li>Defina pequenas ações: Um simples contato, um convite para um café ou um compartilhamento de oportunidade podem reativar laços valiosos.</li>
-    <li>Expanda sua mentalidade de networking: Construir relações maduras e produtivas leva tempo. Invista de forma intencional, autêntica e estratégica.</li>
-    </ul>
-    <strong>Lembre-se: seu potencial de Networking não é estático; ele pode ser moldado e aprimorado com dedicação, prática e estratégia.</strong>Use essas informações como uma bússola para fortalecer seus pontos fortes e trabalhar nas áreas que chamam mais atenção. Ao fazer isso, você não apenas aprimorará seu desempenho em networking, mas também abrirá portas para <strong>avanços inovadores em sua carreira</strong> e para a construção de relacionamentos profissionais sólidos e enriquecedores.
+    <strong>Lembre-se: sua maturidade de Networking Interno não é estática; ela pode ser moldada e aprimorada com dedicação, prática e estratégia.</strong> Use essas informações como uma bússola para fortalecer seus pontos fortes e trabalhar nas áreas que chamam mais atenção. Ao fazer isso, você não apenas aprimorará seu desempenho em networking interno, mas também abrirá portas para avanços inovadores em sua carreira e para a construção de relacionamentos profissionais sólidos e enriquecedores.
     <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Seus conhecimentos e habilidades abrem portas, mas são seus relacionamentos que dirão até onde você pode ir.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
     Boa sorte em sua jornada de crescimento profissional!
     <br><br>
-    Para saber mais sobre a FN (Fórmula do Networking), você pode acessar os materiais de aprofundamento gratuitos no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu resultado e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.
+    Para saber mais sobre a INI (Índice de Networking Interno), você pode acessar os materiais de aprofundamento gratuitos no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu resultado e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking.
     <br><br>
     Caso deseje adquirir a análise de perfil completa, entre em contato conosco no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>`;
 
@@ -677,7 +671,7 @@ async function shareOnWhatsApp(chart) {
         window.open(whatsappUrl, '_blank');
     } catch (error) {
         console.error("Error sharing the image:", error);
-        alert("Error sharing image. Please try again."); // Optional user message
+        alert("Erro ao compartilhar resultado. Por favor, tente novamente."); // Optional user message
     }
 }
 

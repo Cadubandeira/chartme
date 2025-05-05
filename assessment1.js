@@ -622,7 +622,7 @@ async function shareOnWhatsApp(chart) {
         window.open(whatsappUrl, '_blank');
     } catch (error) {
         console.error("Error sharing the image:", error);
-        alert("Error sharing image. Please try again."); // Optional user message
+        alert("Erro ao compartilhar resultado. Por favor, tente novamente."); // Optional user message
     }
 }
 
