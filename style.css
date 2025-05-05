@@ -10,13 +10,13 @@ ul {
 li {
     margin-bottom: 12px;
 }
-.FN.equation::before {
+.FNequation::before {
     content: "FN = P (Proximidade) + F (Frequência) + S (Sintonia de Interesses)";
     font-size: 20px;
     font-weight: bold;
   }
 
-.INI.equation::before {
+.INIequation::before {
     content: "INI = RP (Relacionamento Próximo) + CF (Constância de Fomento) + AI (Alinhamento de Interesses) + AE (Atuação Estratégica)";
     font-size: 20px;
     font-weight: bold;

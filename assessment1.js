@@ -534,7 +534,7 @@ async function showResults() {
         <br>Lembre-se: este é um retrato do momento, não um diagnóstico definitivo sobre a qualidade dessa conexão. As relações evoluem e, com pequenas ações intencionais, é possível fortalecer laços, criar maior alinhamento e transformar conexões em oportunidades significativas.
         <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">"Networking é a ciência, a arte e a prática do relacionamento profissional."</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address>
         <br>O <strong>Fórmula do Networking (FN)</strong> reflete o equilíbrio entre <strong>Proximidade, Frequência e Sintonia de Interesses</strong>, três dimensões essenciais para avaliar a profundidade e o impacto de uma conexão profissional. Sua pontuação final, resultante da soma desses fatores, indica o nível de maturidade dessa relação e o quanto ela contribui para seu crescimento profissional.
-        <br><p class="FN.equation"></p>
+        <br><p class="FNequation"></p>
         <ul>
         <li><strong>Uma pontuação alta</strong> sugere que essa é uma conexão bem estabelecida, com interações significativas, frequentes e alinhadas.</li>
         <li><strong>Uma pontuação intermediária</strong> aponta para uma relação existente, mas que pode ser fortalecida com ajustes específicos.</li>
