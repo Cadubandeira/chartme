@@ -322,7 +322,8 @@ async function loadSectionInstructions() {
     document.body.classList.remove(
         "bg-section-1",
         "bg-section-2",
-        "bg-section-3"
+        "bg-section-3",
+        "bg-section-4"
     );
 
     // Add the background class for the current section
