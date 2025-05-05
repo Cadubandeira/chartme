@@ -10,12 +10,18 @@ ul {
 li {
     margin-bottom: 12px;
 }
-.equation::before {
+.FN.equation::before {
     content: "FN = P (Proximidade) + F (Frequência) + S (Sintonia de Interesses)";
     font-size: 20px;
     font-weight: bold;
   }
 
+.INI.equation::before {
+    content: "INI = RP (Relacionamento Próximo) + CF (Constância de Fomento) + AI (Alinhamento de Interesses) + AE (Atuação Estratégica)";
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
 .admin-dashboard {
     width: 90%; /* Default width for small screens */
     max-width: 600px; /* Prevent it from getting too large on small screens */

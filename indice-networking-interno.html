@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INI - Índice de Networking Interno</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script type=module src="pdf-generator.js"></script>
+    <script type=module src="indice-networking-interno.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+            authDomain: "chartme-2c4aa.firebaseapp.com",
+            projectId: "chartme-2c4aa",
+            storageBucket: "chartme-2c4aa.firebasestorage.app",
+            messagingSenderId: "1000796548418",
+            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+            measurementId: "G-T2686T1ETY"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        async function handleHome() {
+            try {
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+
+        const saveAssessment = async (assessmentName, result, resultInterpretation, answers) => { // Add answers parameter
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            await db.collection("assessmentHistory").add({
+                userId: user.uid,
+                assessmentName: assessmentName,
+                result: result,
+                resultInterpretation: resultInterpretation,
+                answers: answers, // Save the answers
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() // Save the server timestamp
+            });
+            console.log("Assessment saved successfully!");
+        } catch (error) {
+            console.error("Error saving assessment: ", error);
+        }
+    } else {
+        console.log("User is not logged in.");
+    }
+}
+    </script>
+
+</head>
+<body>
+     <div class="loading-overlay" id="loading-overlay">
+         <div class="loader"></div>
+        <p id="loading-message" class="loading-message"></p>
+     </div>
+
+    <div id="menu-button-container">
+        <button id="menu-icon-button" onclick="handleHome()"  style="position:absolute; top:24px; left:24px;">
+            <i class="material-icons">home</i>
+            <span class="tooltip">Início</span>
+        </button>
+    </div>
+
+    <div id="logout-button-container">
+        <button id="logout-icon-button" onclick="handleLogout()" style="position:absolute; top:24px; right:24px;">
+            <i class="material-icons">logout</i>
+            <span class="tooltip">Sair</span>
+        </button>
+    </div>
+
+    <div class="container">
+
+        <div id="test-container" class="form-step hidden">
+            <h3 id="section-title"></h3>
+            <p id="section-instruction"></p>
+            <h3 id="question-number"></h3>
+            <h3 id="question-text" style="font-size:1.1em;"></h3>
+             <div id="answers-wrapper">
+                <div id="answer-options"></div>
+                <span id="answer-error" class="error-message hidden">Por favor, escolha uma opção para continuar</span>
+            </div>
+            <button onclick="nextQuestion()">Continuar</button>
+        </div>
+
+        <div id="results-container" class="form-step hidden">
+           <h2 id="final-message-title"></h2>
+             <p id="final-message"></p>
+                           <canvas id="radarChart"    width: 100%; max-width: 600px; height: auto; display: flex; justify-content: center;align-items: center;"></canvas>
+             <h2 id="total-result-title"></h2>
+             <p id="total-result" style="font-weight: 600;"></p>
+             <p id="total-result-interpretation"></p>
+            <div id="section-results">
+            </div>
+		    <p id="final-reflection"></p>
+		    <button id="share-button" style="margin-top:32px;">Compartilhar no WhatsApp</button>
+  		<button id="save-results-button" style="margin-top:16px;">Baixar PDF</button>
+        </div>
+          <div id="initial-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="assessment-title">INI - Índice de Networking Interno</h2>
+		    <br>
+            <h3>Introdução</h3>
+		    <p style="text-align:left; line-height:1.3em;">
+                O networking interno é uma habilidade estratégica fundamental para impulsionar o crescimento individual e coletivo dentro da organização. Mais do que criar relações, o networking interno eficaz exige atitude intencional: fortalecer conexões, gerar valor para si, para colegas, equipes e para a empresa, além de ampliar a visibilidade profissional com naturalidade, autenticidade e propósito.
+                <br><br>
+                O <strong>INI</strong> — <strong>Índice de Networking Interno</strong> foi desenvolvido para ajudar você a refletir, medir e aprimorar sua capacidade de construir conexões produtivas dentro da empresa. Este diagnóstico vai permitir identificar seus pontos fortes e oportunidades de evolução em quatro dimensões essenciais:
+                <br><br>
+                <p class="INI.equation"></p>
+                <br>
+                <ol>
+                <li><strong>Relacionamento Próximo:</strong> Capacidade de buscar ativamente e construir conexões com colegas de diferentes áreas e níveis hierárquicos.</li>
+                <li><strong>Constância de Fomento:</strong> Capacidade de manter conexões vivas com interações de valor frequentes e relevantes.</li>
+                <li><strong>Alinhamento de Interesses:</strong> Capacidade de identificar interesses em comum e também de criar novos interesses compartilhados, construindo parcerias genuínas.</li>
+                <li><strong>Atuação Estratégica:</strong> Ações intencionais e proativas para agregar valor em interações, demonstrando valor com discrição e naturalidade.</li>
+                </ol>
+            </p>
+            <hr class="solid">
+               <h3>Instruções</h3>
+		    <p style="text-align:left; line-height:1.3em;">
+                <ul>
+                <li><strong>Responda às seguintes perguntas para avaliar seu desempenho quanto ao índice de networking interno.</strong></li>
+                <li><strong>Considere a sua atuação atual dentro da sua empresa.</strong></li>
+                <li><strong>Responda todas as avaliações com honestidade, sendo fiel a si mesmo(a).</strong></li>
+                <li><strong>Seja sincero(a) ao responder e escolha a opção que mais reflete seu comportamento e atitudes atuais.</strong></li>
+                <li><strong>Não responda pensando em quem você gostaria de ser, mas sim sobre quem você é, e como pensa e age atualmente.</strong></li>
+                <li><strong>Não tente analisar excessivamente as questões, racionalizar ou tentar encontrar a melhor resposta. Ela não existe !! Não há resposta certa ou melhor, e ninguém irá julgá-lo(a) pelas suas respostas.</strong></li>
+                <li><strong>Seja você mesmo(a). Siga seu coração e seja espontâneo(a): escolha a afirmação que mais se aproxima de você, e não de quem você (pensa que) desejaria ser.</strong></li>
+                </ul>
+		    </p>
+		    <hr class="solid">
+               <div class="modal-buttons">
+                   <button id="start-test-button">Começar</button>
+               </div>
+            </div>
+          </div>
+    </div>
+
+
+
+
+</body>
+</html>
