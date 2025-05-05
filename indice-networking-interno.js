@@ -112,51 +112,102 @@ const sections = [
 
         title: "3. ALINHAMENTO DE INTERESSES (AI)",
         instruction:
-            "A Sintonia de Interesses se refere à capacidade de prospectar, identificar e usar objetivos e interesses em comum para fortalecer as relações, compartilhando assuntos, conhecimentos, experiencias, valores ou desafios diversos, priorizando o contato humano e a construção de confiança. Essa dimensão avalia o nível de alinhamento de valores, interesses, objetivos e benefícios mútuos dentro da relação.",
+            "O Alinhamento de Interesses (AI) refere-se à capacidade de identificar interesses em comum e também de criar novos interesses compartilhados, construindo parcerias baseadas em objetivos, valores e oportunidades de crescimento mútuo.",
         questions: [
             {
-                text: "Alinhamento de interesses\nO quanto essa relação se baseia em interesses ou objetivos profissionais em comum?",
+                text: "Identifico e crio temas de interesse comum para fortalecer as conexões.",
                 options: [
-                    "Sempre: Compartilhamos interesses claros e bem alinhados. Há sintonia em objetivos e oportunidades, e frequentemente encontramos formas de colaborar de maneira significativa. Nossos valores e propósitos convergem, tornando a relação mutuamente benéfica. Há uma conexão natural entre nossas trajetórias e, sempre que surge uma oportunidade, conseguimos nos ajudar de forma estratégica e genuína.",
-                    "Frequentemente: Temos alguns interesses em comum, mas há momentos em que nossas prioridades diferem. Geralmente encontramos pontos de convergência, mas nem sempre conseguimos atuar juntos de maneira estratégica. Algumas vezes percebo que temos alinhamento, mas em outras situações seguimos caminhos distintos.",
-                    "Ocasionalmente: Existem poucos pontos de conexão entre nossos interesses. Às vezes, identificamos alguma sinergia, mas ela não é suficiente para sustentar uma colaboração contínua. Nossos objetivos costumam seguir caminhos distintos. O interesse em se manter conectado ocorre mais por conveniência do que por alinhamento genuíno.",
-                    "Raramente: Não vejo conexões claras entre nossos interesses ou objetivos. A relação parece ser mais circunstancial do que intencional, sem alinhamento significativo em termos de valores ou propósitos. Cada um segue sua própria trajetória sem que essa relação tenha impacto real.",
+                    "Sempre: Busco ativamente identificar e criar temas de interesse comum com as pessoas para fortalecer minhas relações internas.",
+                    "Frequentemente: Costumo encontrar interesses em comum com colegas, mas nem sempre de forma planejada.",
+                    "Ocasionalmente: Às vezes percebo interesses compartilhados, mas raramente trabalho de forma consciente para fortalecê-los.",
+                    "Raramente: Não costumo identificar ou criar interesses em comum para fortalecer conexões internas.",
                 ],
             },
             {
-                text: "Troca de informações e oportunidades\nEssa relação envolve troca mútua de informações e oportunidades?",
+                text: "Compartilho insights, recursos e informações relevantes para os colegas.",
                 options: [
-                    "Sempre: Compartilhamos conhecimento, insights e oportunidades de maneira contínua e genuína. Costumamos trocar informações estratégicas que agregam valor um ao outro e frequentemente abrimos portas para novas conexões ou possibilidades de crescimento. Quando tenho algo relevante para compartilhar, essa pessoa é uma das primeiras em quem penso, e vice-versa.",
-                    "Frequentemente: Compartilhamos informações relevantes, mas sem uma regularidade fixa. Em algumas ocasiões, trocamos oportunidades, mas nem sempre há um fluxo contínuo de aprendizado ou crescimento mútuo. Às vezes há uma troca interessante, mas pode passar um tempo sem que compartilhemos algo de valor.",
-                    "Ocasionalmente: Raramente trocamos informações relevantes ou oportunidades. Ocasionalmente há alguma troca de conhecimento, mas não há um hábito ou compromisso real em contribuir para o crescimento do outro. Quando interagimos, a troca de valor é mínima e acontece mais por formalidade do que por intenção estratégica.",
-                    "Raramente: Não há compartilhamento de informações ou oportunidades de valor. Quando interagimos, dificilmente há troca de insights ou qualquer colaboração produtiva. A relação se mantém superficial e sem impacto real. Mesmo quando surge algo interessante, não há a iniciativa de compartilhar.",
+                    "Sempre: Compartilho regularmente informações, insights e recursos que possam agregar valor aos colegas.",
+                    "Frequentemente: Compartilho informações relevantes de tempos em tempos, mas sem tanta consistência.",
+                    "Ocasionalmente: Compartilho informações apenas em situações específicas ou quando solicitado.",
+                    "Raramente: Raramente compartilho informações ou recursos com colegas.",
                 ],
             },
             {
-                text: "Confiança e transparência na relação\nVocê sente que há confiança mútua e abertura para compartilhar desafios e oportunidades?",
+                text: "Proponho ou colaboro em projetos de interesse mútuo.",
                 options: [
-                    "Sempre: Confio totalmente nessa pessoa e sinto que a confiança é recíproca. Podemos conversar sobre desafios, oportunidades e situações estratégicas com total abertura. Sei que posso contar com essa pessoa sem receios, e vice-versa. Quando há uma questão relevante, posso falar de forma transparente sem medo de julgamentos ou mal-entendidos.",
-                    "Frequentemente: Confio na maioria das interações, mas há algumas barreiras que limitam a abertura total. Compartilhamos informações de forma razoavelmente transparente, mas sem entrar em tópicos mais sensíveis. A relação tem um bom nível de confiança, mas nem sempre sinto que posso me abrir completamente.",
-                    "Ocasionalmente: Há certa distância na relação, e nem sempre me sinto confortável para compartilhar desafios ou temas importantes. O nível de confiança varia, dependendo do contexto e da situação. Em alguns momentos sinto que posso contar com essa pessoa, mas em outros, não tenho tanta certeza.",
-                    "Raramente: Não sinto confiança na relação e evito compartilhar informações mais estratégicas ou sensíveis. Não tenho certeza se essa pessoa agiria com integridade caso precisássemos colaborar em algo relevante. Prefiro manter a relação mais superficial, sem me expor muito.",
+                    "Sempre: Proponho ou colaboro de forma proativa em projetos que tragam benefícios para mim e para meus colegas.",
+                    "Frequentemente: Colaboro em projetos de interesse mútuo, mas nem sempre de forma contínua ou planejada.",
+                    "Ocasionalmente: Participo de projetos de interesse comum apenas quando sou convidado.",
+                    "Raramente: Não costumo propor ou participar de projetos de interesse mútuo.",
                 ],
             },
             {
-                text: "Grau de colaboração e suporte mútuo\nO quanto essa relação envolve apoio mútuo e colaboração?",
+                text: "Apoio ativamente o crescimento profissional dos outros.",
                 options: [
-                    "Sempre: Há uma cultura de suporte genuíno entre nós. Se um de nós precisa de ajuda ou suporte, o outro se prontifica rapidamente. Já colaboramos em projetos, desafios ou decisões importantes de maneira ativa. Sei que posso contar com essa pessoa para algo relevante e ela pode contar comigo da mesma forma.",
-                    "Frequentemente: Costumamos nos apoiar quando necessário, mas nem sempre de forma proativa. Se solicitado, oferecemos suporte um ao outro, mas sem um envolvimento frequente. Há um nível de colaboração na relação, mas não acontece de forma automática.",
-                    "Ocasionalmente: O apoio entre nós é limitado e ocorre apenas em momentos muito específicos. Quando preciso de algo, não sei ao certo se essa pessoa estaria disposta a colaborar. O suporte ocorre apenas quando há uma necessidade evidente, mas não há uma cultura de ajuda mútua.",
-                    "Raramente: Não há colaboração real entre nós. Se precisarmos de algo, dificilmente recorreríamos um ao outro. A relação não envolve suporte ou engajamento mútuo significativo. Não percebo essa pessoa como alguém que naturalmente ajudaria se eu precisasse.",
+                    "Sempre: Apoio proativamente o desenvolvimento e o crescimento profissional de colegas, oferecendo ajuda e incentivo.",
+                    "Frequentemente: Costumo apoiar colegas em algumas situações específicas, mas sem muita regularidade.",
+                    "Ocasionalmente: Apoio colegas apenas quando há um pedido direto ou uma situação muito evidente.",
+                    "Raramente: Não costumo me envolver ativamente no apoio ao crescimento profissional de outros colegas.",
                 ],
             },
             {
-                text: "Visão de futuro na relação\nVocê enxerga essa conexão como uma relação que pode gerar benefícios no longo prazo?",
+                text: "Busco construir relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
                 options: [
-                    "Sempre: Vejo essa relação como um vínculo estratégico e duradouro, que pode gerar benefícios contínuos no futuro. Considero essa conexão importante para minha jornada profissional e pessoal. Tenho interesse em cultivar essa relação e fortalecê-la ao longo do tempo.",
-                    "Frequentemente: Acredito que há potencial para essa relação crescer e se fortalecer, mas isso depende de como nossa trajetória se desenvolverá. A relação já gerou valor e pode continuar sendo relevante, mas ainda não há certeza de que isso ocorrerá naturalmente.",
-                    "Ocasionalmente: Há incerteza sobre o futuro dessa relação. Às vezes penso que pode ser útil, mas não tenho clareza sobre como essa conexão poderá agregar valor no longo prazo. A relação existe, mas pode se tornar irrelevante com o tempo.",
-                    "Raramente: Não vejo essa relação como algo estratégico para o futuro. Nossa conexão parece estar estagnada ou sem perspectivas de crescimento significativo. Se a relação terminar, não fará diferença para mim.",
+                    "Sempre: Atuo de maneira intencional para construir relações fundamentadas em confiança, respeito e reciprocidade (troca genuína).",
+                    "Frequentemente: Na maioria das vezes busco estabelecer relações com base na confiança, respeito e reciprocidade (troca genuína), mas em outras nem tanto.",
+                    "Ocasionalmente: Somente algumas das minhas relações são pautadas em confiança, respeito e reciprocidade (troca genuína).",
+                    "Raramente: Não possuo e/ou priorizo a construção de relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
+                ],
+            },
+        ],
+
+        title: "4. ATUAÇÃO ESTRATÉGICA (AE)",
+        instruction:
+            "A Atuação Estratégica (AE) diz respeito à realizar ações intencionais e proativas para agregar valor em interações, demonstrando competências, conhecimentos e inteligência de contribuição com discrição e naturalidade, evitando a percepção de exibicionismo. “Mostrar valor é necessário. O segredo é impactar pela contribuição, não pela autopromoção.”",
+        questions: [
+            {
+                text: "Preparo-me estrategicamente para reuniões e interações internas (pesquiso tendências, dados, fornecedores, cases relevantes, etc.).",
+                options: [
+                    "Sempre: Preparo-me estrategicamente para todas as reuniões e interações importantes, pesquisando tendências e informações relevantes.",
+                    "Frequentemente: Normalmente preparo-me para reuniões importantes, mas em algumas situações atuo de forma menos estruturada ou mais superficialmente.",
+                    "Ocasionalmente: Somente em algumas ocasiões especiais faço pesquisas ou preparo dados antes de interações relevantes.",
+                    "Raramente: Costumo participar de reuniões e interações sem preparação prévia ou pesquisa aprofundada.",
+                ],
+            },
+            {
+                text: "Compartilho insights, recursos e informações relevantes para os colegas.",
+                options: [
+                    "Sempre: Compartilho regularmente informações, insights e recursos que possam agregar valor aos colegas.",
+                    "Frequentemente: Compartilho informações relevantes de tempos em tempos, mas sem tanta consistência.",
+                    "Ocasionalmente: Compartilho informações apenas em situações específicas ou quando solicitado.",
+                    "Raramente: Raramente compartilho informações ou recursos com colegas.",
+                ],
+            },
+            {
+                text: "Proponho ou colaboro em projetos de interesse mútuo.",
+                options: [
+                    "Sempre: Proponho ou colaboro de forma proativa em projetos que tragam benefícios para mim e para meus colegas.",
+                    "Frequentemente: Colaboro em projetos de interesse mútuo, mas nem sempre de forma contínua ou planejada.",
+                    "Ocasionalmente: Participo de projetos de interesse comum apenas quando sou convidado.",
+                    "Raramente: Não costumo propor ou participar de projetos de interesse mútuo.",
+                ],
+            },
+            {
+                text: "Apoio ativamente o crescimento profissional dos outros.",
+                options: [
+                    "Sempre: Apoio proativamente o desenvolvimento e o crescimento profissional de colegas, oferecendo ajuda e incentivo.",
+                    "Frequentemente: Costumo apoiar colegas em algumas situações específicas, mas sem muita regularidade.",
+                    "Ocasionalmente: Apoio colegas apenas quando há um pedido direto ou uma situação muito evidente.",
+                    "Raramente: Não costumo me envolver ativamente no apoio ao crescimento profissional de outros colegas.",
+                ],
+            },
+            {
+                text: "Busco construir relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
+                options: [
+                    "Sempre: Atuo de maneira intencional para construir relações fundamentadas em confiança, respeito e reciprocidade (troca genuína).",
+                    "Frequentemente: Na maioria das vezes busco estabelecer relações com base na confiança, respeito e reciprocidade (troca genuína), mas em outras nem tanto.",
+                    "Ocasionalmente: Somente algumas das minhas relações são pautadas em confiança, respeito e reciprocidade (troca genuína).",
+                    "Raramente: Não possuo e/ou priorizo a construção de relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
                 ],
             },
         ],
