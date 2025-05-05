@@ -289,7 +289,7 @@ function hideLoading() {
 
 async function startTest() {
     showLoading();
-    loadingMessage.innerText = "Prepare-se para conhecer a Fórmula do Networking"
+    loadingMessage.innerText = "Prepare-se para conhecer seu Networking Interno"
     await new Promise(resolve => setTimeout(resolve, 2500));
     document.getElementById('initial-modal').classList.add('hidden');
     document.getElementById('test-container').classList.remove('hidden');
