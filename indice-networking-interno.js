@@ -161,57 +161,60 @@ const sections = [
             },
         ],
 
+    },
+    {
         title: "4. ATUAÇÃO ESTRATÉGICA (AE)",
-        instruction:
-            "A Atuação Estratégica (AE) diz respeito à realizar ações intencionais e proativas para agregar valor em interações, demonstrando competências, conhecimentos e inteligência de contribuição com discrição e naturalidade, evitando a percepção de exibicionismo. “Mostrar valor é necessário. O segredo é impactar pela contribuição, não pela autopromoção.”",
-        questions: [
-            {
-                text: "Preparo-me estrategicamente para reuniões e interações internas (pesquiso tendências, dados, fornecedores, cases relevantes, etc.).",
-                options: [
-                    "Sempre: Preparo-me estrategicamente para todas as reuniões e interações importantes, pesquisando tendências e informações relevantes.",
-                    "Frequentemente: Normalmente preparo-me para reuniões importantes, mas em algumas situações atuo de forma menos estruturada ou mais superficialmente.",
-                    "Ocasionalmente: Somente em algumas ocasiões especiais faço pesquisas ou preparo dados antes de interações relevantes.",
-                    "Raramente: Costumo participar de reuniões e interações sem preparação prévia ou pesquisa aprofundada.",
-                ],
-            },
-            {
-                text: "Compartilho insights, recursos e informações relevantes para os colegas.",
-                options: [
-                    "Sempre: Compartilho regularmente informações, insights e recursos que possam agregar valor aos colegas.",
-                    "Frequentemente: Compartilho informações relevantes de tempos em tempos, mas sem tanta consistência.",
-                    "Ocasionalmente: Compartilho informações apenas em situações específicas ou quando solicitado.",
-                    "Raramente: Raramente compartilho informações ou recursos com colegas.",
-                ],
-            },
-            {
-                text: "Proponho ou colaboro em projetos de interesse mútuo.",
-                options: [
-                    "Sempre: Proponho ou colaboro de forma proativa em projetos que tragam benefícios para mim e para meus colegas.",
-                    "Frequentemente: Colaboro em projetos de interesse mútuo, mas nem sempre de forma contínua ou planejada.",
-                    "Ocasionalmente: Participo de projetos de interesse comum apenas quando sou convidado.",
-                    "Raramente: Não costumo propor ou participar de projetos de interesse mútuo.",
-                ],
-            },
-            {
-                text: "Apoio ativamente o crescimento profissional dos outros.",
-                options: [
-                    "Sempre: Apoio proativamente o desenvolvimento e o crescimento profissional de colegas, oferecendo ajuda e incentivo.",
-                    "Frequentemente: Costumo apoiar colegas em algumas situações específicas, mas sem muita regularidade.",
-                    "Ocasionalmente: Apoio colegas apenas quando há um pedido direto ou uma situação muito evidente.",
-                    "Raramente: Não costumo me envolver ativamente no apoio ao crescimento profissional de outros colegas.",
-                ],
-            },
-            {
-                text: "Busco construir relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
-                options: [
-                    "Sempre: Atuo de maneira intencional para construir relações fundamentadas em confiança, respeito e reciprocidade (troca genuína).",
-                    "Frequentemente: Na maioria das vezes busco estabelecer relações com base na confiança, respeito e reciprocidade (troca genuína), mas em outras nem tanto.",
-                    "Ocasionalmente: Somente algumas das minhas relações são pautadas em confiança, respeito e reciprocidade (troca genuína).",
-                    "Raramente: Não possuo e/ou priorizo a construção de relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
-                ],
-            },
+            instruction:
+                "A Atuação Estratégica (AE) diz respeito à realizar ações intencionais e proativas para agregar valor em interações, demonstrando competências, conhecimentos e inteligência de contribuição com discrição e naturalidade, evitando a percepção de exibicionismo. “Mostrar valor é necessário. O segredo é impactar pela contribuição, não pela autopromoção.”",
+            questions: [
+                {
+                    text: "Preparo-me estrategicamente para reuniões e interações internas (pesquiso tendências, dados, fornecedores, cases relevantes, etc.).",
+                    options: [
+                        "Sempre: Preparo-me estrategicamente para todas as reuniões e interações importantes, pesquisando tendências e informações relevantes.",
+                        "Frequentemente: Normalmente preparo-me para reuniões importantes, mas em algumas situações atuo de forma menos estruturada ou mais superficialmente.",
+                        "Ocasionalmente: Somente em algumas ocasiões especiais faço pesquisas ou preparo dados antes de interações relevantes.",
+                        "Raramente: Costumo participar de reuniões e interações sem preparação prévia ou pesquisa aprofundada.",
+                    ],
+                },
+                {
+                    text: "Em interações importantes, busco oportunidades de demonstrar conhecimento técnico e visão estratégica de negócio.",
+                    options: [
+                        "Sempre: Aproveito intencionalmente as interações importantes para demonstrar minhas competências técnicas e visão estratégica.",
+                        "Frequentemente: Demonstro minhas competências e visão estratégica na maioria das minhas interações importantes, mas sem ser uma atitude constante.",
+                        "Ocasionalmente: Só evidencio meu conhecimento técnico e visão de negócio em situações específicas ou sob demanda.",
+                        "Raramente: Raramente utilizo interações para demonstrar minhas competências ou visão estratégica.",
+                    ],
+                },
+                {
+                    text: "Planejo como posso agregar cada vez mais valor às discussões e projetos, encontrando novas formas de contribuir.",
+                    options: [
+                        "Sempre: Planejo de forma consciente como posso agregar mais valor às discussões e contribuir efetivamente antes de participar, encontrando novas formas de contribuir para além de como sempre faço.",
+                        "Frequentemente: Costumo pensar em formas de contribuir e gerar valor, mas nem sempre de forma inovadora ou diferente de como sempre faço.",
+                        "Ocasionalmente: Em algumas situações contribuo com novas perspectivas de maneira improvisada, sem planejamento ou reflexão prévia.",
+                        "Raramente: Participo de discussões e projetos da forma que sempre atuo, sem me preocupar em agregar mais valor.",
+                    ],
+                },
+                {
+                    text: "Aproveito reuniões, eventos e fóruns para evidenciar minha presença e gerar valor e impacto positivo.",
+                    options: [
+                        "Sempre: Utilizo reuniões, eventos e fóruns como oportunidades estratégicas para reforçar minha presença e gerar valor e impacto positivo.",
+                        "Frequentemente: Costumo aproveitar essas oportunidades, mas nem sempre de forma consciente, consistente ou planejada.",
+                        "Ocasionalmente: Às vezes consigo evidenciar minha presença e meu valor, mas somente em algumas ocasiões, não sendo uma atitude constante.",
+                        "Raramente: Não aproveito eventos internos como oportunidades de fortalecimento da minha imagem profissional.",
+                    ],
+                },
+                {
+                    text: "Trato cada interação com pessoas como uma oportunidade de fortalecer minha reputação interna.",
+                    options: [
+                        "Sempre: Tenho plena consciência de que toda interação é estratégica para minha reputação e atuo intencionalmente nesse sentido.",
+                        "Frequentemente: Estou atento(a) à minha reputação na maioria das interações, mas nem sempre ajo de forma estratégica consciente disso.",
+                        "Ocasionalmente: Percebo a importância da minha reputação somente em algumas interações, normalmente com algumas pessoas específicas.",
+                        "Raramente: Raramente tenho consciência e atuo de forma estratégica para fortalecer minha reputação interna durante as interações com as pessoas.",
+                    ],
+                },
         ],
     },
+        
 ];
 
 const sectionScores = [];
@@ -220,17 +223,17 @@ const sectionScores = [];
 const radarChartConfig = {
     type: 'radar',
     data: {
-        labels: ['Proximidade', 'Frequência', 'Sintonia de interesses'],
+        labels: ['Relacionamento Próximo', 'Constância de Fomento', 'Alinhamento de interesses', 'Atuação Estratégica'],
         datasets: [{
             label: 'Pontos',
             data: sectionScores,
             fill: true,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgb(54, 162, 235)',
-            pointBackgroundColor: 'rgb(54, 162, 235)',
+            borderColor: 'rgb(181, 235, 54)',
+            pointBackgroundColor: 'rgb(181, 235, 54)',
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(54, 162, 235)'
+            pointHoverBorderColor: 'rgb(181, 235, 54)'
         }]
 
         
