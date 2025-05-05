@@ -5,53 +5,53 @@ let userEmail = "user@email.com";
 let testAnswers = [];
 const sections = [
     {
-        title: "1. PROXIMIDADE",
+        title: "1. RELACIONAMENTO PRÓXIMO (RP)",
         instruction:
-            "A proximidade é a ação intencional de criar oportunidades e estabelecer conexões, tanto no ambiente físico (como ambientes de trabalho, eventos, workshops e encontros informais) quanto no ambiente digital (como LinkedIn e outras plataformas), com pessoas de diferentes áreas e níveis hierárquicos. A proximidade avalia o nível de engajamento e conexão ativa dentro de uma relação, ou seja, o quanto você se envolve ativamente nessa relação, demonstrando presença e interesse genuíno.",
+            "O Relacionamento Próximo (RP) é a capacidade de buscar ativamente e construir conexões com colegas de diferentes áreas e níveis hierárquicos, mostrando interesse genuíno e iniciativa para se aproximar, fortalecer laços e ampliar a rede interna de relações.",
         questions: [
             {
-                text: "Busca ativa por interações presenciais\nCom que frequência você cria oportunidades para interações presenciais com essa pessoa, demonstrando interesse genuíno na relação?",
+                text: "Participo de projetos interdepartamentais ou colaborações fora da minha área imediata.",
                 options: [
-                    "Sempre: Faço questão de promover encontros presenciais regularmente, buscando fortalecer o vínculo e gerar valor na relação. Por exemplo, proativamente agendo encontros ou participo de eventos onde sei que podemos interagir regularmente.",
-                    "Frequentemente: Tento encontrar essa pessoa sempre que possível, mas nem sempre priorizo ou planejo ativamente. Quando surge um evento ou ocasião adequada, aproveito para interagir presencialmente. Faço contato presencial de forma intencional, mas sem regularidade fixa ou planejada.",
-                    "Ocasionalmente: Encontro essa pessoa raramente e, quando acontece, geralmente é por acaso. Não costumo planejar encontros presenciais, mas se houver oportunidade, aproveito. Só participo de interações presenciais quando há uma necessidade específica ou um convite direto.",
-                    "Raramente: Nunca busco interações presenciais ou considero desnecessário manter esse contato fisicamente. Evito encontros presenciais e mantenho o contato apenas digitalmente, quando necessário. Se acontece uma interação presencial, é totalmente circunstancial e sem intenção de fortalecer a relação.",
+                    "Sempre: Participo ativamente de projetos ou colaborações interdepartamentais, buscando integrar diferentes áreas da empresa.",
+                    "Frequentemente: Participo de projetos interdepartamentais com boa frequência, mas nem sempre de forma proativa.",
+                    "Ocasionalmente: Participo apenas quando sou convidado ou quando o projeto exige minha presença.",
+                    "Raramente: Raramente participo ou procuro oportunidades de interação entre diferentes áreas.",
                 ],
             },
             {
-                text: "Profundidade das conversas\nQuão significativas são suas interações com essa pessoa?",
+                text: "Busco conhecer colegas de diferentes níveis hierárquicos de maneira genuína e respeitosa.",
                 options: [
-                    "Sempre: Nossas conversas vão muito além do básico, abordando desafios, interesses e oportunidades de colaboração. Há uma troca genuína de ideias, aprendizados e insights relevantes para ambos. Compartilhamos experiências e discutimos assuntos que geram impacto real na nossa vida ou carreira.",
-                    "Frequentemente: Costumo ter boas conversas com essa pessoa, mas algumas interações são mais superficiais. Em muitos momentos, há abertura para diálogos produtivos, mas nem sempre consigo aprofundar os temas.  Ocorrem trocas interessantes, mas a relação ainda não tem consistência nas conversas mais estratégicas.",
-                    "Ocasionalmente: As interações são, na maioria das vezes, rápidas e sem profundidade real. Falamos sobre assuntos triviais, sem aprofundamento, e raramente discutimos temas relevantes. Quando nos falamos, é mais por formalidade do que por interesse genuíno em trocar ideias significativas.",
-                    "Raramente: As conversas são extremamente curtas e protocolares, sem qualquer envolvimento pessoal ou profissional. Não há interesse mútuo em conversar sobre temas mais estratégicos ou relevantes. Se interagimos, é apenas por obrigação ou necessidade pontual, sem qualquer intenção de fortalecer a relação.",
+                    "Sempre: Busco e valorizo o contato com colegas de todos os níveis hierárquicos de forma genuína e respeitosa.",
+                    "Frequentemente: Normalmente interajo com colegas de diferentes níveis, mas nem sempre priorizo essa aproximação.",
+                    "Ocasionalmente: Conheço colegas de outros níveis apenas se houver uma necessidade pontual.",
+                    "Raramente: Mantenho contato apenas com pessoas do meu nível hierárquico ou departamento.",
                 ],
             },
             {
-                text: "Uso de canais digitais para manter o vínculo\nCom que frequência você utiliza o digital para manter contato com essa pessoa?",
+                text: "Demonstro interesse real pelas metas e desafios dos colegas e da empresa.",
                 options: [
-                    "Sempre: Uso ferramentas digitais estrategicamente para fortalecer a conexão, seja enviando mensagens, compartilhando conteúdos relevantes, ou interagindo regularmente em redes sociais e outras plataformas. O contato digital acontece de forma natural, consistente e frequente.",
-                    "Frequentemente: Costumo interagir online com essa pessoa e manter o contato ativo, mas sem uma regularidade definida. Às vezes, há períodos de maior troca e outros em que a comunicação diminui, mas ainda assim, há um esforço para manter a conexão viva.",
-                    "Ocasionalmente: Só envio mensagens quando há uma necessidade específica ou quando preciso de algo. A interação digital é esporádica, sem uma intenção clara de nutrir a relação a longo prazo. Se não houver um motivo concreto, dificilmente puxo uma conversa ou interajo online.",
-                    "Raramente: Nunca ou quase nunca envio mensagens ou interajo digitalmente. Se há algum contato digital, ele ocorre apenas de forma passiva, como responder a um email ou mensagem recebida, sem iniciativa própria para manter a comunicação ativa.",
+                    "Sempre: Demonstro verdadeiro interesse pelos objetivos dos colegas e pelas metas da organização, buscando colaborar sempre que possível.",
+                    "Frequentemente: Mostro interesse pelas metas dos colegas e da empresa, mas isso acontece de forma mais pontual.",
+                    "Ocasionalmente: Demonstro interesse apenas quando as metas afetam diretamente meu trabalho.",
+                    "Raramente: Tenho pouco interesse ou envolvimento com as metas dos colegas ou da empresa.",
                 ],
             },
             {
-                text: "Disponibilidade e suporte ativo\nCom que frequência você se coloca à disposição para apoiar essa pessoa?",
+                text: "Aproveito interações informais (cafés, eventos internos) para fortalecer relações.",
                 options: [
-                    "Sempre: Ativamente ofereço suporte e busco oportunidades para ajudar essa pessoa, seja conectando-a com outras pessoas, compartilhando insights valiosos ou apoiando em desafios específicos. Meu envolvimento é espontâneo, e me preocupo genuinamente com o crescimento dela.",
-                    "Frequentemente: Estou disponível para ajudar, mas normalmente apenas quando sou solicitado. Se percebo que posso contribuir, ofereço suporte, mas nem sempre faço isso de maneira proativa. O suporte acontece, mas depende de contexto e demanda.",
-                    "Ocasionalmente: Só ajudo quando há um pedido direto ou quando percebo que a situação exige minha intervenção. Mesmo nesses casos, minha disponibilidade pode ser limitada, e dificilmente me envolvo de maneira consistente ou estratégica.",
-                    "Raramente: Nunca ou quase nunca ofereço ajuda ou apoio a essa pessoa. Se ela precisar de algo, provavelmente buscará outra pessoa antes de me contatar, pois não sou visto como um ponto de suporte ativo na relação.",
+                    "Sempre: Uso ativamente essas ocasiões para fortalecer vínculos e criar conexões genuínas.",
+                    "Frequentemente: Aproveito algumas interações informais, mas nem sempre de maneira intencional.",
+                    "Ocasionalmente: Participo de eventos informais, mas raramente os utilizo para aprofundar relações.",
+                    "Raramente: Evito ou não aproveito eventos informais para me conectar com colegas.",
                 ],
             },
             {
-                text: "Interesse genuíno e reciprocidade na relação\nComo você percebe o equilíbrio e a reciprocidade na iniciativa de manter contato nessa relação?",
+                text: "Facilito a integração de pessoas e conhecimentos entre áreas da organização.",
                 options: [
-                    "Sempre: Eu e essa pessoa tomamos a iniciativa de forma equilibrada. Ambos demonstramos interesse em manter a conexão viva e alternamos naturalmente entre iniciar e responder interações. Existe uma dinâmica saudável na relação, e ambos se esforçam para mantê-la. A relação é fluida, e não há um esforço desproporcional de apenas um dos lados.",
-                    "Frequentemente: Existe um lado (eu ou a outra pessoa) que toma a iniciativa, e a outra pessoa responde bem e demonstra interesse e boa vontade quando contatada. Entretanto, uma das pessoas é muito mais proativa, e se ela não ativar o contato, pode haver longos períodos sem interação.",
-                    "Ocasionalmente: Entramos em contato apenas quando há um motivo específico ou necessidade. Sem um motivo específico, a relação fica parada por um longo tempo. As partes raramente tomam a iniciativa proativa de manter a conexão viva. A relação parece mais passiva do que genuína.",
-                    "Raramente: Não há esforço para manter essa relação ativa, e mesmo quando há interação, isso ocorre sem muito entusiasmo das partes. Se não houver um motivo externo ou um pedido formal, não há interação. A conexão depende portanto exclusivamente de fatores externos, sem qualquer proatividade de ambas as partes.",
+                    "Sempre: Busco de forma intencional integrar pessoas e compartilhar conhecimentos entre áreas distintas.",
+                    "Frequentemente: Promovo integrações entre áreas em algumas oportunidades.",
+                    "Ocasionalmente: Facilito integrações apenas quando requisitado ou por necessidade do projeto.",
+                    "Raramente: Não costumo atuar para integrar pessoas ou promover troca entre áreas diferentes.",
                 ],
             },
         ],
