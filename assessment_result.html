@@ -68,8 +68,8 @@
             <div id="section-results">
             </div>
             <p id="final-reflection"></p>
-            <button id="share-button" style="margin-top:32px;">Compartilhar no WhatsApp</button>
-            <button id="save-results-button" style="margin-top:16px;">Baixar PDF</button>
+            <!-- <button id="share-button" style="margin-top:32px;">Compartilhar no WhatsApp</button>
+            <button id="save-results-button" style="margin-top:16px;">Baixar PDF</button>-->
 
         </div>
     </div>
@@ -162,9 +162,7 @@
 
             if (assessment.assessmentName === "Fórmula do Networking") {
                 assessmentType = 'fn';
-                
                 totalResult.innerText = `${assessment.result} de 60 pontos possíveis`;
-
                 sectionLabels = ['Proximidade', 'Frequência', 'Sintonia de interesses'];
                 sectionsConfig = [
                     {
@@ -247,8 +245,9 @@
         Boa sorte em sua jornada de crescimento profissional!`;
             }
 
-            
             totalResultTitle.innerText = "Seu índice total foi de:";
+
+
             // Access the correct interpretation string from totalResultInterpretations
             if (assessment.resultInterpretation && totalResultInterpretations[assessment.resultInterpretation]) {
                 totalResultInterpretation.innerText = totalResultInterpretations[assessment.resultInterpretation];
@@ -365,21 +364,21 @@
                 ];
 
                 questions = [
-                    "Busca ativa por interações presenciais",
-                    "Profundidade das conversas",
-                    "Uso de canais digitais para manter o vínculo",
-                    "Disponibilidade e suporte ativo",
-                    "Interesse genuíno e reciprocidade na relação",
-                    "Regularidade das interações",
-                    "Tempo de Duração da Relação",
-                    "Retomada da conexão após períodos sem contato",
-                    "Evolução da relação ao longo do tempo",
-                    "Impacto da relação no seu desenvolvimento",
-                    "Alinhamento de interesses",
-                    "Troca de informações e oportunidades",
-                    "Confiança e transparência na relação",
-                    "Grau de colaboração e suporte mútuo",
-                    "Visão de futuro na relação"
+                    "Busca ativa por interações presenciais:<br>Com que frequência você cria oportunidades para interações presenciais com essa pessoa, demonstrando interesse genuíno na relação?",
+                    "Profundidade das conversas:<br>Quão significativas são suas interações com essa pessoa?",
+                    "Uso de canais digitais para manter o vínculo:<br>Com que frequência você utiliza o digital para manter contato com essa pessoa?",
+                    "Disponibilidade e suporte ativo:<br>Com que frequência você se coloca à disposição para apoiar essa pessoa?",
+                    "Interesse genuíno e reciprocidade na relação:<br>Como você percebe o equilíbrio e a reciprocidade na iniciativa de manter contato nessa relação?",
+                    "Regularidade das interações:<br>Com que frequência você mantém contato ativo com essa pessoa?",
+                    "Tempo de Duração da Relação:<br>Essa relação tem se mantido ativa ao longo do tempo, ou é algo recente ou passageiro?",
+                    "Retomada da conexão após períodos sem contato:<br>Quando há um tempo sem contato, como você age?",
+                    "Evolução da relação ao longo do tempo:<br>Como essa relação tem se desenvolvido?",
+                    "Impacto da relação no seu desenvolvimento:<br>Essa conexão tem trazido benefícios para você e para a outra pessoa?",
+                    "Alinhamento de interesses:<br>O quanto essa relação se baseia em interesses ou objetivos profissionais em comum?",
+                    "Troca de informações e oportunidades:<br>Essa relação envolve troca mútua de informações e oportunidades?",
+                    "Confiança e transparência na relação:<br>Você sente que há confiança mútua e abertura para compartilhar desafios e oportunidades?",
+                    "Grau de colaboração e suporte mútuo:<br>O quanto essa relação envolve apoio mútuo e colaboração?",
+                    "Visão de futuro na relação:<br>Você enxerga essa conexão como uma relação que pode gerar benefícios no longo prazo?"
                 ];
 
             } else if (assessmentType === 'imp') {
@@ -392,31 +391,31 @@
                 ];
 
                 questions = [
-                    "Receptividade, atenção e compreensão para com os outros",
-                    "Abordagem e início de conversas",
-                    "Atenção ao escutar",
-                    "Estabelecimento de vínculos",
-                    "Adaptação a diferentes públicos",
-                    "Aplicação de habilidades cognitivas, técnicas e comportamentais",
-                    "Busca por conhecimento e atualização",
-                    "Uso do compartilhamento para potencializar meus conhecimentos e experiências",
-                    "Responsabilidade e cumprimento de compromissos, metas e resultados",
-                    "Proatividade na aprendizagem e autodesenvolvimento",
-                    "Coerência entre palavra e ação",
-                    "Estabelecimento de relacionamentos confiáveis",
-                    "Manutenção da confidencialidade ao lidar com informações reservadas",
-                    "Consolidação de parcerias de longo prazo",
-                    "Integridade e reconhecimento",
-                    "Disposição em contribuir sem retribuição imediata",
-                    "Receptividade às demandas de ajuda e apoio",
-                    "Participação ativa em atividades que agregam valor",
-                    "Mentoria, incentivo, recomendações e conselhos",
-                    "Compartilhamento de insights e fomento a diálogos enriquecedores",
-                    "Promoção das próprias realizações e habilidades",
-                    "Participação em eventos e oportunidades de exposição",
-                    "Uso de redes sociais e plataformas profissionais",
-                    "Demonstração de resultados",
-                    "Reconhecimento como referência ou especialista"
+                    "Receptividade, atenção e compreensão para com os outros:<br> Como você avalia sua capacidade de demonstrar receptividade, atenção e compreensão ao interagir com as pessoas, independentemente de cargo ou status?",
+                    "Abordagem e início de conversas:<br>Como você avalia sua habilidade para se aproximar e iniciar conversas de forma espontânea e construtiva, tanto com pessoas conhecidas quanto desconhecidas?",
+                    "Atenção ao escutar:<br>Como você avalia sua capacidade de ouvir atentamente, demonstrando interesse genuíno durante a comunicação?",
+                    "Estabelecimento de vínculos:<br>Como você avalia sua habilidade para criar e manter vínculos sólidos e produtivos, especialmente no ambiente profissional?",
+                    "Adaptação a diferentes públicos:<br>Como você avalia sua capacidade de se adaptar e interagir de forma eficaz com diferentes públicos e em variados contextos?",
+                    "Aplicação de habilidades cognitivas, técnicas e comportamentais:<br>Como você avalia sua capacidade de aplicar suas habilidades cognitivas, técnicas e comportamentais para gerar inovações, melhorar processos, atingir objetivos e superar desafios?",
+                    "Busca por conhecimento e atualização:<br>Como você avalia sua iniciativa em buscar novos conhecimentos e se manter atualizado(a) na sua área de atuação?",
+                    "Uso do compartilhamento para potencializar meus conhecimentos e experiências:<br>Como você avalia a frequência e a eficácia com que compartilha seus conhecimentos e experiências para fortalecer sua relevância e contribuir para sua área?",
+                    "Responsabilidade e cumprimento de compromissos, metas e resultados:<br>Como você avalia sua capacidade de assumir e cumprir metas e compromissos, garantindo a responsabilidade pelos resultados obtidos?",
+                    "Proatividade na aprendizagem e autodesenvolvimento:<br>omo você avalia sua iniciativa para buscar oportunidades de aprendizagem e se desenvolver continuamente, aprimorando suas habilidades e competências?",
+                    "Coerência entre palavra e ação:<br>Como você avalia sua capacidade de honrar promessas, acordos, responsabilidades e compromissos, mantendo uma postura aberta e transparente mesmo diante de dificuldades?",
+                    "Estabelecimento de relacionamentos confiáveis:<br>Como você avalia sua capacidade de construir e manter relacionamentos baseados em transparência, respeito e confiança mútua?",
+                    "Manutenção da confidencialidade ao lidar com informações reservadas:<br>Como você se posiciona em relação à proteção e manutenção da confidencialidade de informações sensíveis ou reservadas?",
+                    "Consolidação de parcerias de longo prazo:<br>Como você avalia sua capacidade de estabelecer e manter parcerias baseadas na confiança mútua ao longo do tempo?",
+                    "Integridade e reconhecimento:<br>Como você avalia o reconhecimento que recebe em suas relações no que diz respeito à sua integridade - ou seja, à capacidade de “fazer o que eu digo” (walk the talk) - e à postura confiável que adoto?",
+                    "Disposição em contribuir sem retribuição imediata:<br>Como você avalia sua disposição para oferecer ajuda e contribuições sem esperar algo em troca imediatamente?",
+                    "Receptividade às demandas de ajuda e apoio:<br>Como você avalia sua capacidade de ser receptivo(a) e atender às demandas de ajuda e apoio quando solicitadas?",
+                    "Participação ativa em atividades que agregam valor:<br>Como você avalia seu envolvimento em atividades que agregam valor, ou seja, que beneficiam tanto você quanto seus colegas ou a organização?",
+                    "Mentoria, incentivo, recomendações e conselhos:<br>Como você avalia sua prática de oferecer mentoria, orientação, incentivo e conselhos para ajudar colegas e parceiros?",
+                    "Compartilhamento de insights e fomento a diálogos enriquecedores:<br>Como você avalia sua iniciativa para compartilhar conhecimentos e promover diálogos construtivos que possam enriquecer o ambiente de trabalho?",
+                    "Promoção das próprias realizações e habilidades:<br>Como você avalia sua capacidade de promover, de maneira estratégica e natural, suas conquistas e habilidades, fortalecendo sua imagem profissional?",
+                    "Participação em eventos e oportunidades de exposição:<br>Como você avalia sua iniciativa em buscar e participar de eventos, palestras, workshops e outras oportunidades que aumentem sua visibilidade profissional?",
+                    "Uso de redes sociais e plataformas profissionais:<br>Como você avalia sua capacidade de utilizar redes sociais e plataformas profissionais para divulgar seu trabalho e reforçar sua marca pessoal?",
+                    "Demonstração de resultados:<br>Como você avalia sua habilidade de apresentar de forma clara e estruturada os resultados e impactos dos seus projetos e realizações?",
+                    "Reconhecimento como referência ou especialista:<br>Como você avalia o reconhecimento que recebe como referência ou especialista em sua área, tanto dentro da sua organização quanto no mercado?"
                 ];
             }
 
