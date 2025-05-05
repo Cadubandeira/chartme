@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INI - Índice de Networking Interno</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script type=module src="pdf-generator.js"></script>
+    <script type=module src="assessment3.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+            authDomain: "chartme-2c4aa.firebaseapp.com",
+            projectId: "chartme-2c4aa",
+            storageBucket: "chartme-2c4aa.firebasestorage.app",
+            messagingSenderId: "1000796548418",
+            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+            measurementId: "G-T2686T1ETY"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Assessment 3</h1>
+        <form id="assessment-form">
+            <button type="button" id="prev-section">Anterior</button>
+            <button type="button" id="next-section">Próximo</button>
+            <button type="button" id="submit-test">Finalizar Teste</button>
+        </form>
+        <div id="result" class="hidden">
+            <h2>Resultados</h2>
+            <div id="chart-container">
+                <canvas id="result-chart"></canvas>
+            </div>
+            <div id="total-result">
+                <h3 id="totalResultTitle"></h3>
+                <p id="totalResult"></p>
+                <p id="totalResultInterpretation"></p>
+            </div>
+            <button id="save-results-button">Salvar Resultados</button>
+        </div>
+        <div id="initial-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="assessment-title">INI - Índice de Networking Interno</h2>
+                <br>
+                <h3>Instruções</h3>
+                <p style="text-align:left; line-height:1.3em;">
+                    Responda às seguintes perguntas para avaliar seu desempenho quanto ao índice de networking interno.
+                </p>
+                <hr class="solid">
+                <h3>Importante!</h3>
+                <p style="text-align:left; line-height:1.3em;">
+                    Considere a sua atuação atual dentro da sua empresa. <br>
+                    Responda todas as avaliações com honestidade, sendo fiel a si mesmo(a). <br>
+                    Seja sincero(a) ao responder e escolha a opção que mais reflete seu comportamento e atitudes atuais.<br>
+                    Não responda pensando em quem você gostaria de ser, mas sim sobre quem você é, e como pensa e age atualmente.<br>
+                    Não tente analisar excessivamente as questões, racionalizar ou tentar encontrar a melhor resposta. Ela não existe !! Não há resposta certa ou melhor, e ninguém irá julgá-lo(a) pelas suas respostas.<br>
+                    Seja você mesmo(a). Siga seu coração e seja espontâneo(a): escolha a afirmação que mais se aproxima de você, e não de quem você (pensa que) desejaria ser.
+
+                </p>
+                <div class="modal-buttons">
+                    <button id="start-test-button">Começar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
