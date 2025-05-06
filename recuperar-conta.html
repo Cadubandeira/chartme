@@ -32,7 +32,74 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="register-script.js"></script>
+
+    <script>
+        // Firebase configuration (ensure this matches your project)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
+            authDomain: "chartme-2c4aa.firebaseapp.com",
+            projectId: "chartme-2c4aa",
+            storageBucket: "chartme-2c4aa.firebasestorage.app",
+            messagingSenderId: "1000796548418",
+            appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
+            measurementId: "G-T2686T1ETY"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const snackbar = document.getElementById('snackbar');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        function showSnackbar(message, isError = false) {
+            if (!snackbar) {
+                return;
+            }
+            snackbar.innerHTML = `${message} <button onclick="hideSnackbar()">Fechar</button>`;
+            snackbar.classList.add('show');
+            snackbar.classList.toggle('error', isError);
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+                snackbar.classList.remove('error');
+            }, 3000);
+        }
+
+        function hideSnackbar() {
+            if (snackbar) {
+                snackbar.classList.remove('show');
+                snackbar.classList.remove('error');
+            }
+        }
+
+        function showLoading() {
+            loadingOverlay.classList.add('show');
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('show');
+        }
+
+        function resetPassword() {
+            const emailInput = document.getElementById("emailInput");
+            const email = emailInput.value;
+
+            if (!email) {
+                showSnackbar("Por favor, digite seu e-mail.", true);
+                return;
+            }
+
+            showLoading();
+
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    showSnackbar("E-mail de recuperação enviado! Verifique sua caixa de entrada.", false);
+                })
+                .catch((error) => {
+                    showSnackbar("Erro ao enviar e-mail de recuperação: " + error.message, true);
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+        }
+    </script>
 </body>
 
 </html>

@@ -158,30 +158,3 @@ registerForm.addEventListener('submit', async (e) => {
         hideLoading();
     }
 });
-
-// Password reset functionality
-const resetForm = document.getElementById('reset-form'); // Get the reset form
-
-// Make the resetPassword function globally accessible
-window.resetPassword = () => {
-    const email = document.getElementById("emailInput").value; // Get email from input field
-    if (!email) {
-        showSnackbar("Por favor, digite seu e-mail.", true);
-        return;
-    }
-
-    showLoading(); // Show loading overlay
-
-    auth.sendPasswordResetEmail(email)
-        .then(() => {
-            // Password reset email sent!
-            showSnackbar("E-mail de recuperação enviado! Verifique sua caixa de entrada.", false);
-        })
-        .catch((error) => {
-            // Error: sendPasswordResetEmail
-            showSnackbar("Erro ao enviar e-mail de recuperação: " + error.message, true);
-        })
-        .finally(() => {
-            hideLoading(); // Hide loading overlay
-        });
-};
