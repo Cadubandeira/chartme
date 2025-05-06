@@ -512,13 +512,13 @@ const sectionInterpretations = {
 
 function getResultInterpretation(totalScore) {
  let interpretation = "";
-    if (totalScore >= 51) {
+    if (totalScore >= 66) {
       interpretation = "excellent";
-    } else if (totalScore >= 41) {
+    } else if (totalScore >= 51) {
       interpretation = "good";
-    } else if (totalScore >= 31) {
+    } else if (totalScore >= 36) {
       interpretation = "average";
-    } else if (totalScore >= 21) {
+    } else if (totalScore >= 20) {
       interpretation =  "bad";
     } else {
       interpretation =  "bad";
