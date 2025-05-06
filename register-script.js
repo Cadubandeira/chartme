@@ -162,7 +162,8 @@ registerForm.addEventListener('submit', async (e) => {
 // Password reset functionality
 const resetForm = document.getElementById('reset-form'); // Get the reset form
 
-const resetPassword = () => {
+// Make the resetPassword function globally accessible
+window.resetPassword = () => {
     const email = document.getElementById("emailInput").value; // Get email from input field
     if (!email) {
         showSnackbar("Por favor, digite seu e-mail.", true);
