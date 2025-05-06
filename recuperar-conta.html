@@ -7,7 +7,7 @@
     <title>Recuperação de Conta</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head>
+</head>
 
 <body>
     <div class="loading-overlay" id="loading-overlay">
@@ -21,20 +21,24 @@
                 <div class="outlined-input-container">
                     <input type="email" id="emailInput" placeholder=" " required>
                     <label for="emailInput">Digite seu e-mail</label>
-                    </div>
+                </div>
                 <span id="email-error" class="error-message hidden">Por favor, digite um e-mail válido.</span>
                 <button type="button" onclick="resetPassword()">Recuperar senha</button>
             </form>
-            <p style="margin-top: 24px; margin-bottom: 0px;">Se lembrou ou já recuperou sua senha? <a href="index.html" style="color: blue; text-decoration: underline;">Entrar</a></p>
+            <p style="margin-top: 24px; margin-bottom: 0px;">
+                Se lembrou ou já recuperou sua senha?
+                <a href="index.html" style="color: blue; text-decoration: underline;">Entrar</a>
+            </p>
         </div>
     </div>
     <div id="snackbar"></div>
+
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase configuration (ensure this matches your project)
+        //  Firebase configuration (ensure this matches your project EXACTLY)
         const firebaseConfig = {
             apiKey: "AIzaSyDFAh_QfHaQqXIna07yHuHzN6EW4mGCtUE",
             authDomain: "chartme-2c4aa.firebaseapp.com",
@@ -44,8 +48,13 @@
             appId: "1:1000796548418:web:c891c61205cdf404f1ecdb",
             measurementId: "G-T2686T1ETY"
         };
-        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const auth = firebase.auth();
+
         const snackbar = document.getElementById('snackbar');
         const loadingOverlay = document.getElementById('loading-overlay');
 
@@ -93,7 +102,11 @@
                     showSnackbar("E-mail de recuperação enviado! Verifique sua caixa de entrada.", false);
                 })
                 .catch((error) => {
-                    showSnackbar("Erro ao enviar e-mail de recuperação: " + error.message, true);
+                    let errorMessage = "Erro ao enviar e-mail de recuperação.";
+                    if (error && error.message) {
+                        errorMessage += " " + error.message;
+                    }
+                    showSnackbar(errorMessage, true);
                 })
                 .finally(() => {
                     hideLoading();
