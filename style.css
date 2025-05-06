@@ -611,7 +611,7 @@ h1 {
     padding: 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     position: fixed;
     z-index: 1;
     left: 50%;
