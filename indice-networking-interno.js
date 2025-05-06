@@ -521,7 +521,7 @@ function getResultInterpretation(totalScore) {
     } else if (totalScore >= 21) {
       interpretation =  "bad";
     } else {
-      interpretation =  "irrelevant";
+      interpretation =  "bad";
     }
     return interpretation;
 }
