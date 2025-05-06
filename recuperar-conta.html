@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de Conta</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!-- Add Material Icons -->
+</head>
+
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loader"></div>
+    </div>
+    <div class="container">
+        <div id="message"></div>
+        <div id="name-form" class="form-step">
+            <h2>Para recuperar sua senha, confirme o e-mail cadastrado</h2>
+            <form id="register-form">
+                <div class="outlined-input-container">
+                    <input type="email" id="register-email" placeholder=" " required>
+                    <label for="register-email">Digite seu e-mail</label>
+                </div>
+                <span id="email-error" class="error-message hidden">Por favor, digite seu e-mail</span>
+                <button type="submit">Recuperar senha</button>
+            </form>
+        </div>
+    </div>
+      <div id="snackbar"></div>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="register-script.js"></script>
+</body>
+
+</html>
