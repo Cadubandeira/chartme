@@ -532,7 +532,7 @@ async function showResults() {
     document.getElementById("test-container").classList.add("hidden");
 
     const messages = [
-        "Calculando o seu índice de influência e colaboração interna",
+        "Calculando o seu índice de influência",
         "Analisando a força e a coesão do seu networking pessoal",
         "Decifrando alguns padrões",
         "Apresentamos o seu Índice de Networking Interno..."
