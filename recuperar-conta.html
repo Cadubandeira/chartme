@@ -55,17 +55,23 @@
         }
         const auth = firebase.auth();
 
+        
         const snackbar = document.getElementById('snackbar');
         const loadingOverlay = document.getElementById('loading-overlay');
 
+        let snackbarTimeout;
         function showSnackbar(message, isError = false) {
             if (!snackbar) {
                 return;
             }
+
+            clearTimeout(snackbarTimeout); // Clear any existing timeout
+
             snackbar.innerHTML = `${message} <button onclick="hideSnackbar()">Fechar</button>`;
             snackbar.classList.add('show');
             snackbar.classList.toggle('error', isError);
-            setTimeout(() => {
+
+            snackbarTimeout = setTimeout(() => {
                 snackbar.classList.remove('show');
                 snackbar.classList.remove('error');
             }, 3000);
