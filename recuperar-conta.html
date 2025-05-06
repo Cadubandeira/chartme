@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperação de Conta</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!-- Add Material Icons -->
-</head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
 
 <body>
     <div class="loading-overlay" id="loading-overlay">
@@ -17,17 +17,17 @@
         <div id="message"></div>
         <div id="name-form" class="form-step">
             <h2>Para recuperar sua senha, confirme o e-mail cadastrado</h2>
-            <form id="register-form">
+            <form id="reset-form">
                 <div class="outlined-input-container">
-                    <input type="email" id="register-email" placeholder=" " required>
-                    <label for="register-email">Digite seu e-mail</label>
-                </div>
-                <span id="email-error" class="error-message hidden">Por favor, digite seu e-mail</span>
-                <button type="submit">Recuperar senha</button>
-            </form>
+                    <input type="email" id="emailInput" placeholder=" " required>
+                    <label for="emailInput">Digite seu e-mail</label>
+                    </div>
+                <span id="email-error" class="error-message hidden">Por favor, digite um e-mail válido.</span>
+                <button type="button" onclick="resetPassword()">Recuperar senha</button>
+                </form>
         </div>
     </div>
-      <div id="snackbar"></div>
+    <div id="snackbar"></div>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>

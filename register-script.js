@@ -20,7 +20,7 @@ const confirmPasswordInput = document.getElementById('register-confirm-password'
 const confirmPasswordError = document.getElementById('confirm-password-error');
 const emailAlreadyRegisteredError = document.getElementById('email-already-registered');
 const loadingOverlay = document.getElementById('loading-overlay');
- const snackbar = document.getElementById('snackbar');
+const snackbar = document.getElementById('snackbar');
 
 function showError(id, show, mandatory = false, message = '') {
     const errorElement = document.getElementById(id);
@@ -39,28 +39,27 @@ function showMessage(message, isError = false) {
     messageDiv.style.color = isError ? 'red' : 'green';
     messageDiv.style.display = 'block';
 }
-  function showSnackbar(message, isError = false) {
-       if(!snackbar){
-           return;
-        }
-      snackbar.innerHTML = `${message} <button onclick="hideSnackbar()">Fechar</button>`;
-        snackbar.classList.add('show');
-        snackbar.classList.toggle('error', isError);
-         setTimeout(() => {
+
+function showSnackbar(message, isError = false) {
+    if (!snackbar) {
+        return;
+    }
+    snackbar.innerHTML = `${message} <button onclick="hideSnackbar()">Fechar</button>`;
+    snackbar.classList.add('show');
+    snackbar.classList.toggle('error', isError);
+    setTimeout(() => {
         snackbar.classList.remove('show');
         snackbar.classList.remove('error');
-         }, 3000);
+    }, 3000);
+}
+
+function hideSnackbar() {
+    if (snackbar) {
+        snackbar.classList.remove('show');
+        snackbar.classList.remove('error');
     }
 
-
-   function hideSnackbar() {
-       if(snackbar){
-             snackbar.classList.remove('show');
-            snackbar.classList.remove('error');
-       }
-
-    }
-
+}
 
 function showLoading() {
     loadingOverlay.classList.add('show');
@@ -159,3 +158,29 @@ registerForm.addEventListener('submit', async (e) => {
         hideLoading();
     }
 });
+
+// Password reset functionality
+const resetForm = document.getElementById('reset-form'); // Get the reset form
+
+const resetPassword = () => {
+    const email = document.getElementById("emailInput").value; // Get email from input field
+    if (!email) {
+        showSnackbar("Por favor, digite seu e-mail.", true);
+        return;
+    }
+
+    showLoading(); // Show loading overlay
+
+    auth.sendPasswordResetEmail(email)
+        .then(() => {
+            // Password reset email sent!
+            showSnackbar("E-mail de recuperação enviado! Verifique sua caixa de entrada.", false);
+        })
+        .catch((error) => {
+            // Error: sendPasswordResetEmail
+            showSnackbar("Erro ao enviar e-mail de recuperação: " + error.message, true);
+        })
+        .finally(() => {
+            hideLoading(); // Hide loading overlay
+        });
+};
