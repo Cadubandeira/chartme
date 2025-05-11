@@ -74,6 +74,7 @@
         </div>
     </div>
     <script src="assessment2.js"></script>
+    <script src="indice-networking-interno.js"></script>
     <!-- Load the same assessment script -->
     <script>
         // Firebase Configuration and Initialization (SAME as in dashboard.html)
@@ -243,7 +244,45 @@
         <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Seus conhecimentos e habilidades abrem portas, mas são seus relacionamentos que dirão até onde você pode ir.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
 
         Boa sorte em sua jornada de crescimento profissional!`;
-            }
+            
+
+            } else if (assessment.assessmentName === "Índice de Networking Interno") {
+                            assessmentType = 'ini';
+                            totalResult.innerText = `${assessment.result} de 80 pontos possíveis`;
+                            sectionLabels = ['Relacionamento Próximo', 'Constância de Fomento', 'Alinhamento de Interesses', 'Atuação Estratégica'];
+                            sectionsConfig = [
+                                {
+                                    title: "1. RELACIONAMENTO PRÓXIMO", questions: [{}, {}, {}, {}, {}]
+                                },
+                                {
+                                    title: "2. CONSTÂNCIA DE FOMENTO", questions: [{}, {}, {}, {}, {}]
+                                },
+                                {
+                                    title: "3. ALINHAMENTO DE INTERESSES", questions: [{}, {}, {}, {}, {}]
+                                },
+                                {
+                                    title: "4. ATUAÇÃO ESTRATÉGICA", questions: [{}, {}, {}, {}, {}]
+                                }
+                            ];
+
+                            finalMessageTitle.innerText = "INI - Índice de Networking Interno";
+                            finalMessage.innerHTML =
+                            `Analise cuidadosamente seus resultados. Eles mostram um panorama de suas habilidades atuais de networking dentro da organziação onde você atua. Considere a presença que você entrega em tudo o que faz. Enxergue seus pontos fortes e célebres, mas também não ignore as áreas que indicam espaço para crescimento. Entenda que esta avaliação é um retrato do momento, não um veredito final. Você é plenamente capaz de evoluir, se adaptar e aprender. Atualmente, praticar networking não é mais apenas um complemento, é uma necessidade premente.
+                            <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">"Hoje, praticar networking não é mais apenas um complemento mas uma necessidade essencial para o desenvolvimento pessoal e profissional."</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address>
+                            <br>De forma geral, o <strong>Índice de Networking Interno (INI)</strong> reflete o desempenho integrado das quatro dimensões essenciais – Relacionamento Próximo (RP), Constância de Fomento (CF), Alinhamento de Interesses (AI) e Atuação Estratégica (AE) – que compõem a sua capacidade de estabelecer conexões valiosas no ambiente profissional dentro da organização. A pontuação final, obtida pela soma dos pontos de cada dimensão, indica o quão eficazmente você se relaciona, se posiciona, comunica suas competências e constrói relacionamentos sólidos. Uma pontuação elevada sugere que você possui habilidades robustas de networking interno, abrindo portas para novas oportunidades dentro da própria organização e tendo abertura para parcerias estratégicas com pessoas das mais variadas áreas organizacionais. Por outro lado, uma pontuação mais baixa sinaliza áreas de desenvolvimento que, quando aprimoradas, podem potencializar sua reputação e performance pessoal e profissional. Analise os resultados abaixo para identificar seus pontos fortes e as oportunidades de melhoria, e use essas informações para direcionar seu autodesenvolvimento e aprimorar suas práticas de networking interno.`;
+
+                            finalReflection.innerHTML = `<h3>REFLEXÃO FINAL</h3><br>
+                            <strong>Lembre-se: sua maturidade de Networking Interno não é estática; ela pode ser moldada e aprimorada com dedicação, prática e estratégia.</strong> Use essas informações como uma bússola para fortalecer seus pontos fortes e trabalhar nas áreas que chamam mais atenção. Ao fazer isso, você não apenas aprimorará seu desempenho em networking interno, mas também abrirá portas para avanços inovadores em sua carreira e para a construção de relacionamentos profissionais sólidos e enriquecedores.
+                            <blockquote cite="https://www.linkedin.com/in/paulocruzfilho">“Seus conhecimentos e habilidades abrem portas, mas são seus relacionamentos que dirão até onde você pode ir.”</blockquote><address> - Paulo Cruz, fundador do Inner Networking.</address><br>
+                            Boa sorte em sua jornada de crescimento profissional!
+                            <br><br>
+                            Para saber mais sobre a INI (Índice de Networking Interno), você pode acessar os materiais de aprofundamento gratuitos no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>. Além disso, caso seja do seu interesse, você pode obter uma versão detalhada do seu INI e mesmo desenvolver o seu Desafio Perfeito para dar um salto evolutivo em seu nível de networking interno.
+                            <br><br>
+                            Caso deseje adquirir a análise de perfil completa, entre em contato conosco no site <a href="https://www.innernetworking.com.br" target="_blank">www.innernetworking.com.br</a>`;
+          
+                        }
+
+
 
             totalResultTitle.innerText = "Seu índice total foi de:";
 
@@ -287,6 +326,13 @@
             { title: "3. CONFIANÇA", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
             { title: "4. COLABORAÇÃO", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
             { title: "5. VISIBILIDADE", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
+        ];
+    } else if (assessmentType === 'ini') {
+        sectionsConfig = [
+            { title: "1. RELACIONAMENTO PRÓXIMO", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "2. CONSTÂNCIA DE FOMENTO", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "3. ALINHAMENTO DE INTERESSES", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "4. ATUAÇÃO ESTRATÉGICA", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
         ];
     }
 
@@ -416,6 +462,37 @@
                     "Uso de redes sociais e plataformas profissionais:<br>Como você avalia sua capacidade de utilizar redes sociais e plataformas profissionais para divulgar seu trabalho e reforçar sua marca pessoal?",
                     "Demonstração de resultados:<br>Como você avalia sua habilidade de apresentar de forma clara e estruturada os resultados e impactos dos seus projetos e realizações?",
                     "Reconhecimento como referência ou especialista:<br>Como você avalia o reconhecimento que recebe como referência ou especialista em sua área, tanto dentro da sua organização quanto no mercado?"
+                ];
+                
+            } else if (assessmentType === 'ini'){
+                sectionConfigs = [
+                    { title: "1. RELACIONAMENTO PRÓXIMO", questions: [{}, {}, {}, {}, {}] },
+                    { title: "2. CONSTÂNCIA DE FOMENTO", questions: [{}, {}, {}, {}, {}] },
+                    { title: "3. ALINHAMENTO DE INTERESSES", questions: [{}, {}, {}, {}, {}] },
+                    { title: "4. ATUAÇÃO ESTRATÉGICA", questions: [{}, {}, {}, {}, {}] }
+                ];
+
+                questions = [
+                    "Participo de projetos interdepartamentais ou colaborações fora da minha área imediata.",
+                    "Busco conhecer colegas de diferentes níveis hierárquicos de maneira genuína e respeitosa.",
+                    "Demonstro interesse real pelas metas e desafios dos colegas e da empresa.",
+                    "Aproveito interações informais (cafés, eventos internos) para fortalecer relações.",
+                    "Facilito a integração de pessoas e conhecimentos entre áreas da organização.",
+                    "Mantenho contato periódico com colegas, mesmo fora dos projetos em andamento.",
+                    "Dou retornos rápidos e atenciosos a comunicações internas.",
+                    "Participo de eventos, comitês, grupos ou redes internas da organização.",
+                    "Agendo conversas para troca de ideias e atualização profissional.",
+                    "Uso canais digitais internos (como chats, intranet, fóruns) para manter relações vivas e produtivas.",
+                    "Identifico e crio temas de interesse comum para fortalecer as conexões.",
+                    "Compartilho insights, recursos e informações relevantes para os colegas.",
+                    "Proponho ou colaboro em projetos de interesse mútuo.",
+                    "Apoio ativamente o crescimento profissional dos outros.",
+                    "Busco construir relações baseadas em confiança, respeito e reciprocidade (troca genuína).",
+                    "Preparo-me estrategicamente para reuniões e interações internas (pesquiso tendências, dados, fornecedores, cases relevantes, etc.).",
+                    "Em interações importantes, busco oportunidades de demonstrar conhecimento técnico e visão estratégica de negócio.",
+                    "Planejo como posso agregar cada vez mais valor às discussões e projetos, encontrando novas formas de contribuir.",
+                    "Aproveito reuniões, eventos e fóruns para evidenciar minha presença e gerar valor e impacto positivo.",
+                    "Trato cada interação com pessoas como uma oportunidade de fortalecer minha reputação interna."
                 ];
             }
 
