@@ -188,7 +188,7 @@ async function loadAssessmentData() {
         assessmentResults = Object.values(userScores);
     }
 
-     let userHighestScores = processHighestScores(assessmentResults, currentAssessment);
+    let userHighestScores = processHighestScores(assessmentResults);
 
     if (userHighestScores.length === 0) {
         console.log("No data found for the selected date range.");
@@ -311,22 +311,11 @@ function createPieChart(canvasId, data) {
     return new Chart(ctx, config);
 }
 
-async function displayLeaderboard(userHighestScores, assessmentType) {
+async function displayLeaderboard(userHighestScores) {
     const leaderboardList = document.getElementById('leaderboard-list');
-    const headerRow = document.getElementById('leaderboard-header-row'); // Get the header row
-    leaderboardList.innerHTML = ''; // Clear previous leaderboard data
-    headerRow.innerHTML = ''; // Clear previous header row
+    leaderboardList.innerHTML = ''; // Clear previous leaderboard
 
-    const tableHeaders = getTableHeaders(assessmentType); // Get headers based on assessment
-
-    // Create table header row
-    tableHeaders.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        headerRow.appendChild(th);
-    });
-
-    // Function to fetch username and generate table rows
+    // Function to fetch username and general informations
     async function generateTableRow(userScore, index) {
         try {
             const userDoc = await db.collection("users").doc(userScore.userId).get();
@@ -337,25 +326,31 @@ async function displayLeaderboard(userHighestScores, assessmentType) {
 
                 const row = leaderboardList.insertRow();
                 const posCell = row.insertCell(0);
-                posCell.textContent = index;
-
                 const userCell = row.insertCell(1);
-                userCell.textContent = `${username} (${userEmail})`;
-
                 const scoreCell = row.insertCell(2);
+                const agradabilidadeCell = row.insertCell(3);
+                const expertiseCell = row.insertCell(4);
+                const confiancaCell = row.insertCell(5);
+                const colaboracaoCell = row.insertCell(6);
+                const visibilidadeCell = row.insertCell(7);
+
+                posCell.textContent = index;
+                userCell.textContent = `${username} (${userEmail})`;
                 scoreCell.textContent = userScore.highestScore;
 
-                // Populate section scores dynamically
+                // Populate section scores
                 if (userScore.sectionScores) {
-                    for (let i = 0; i < userScore.sectionScores.length; i++) {
-                        const sectionCell = row.insertCell(i + 3);
-                        sectionCell.textContent = userScore.sectionScores[i] != null ? userScore.sectionScores[i] : 'N/A';
-                    }
+                    agradabilidadeCell.textContent = userScore.sectionScores[0] != null ? userScore.sectionScores[0] : 'N/A';
+                    expertiseCell.textContent = userScore.sectionScores[1] != null ? userScore.sectionScores[1] : 'N/A';
+                    confiancaCell.textContent = userScore.sectionScores[2] != null ? userScore.sectionScores[2] : 'N/A';
+                    colaboracaoCell.textContent = userScore.sectionScores[3] != null ? userScore.sectionScores[3] : 'N/A';
+                    visibilidadeCell.textContent = userScore.sectionScores[4] != null ? userScore.sectionScores[4] : 'N/A';
                 } else {
-                    for (let i = 0; i < tableHeaders.length - 3; i++) {
-                        const sectionCell = row.insertCell(i + 3);
-                        sectionCell.textContent = 'N/A';
-                    }
+                    agradabilidadeCell.textContent = 'N/A';
+                    expertiseCell.textContent = 'N/A';
+                    confiancaCell.textContent = 'N/A';
+                    colaboracaoCell.textContent = 'N/A';
+                    visibilidadeCell.textContent = 'N/A';
                 }
 
                 return row;
@@ -372,27 +367,14 @@ async function displayLeaderboard(userHighestScores, assessmentType) {
     // Populate the leaderboard
     for (let index = 0; index < userHighestScores.length; index++) {
         const userScore = userHighestScores[index];
-        const row = await generateTableRow(userScore, index + 1);
+        const row = await generateTableRow(userScore, index + 1); // add one. As list start on 0, the user list will show 1
 
         if (!row) {
             console.warn("Skipping row due to error fetching user data.");
-            continue;
+            continue; // Skip to the next iteration if there was an error. If error on a row, it keeps displaying the others
         }
+
     }
-}
-
-function getTableHeaders(assessmentType) {
-    let headers = ['#', 'Usuário', 'Total']; // Basic headers
-
-    if (assessmentType === 'Índice de Magnetismo Profissional') {
-        headers.push('Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade');
-    } else if (assessmentType === 'Fórmula do Networking') {
-        headers.push('Proximidade', 'Frequência', 'Sintonia de interesses');
-    } else if (assessmentType === 'Índice de Networking Interno') {
-        headers.push('Relacionamento próximo', 'Constância de fomento', 'Alinhamento de interesses', 'Atuação estratégica');
-    }
-
-    return headers;
 }
 
 function clearLeaderboard() {
@@ -400,7 +382,7 @@ function clearLeaderboard() {
     leaderboardList.innerHTML = '';
 }
 
-function processHighestScores(assessmentResults, assessmentType) {
+function processHighestScores(assessmentResults) {
     const userScores = {};
 
     assessmentResults.forEach(result => {
@@ -411,51 +393,39 @@ function processHighestScores(assessmentResults, assessmentType) {
             userScores[userId] = {
                 userId: userId,
                 highestScore: score,
-                result: result
+                result: result  // Store the entire result object
             };
         }
     });
 
     // Convert to an array and include section scores
     const userHighestScores = Object.values(userScores).map(userScore => {
-        const sectionScores = calculateSectionScores(userScore.result, assessmentType); // Pass assessment type
+        const sectionScores = calculateSectionScores(userScore.result);
         return {
             userId: userScore.userId,
             highestScore: userScore.highestScore,
-            sectionScores: sectionScores,
-            resultInterpretation: userScore.result.resultInterpretation
+            sectionScores: sectionScores, //Add score sections! and the main one! IMPORTANT
+            resultInterpretation: userScore.result.resultInterpretation //To fix data for chart, must be on this object
         };
     });
 
     return userHighestScores;
 }
 
-
 // Helper function to calculate section scores for a single assessment
-function calculateSectionScores(assessmentResult, assessmentType) {
+function calculateSectionScores(assessmentResult) {
     const sectionScores = [];
-    let numberOfSections = 5; // Default for Índice de Magnetismo Profissional
-    let numberOfQuestionsBySection = 5; // Default
-
-    if (assessmentType === "Fórmula do Networking") {
-        numberOfSections = 3;
-        numberOfQuestionsBySection = 5;
-    } else if (assessmentType === "Índice de Networking Interno") {
-        numberOfSections = 4;
-        numberOfQuestionsBySection = 5;
-    }
-
     if (!assessmentResult.answers) {
         console.warn("No answers found for assessmentResult:", assessmentResult);
-        return Array(numberOfSections).fill(0);
+        return [0, 0, 0, 0, 0];  // Return an array of zeros if there are no answers
     }
-
-    for (let sectionIndex = 0; sectionIndex < numberOfSections; sectionIndex++) {
+    console.log(`assessmentResult.answers`, assessmentResult.answers)
+    for (let sectionIndex = 0; sectionIndex < 5; sectionIndex++) { // Assuming 5 sections
         let sectionScore = 0;
-        const startQuestionIndex = sectionIndex * numberOfQuestionsBySection;
-        for (let i = 0; i < numberOfQuestionsBySection; i++) {
+        const startQuestionIndex = sectionIndex * 5; // Assuming 5 questions per section
+        for (let i = 0; i < 5; i++) {
             const questionIndex = startQuestionIndex + i;
-            const answer = assessmentResult.answers.find(ans => ans && ans.questionIndex === questionIndex);
+            const answer = assessmentResult.answers.find(ans => ans && ans.questionIndex === questionIndex); // Add null check
 
             if (answer) {
                 sectionScore += 4 - answer.answerIndex;
@@ -463,10 +433,11 @@ function calculateSectionScores(assessmentResult, assessmentType) {
         }
         sectionScores.push(sectionScore);
     }
+    console.log(`sectionScores`, sectionScores);
     return sectionScores;
 }
 
-function sortTable(userHighestScores, columnIndex, direction, tableHeaders) { // ADD tableHeaders
+function sortTable(userHighestScores, columnIndex, direction) {
     currentSortDirection = direction
     // Remove any existing sorting indicators
     const thElements = document.querySelectorAll('.leaderboard-table th');
@@ -488,7 +459,6 @@ function sortTable(userHighestScores, columnIndex, direction, tableHeaders) { //
     } else {
         console.warn("The column index value is incorrect so any changes on html values are not valid.");
     }
-
     userHighestScores.sort((a, b) => {
         let valueA, valueB;
 
@@ -497,37 +467,33 @@ function sortTable(userHighestScores, columnIndex, direction, tableHeaders) { //
                 valueA = a.userId;
                 valueB = b.userId;
                 break;
-            case 1: // Total Score
+            case 1: // IMP
                 valueA = a.highestScore;
                 valueB = b.highestScore;
                 break;
-            default: // Sorting by section (dynamic)
-                // Find the header text for this column
-                const headerText = tableHeaders[columnIndex];
-
-                // Determine the correct index into sectionScores
-                let sectionIndex = -1; // Default to -1 (not found)
-                if (headerText === 'Agradabilidade' || headerText === 'Proximidade' || headerText === 'Relacionamento próximo') {
-                    sectionIndex = 0;
-                } else if (headerText === 'Expertise' || headerText === 'Frequência' || headerText === 'Constância de fomento') {
-                    sectionIndex = 1;
-                } else if (headerText === 'Confiança' || headerText === 'Sintonia de interesses' || headerText === 'Alinhamento de interesses') {
-                    sectionIndex = 2;
-                } else if (headerText === 'Colaboração' || headerText === 'Atuação estratégica') {
-                    sectionIndex = 3;
-                } else if (headerText === 'Visibilidade') {
-                    sectionIndex = 4;
-                }
-
-                if (sectionIndex !== -1 && a.sectionScores && b.sectionScores) {
-                    valueA = a.sectionScores[sectionIndex];
-                    valueB = b.sectionScores[sectionIndex];
-                } else {
-                    valueA = null;
-                    valueB = null;
-                }
+            case 2: // Agradabilidade
+                valueA = a.sectionScores ? a.sectionScores[0] : null;
+                valueB = b.sectionScores ? b.sectionScores[0] : null;
+                break;
+            case 3: // Expertise
+                valueA = a.sectionScores ? a.sectionScores[1] : null;
+                valueB = b.sectionScores ? b.sectionScores[1] : null;
+                break;
+            case 4: // Confiança
+                valueA = a.sectionScores ? a.sectionScores[2] : null;
+                valueB = b.sectionScores ? b.sectionScores[2] : null;
+                break;
+            case 5: // Colaboração
+                valueA = a.sectionScores ? a.sectionScores[3] : null;
+                valueB = b.sectionScores ? b.sectionScores[3] : null;
+                break;
+            case 6: // Visibilidade
+                valueA = a.sectionScores ? a.sectionScores[4] : null;
+                valueB = b.sectionScores ? b.sectionScores[4] : null;
+                break;
+            default:
+                return 0;
         }
-
         if (valueA == null && valueB == null) return 0;
         if (valueA == null) return currentSortDirection === 'asc' ? -1 : 1;
         if (valueB == null) return currentSortDirection === 'asc' ? 1 : -1;
