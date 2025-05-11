@@ -604,6 +604,8 @@
                     }
                 }
             } else if (assessmentType === 'ini') {
+                console.log("INI - getSectionInterpretation called with:", { sectionTitle, sectionScore, assessmentType }); // VERY IMPORTANT
+
                 const iniSectionInterpretations = {
                     "1. RELACIONAMENTO PRÓXIMO (RP)": {
                         excellent:
@@ -656,7 +658,11 @@
                     } else {
                         interpretation = iniSectionInterpretations[sectionTitle].bad;
                     }
-                }
+                    console.log("INI - Interpretation found:", interpretation); // Log the result
+                } else {
+            console.log("INI - No interpretation found for sectionTitle:", sectionTitle); // Log if no match
+            interpretation = "Interpretation not available"; // Or some default message
+        }
             }
 
 
