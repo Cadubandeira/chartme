@@ -466,7 +466,8 @@ function calculateSectionScores(assessmentResult, assessmentType) {
     return sectionScores;
 }
 
-function sortTable(userHighestScores, columnIndex, direction) {
+function sortTable(userHighestScores, columnIndex, direction, tableHeaders) { // ADD tableHeaders
+    currentSortDirection = direction
     // Remove any existing sorting indicators
     const thElements = document.querySelectorAll('.leaderboard-table th');
     thElements.forEach(th => th.classList.remove('sorted-asc', 'sorted-desc'));
@@ -475,6 +476,7 @@ function sortTable(userHighestScores, columnIndex, direction) {
 
     if (currentSortColumn === columnIndex) {
         currentSortDirection = currentSortDirection === 'desc' ? 'asc' : 'desc';
+        loadAssessmentData();
     } else {
         currentSortColumn = columnIndex;
         currentSortDirection = 'desc'; // Default to descending for new columns
@@ -495,33 +497,37 @@ function sortTable(userHighestScores, columnIndex, direction) {
                 valueA = a.userId;
                 valueB = b.userId;
                 break;
-            case 1: // IMP
+            case 1: // Total Score
                 valueA = a.highestScore;
                 valueB = b.highestScore;
                 break;
-            case 2: // Agradabilidade
-                valueA = a.sectionScores ? a.sectionScores[0] : null;
-                valueB = b.sectionScores ? b.sectionScores[0] : null;
-                break;
-            case 3: // Expertise
-                valueA = a.sectionScores ? a.sectionScores[1] : null;
-                valueB = b.sectionScores ? b.sectionScores[1] : null;
-                break;
-            case 4: // Confiança
-                valueA = a.sectionScores ? a.sectionScores[2] : null;
-                valueB = b.sectionScores ? b.sectionScores[2] : null;
-                break;
-            case 5: // Colaboração
-                valueA = a.sectionScores ? a.sectionScores[3] : null;
-                valueB = b.sectionScores ? b.sectionScores[3] : null;
-                break;
-            case 6: // Visibilidade
-                valueA = a.sectionScores ? a.sectionScores[4] : null;
-                valueB = b.sectionScores ? b.sectionScores[4] : null;
-                break;
-            default:
-                return 0;
+            default: // Sorting by section (dynamic)
+                // Find the header text for this column
+                const headerText = tableHeaders[columnIndex];
+
+                // Determine the correct index into sectionScores
+                let sectionIndex = -1; // Default to -1 (not found)
+                if (headerText === 'Agradabilidade' || headerText === 'Proximidade' || headerText === 'Relacionamento próximo') {
+                    sectionIndex = 0;
+                } else if (headerText === 'Expertise' || headerText === 'Frequência' || headerText === 'Constância de fomento') {
+                    sectionIndex = 1;
+                } else if (headerText === 'Confiança' || headerText === 'Sintonia de interesses' || headerText === 'Alinhamento de interesses') {
+                    sectionIndex = 2;
+                } else if (headerText === 'Colaboração' || headerText === 'Atuação estratégica') {
+                    sectionIndex = 3;
+                } else if (headerText === 'Visibilidade') {
+                    sectionIndex = 4;
+                }
+
+                if (sectionIndex !== -1 && a.sectionScores && b.sectionScores) {
+                    valueA = a.sectionScores[sectionIndex];
+                    valueB = b.sectionScores[sectionIndex];
+                } else {
+                    valueA = null;
+                    valueB = null;
+                }
         }
+
         if (valueA == null && valueB == null) return 0;
         if (valueA == null) return currentSortDirection === 'asc' ? -1 : 1;
         if (valueB == null) return currentSortDirection === 'asc' ? 1 : -1;
