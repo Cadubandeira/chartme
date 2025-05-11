@@ -648,13 +648,13 @@
                 };
                 if (iniSectionInterpretations[sectionTitle]) {
                     if (sectionScore >= 17) {
-                        interpretation = impSectionInterpretations[sectionTitle].excellent;
+                        interpretation = iniSectionInterpretations[sectionTitle].excellent;
                     } else if (sectionScore >= 13) {
-                        interpretation = impSectionInterpretations[sectionTitle].good;
+                        interpretation = iniSectionInterpretations[sectionTitle].good;
                     } else if (sectionScore >= 9) {
-                        interpretation = impSectionInterpretations[sectionTitle].average;
+                        interpretation = iniSectionInterpretations[sectionTitle].average;
                     } else {
-                        interpretation = impSectionInterpretations[sectionTitle].bad;
+                        interpretation = iniSectionInterpretations[sectionTitle].bad;
                     }
                 }
             }
