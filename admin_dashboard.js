@@ -311,11 +311,22 @@ function createPieChart(canvasId, data) {
     return new Chart(ctx, config);
 }
 
-async function displayLeaderboard(userHighestScores) {
+async function displayLeaderboard(userHighestScores, assessmentType) {
     const leaderboardList = document.getElementById('leaderboard-list');
-    leaderboardList.innerHTML = ''; // Clear previous leaderboard
+    const headerRow = document.getElementById('leaderboard-header-row'); // Get the header row
+    leaderboardList.innerHTML = ''; // Clear previous leaderboard data
+    headerRow.innerHTML = ''; // Clear previous header row
 
-    // Function to fetch username and general informations
+    const tableHeaders = getTableHeaders(assessmentType); // Get headers based on assessment
+
+    // Create table header row
+    tableHeaders.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+
+    // Function to fetch username and generate table rows
     async function generateTableRow(userScore, index) {
         try {
             const userDoc = await db.collection("users").doc(userScore.userId).get();
@@ -326,31 +337,25 @@ async function displayLeaderboard(userHighestScores) {
 
                 const row = leaderboardList.insertRow();
                 const posCell = row.insertCell(0);
-                const userCell = row.insertCell(1);
-                const scoreCell = row.insertCell(2);
-                const agradabilidadeCell = row.insertCell(3);
-                const expertiseCell = row.insertCell(4);
-                const confiancaCell = row.insertCell(5);
-                const colaboracaoCell = row.insertCell(6);
-                const visibilidadeCell = row.insertCell(7);
-
                 posCell.textContent = index;
+
+                const userCell = row.insertCell(1);
                 userCell.textContent = `${username} (${userEmail})`;
+
+                const scoreCell = row.insertCell(2);
                 scoreCell.textContent = userScore.highestScore;
 
-                // Populate section scores
+                // Populate section scores dynamically
                 if (userScore.sectionScores) {
-                    agradabilidadeCell.textContent = userScore.sectionScores[0] != null ? userScore.sectionScores[0] : 'N/A';
-                    expertiseCell.textContent = userScore.sectionScores[1] != null ? userScore.sectionScores[1] : 'N/A';
-                    confiancaCell.textContent = userScore.sectionScores[2] != null ? userScore.sectionScores[2] : 'N/A';
-                    colaboracaoCell.textContent = userScore.sectionScores[3] != null ? userScore.sectionScores[3] : 'N/A';
-                    visibilidadeCell.textContent = userScore.sectionScores[4] != null ? userScore.sectionScores[4] : 'N/A';
+                    for (let i = 0; i < userScore.sectionScores.length; i++) {
+                        const sectionCell = row.insertCell(i + 3);
+                        sectionCell.textContent = userScore.sectionScores[i] != null ? userScore.sectionScores[i] : 'N/A';
+                    }
                 } else {
-                    agradabilidadeCell.textContent = 'N/A';
-                    expertiseCell.textContent = 'N/A';
-                    confiancaCell.textContent = 'N/A';
-                    colaboracaoCell.textContent = 'N/A';
-                    visibilidadeCell.textContent = 'N/A';
+                    for (let i = 0; i < tableHeaders.length - 3; i++) {
+                        const sectionCell = row.insertCell(i + 3);
+                        sectionCell.textContent = 'N/A';
+                    }
                 }
 
                 return row;
@@ -367,14 +372,27 @@ async function displayLeaderboard(userHighestScores) {
     // Populate the leaderboard
     for (let index = 0; index < userHighestScores.length; index++) {
         const userScore = userHighestScores[index];
-        const row = await generateTableRow(userScore, index + 1); // add one. As list start on 0, the user list will show 1
+        const row = await generateTableRow(userScore, index + 1);
 
         if (!row) {
             console.warn("Skipping row due to error fetching user data.");
-            continue; // Skip to the next iteration if there was an error. If error on a row, it keeps displaying the others
+            continue;
         }
-
     }
+}
+
+function getTableHeaders(assessmentType) {
+    let headers = ['#', 'Usuário', 'Total']; // Basic headers
+
+    if (assessmentType === 'Índice de Magnetismo Profissional') {
+        headers.push('Agradabilidade', 'Expertise', 'Confiança', 'Colaboração', 'Visibilidade');
+    } else if (assessmentType === 'Fórmula do Networking') {
+        headers.push('Proximidade', 'Frequência', 'Sintonia de interesses');
+    } else if (assessmentType === 'Índice de Networking Interno') {
+        headers.push('Relacionamento próximo', 'Constância de fomento', 'Alinhamento de interesses', 'Atuação estratégica');
+    }
+
+    return headers;
 }
 
 function clearLeaderboard() {
@@ -382,7 +400,7 @@ function clearLeaderboard() {
     leaderboardList.innerHTML = '';
 }
 
-function processHighestScores(assessmentResults) {
+function processHighestScores(assessmentResults, assessmentType) {
     const userScores = {};
 
     assessmentResults.forEach(result => {
@@ -393,39 +411,54 @@ function processHighestScores(assessmentResults) {
             userScores[userId] = {
                 userId: userId,
                 highestScore: score,
-                result: result  // Store the entire result object
+                result: result
             };
         }
     });
 
     // Convert to an array and include section scores
     const userHighestScores = Object.values(userScores).map(userScore => {
-        const sectionScores = calculateSectionScores(userScore.result);
+        const sectionScores = calculateSectionScores(userScore.result, assessmentType); // Pass assessment type
         return {
             userId: userScore.userId,
             highestScore: userScore.highestScore,
-            sectionScores: sectionScores, //Add score sections! and the main one! IMPORTANT
-            resultInterpretation: userScore.result.resultInterpretation //To fix data for chart, must be on this object
+            sectionScores: sectionScores,
+            resultInterpretation: userScore.result.resultInterpretation
         };
     });
 
     return userHighestScores;
 }
 
+
 // Helper function to calculate section scores for a single assessment
-function calculateSectionScores(assessmentResult) {
+function calculateSectionScores(assessmentResult, assessmentType) {
     const sectionScores = [];
     if (!assessmentResult.answers) {
         console.warn("No answers found for assessmentResult:", assessmentResult);
-        return [0, 0, 0, 0, 0];  // Return an array of zeros if there are no answers
+        // Return an array of zeros with length based on assessment
+        let numberOfSections = 5;
+        if (assessmentType === "Fórmula do Networking") {
+            numberOfSections = 3;
+        } else if (assessmentType === "Índice de Networking Interno") {
+            numberOfSections = 4;
+        }
+        return Array(numberOfSections).fill(0);
     }
-    console.log(`assessmentResult.answers`, assessmentResult.answers)
-    for (let sectionIndex = 0; sectionIndex < 5; sectionIndex++) { // Assuming 5 sections
+
+    let numberOfQuestionsBySection = 5;
+    if (assessmentType === "Fórmula do Networking") {
+        numberOfQuestionsBySection = 5;
+    } else if (assessmentType === "Índice de Networking Interno") {
+        numberOfQuestionsBySection = 5;
+    }
+
+    for (let sectionIndex = 0; sectionIndex < numberOfSections; sectionIndex++) {
         let sectionScore = 0;
-        const startQuestionIndex = sectionIndex * 5; // Assuming 5 questions per section
-        for (let i = 0; i < 5; i++) {
+        const startQuestionIndex = sectionIndex * numberOfQuestionsBySection;
+        for (let i = 0; i < numberOfQuestionsBySection; i++) {
             const questionIndex = startQuestionIndex + i;
-            const answer = assessmentResult.answers.find(ans => ans && ans.questionIndex === questionIndex); // Add null check
+            const answer = assessmentResult.answers.find(ans => ans && ans.questionIndex === questionIndex);
 
             if (answer) {
                 sectionScore += 4 - answer.answerIndex;
@@ -433,7 +466,6 @@ function calculateSectionScores(assessmentResult) {
         }
         sectionScores.push(sectionScore);
     }
-    console.log(`sectionScores`, sectionScores);
     return sectionScores;
 }
 
