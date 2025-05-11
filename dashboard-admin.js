@@ -257,3 +257,11 @@ async function handleAdminDashboard() {
         console.log(error.message);
     }
 }
+
+async function handleAdminUsers() {
+    try {
+        window.location.href = 'users.html';
+    } catch (error) {
+        console.log(error.message);
+    }
+}
