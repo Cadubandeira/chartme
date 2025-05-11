@@ -463,7 +463,7 @@
                     "Demonstração de resultados:<br>Como você avalia sua habilidade de apresentar de forma clara e estruturada os resultados e impactos dos seus projetos e realizações?",
                     "Reconhecimento como referência ou especialista:<br>Como você avalia o reconhecimento que recebe como referência ou especialista em sua área, tanto dentro da sua organização quanto no mercado?"
                 ];
-                
+
             } else if (assessmentType === 'ini'){
                 sectionConfigs = [
                     { title: "1. RELACIONAMENTO PRÓXIMO", questions: [{}, {}, {}, {}, {}] },
@@ -603,7 +603,64 @@
                         interpretation = impSectionInterpretations[sectionTitle].bad;
                     }
                 }
+            } else if (assessmentType === 'ini') {
+                const impSectionInterpretations = {
+                    "1. RELACIONAMENTO PRÓXIMO (RP)": {
+                        excellent:
+                            "<strong>Excelente</strong>:\nVocê demonstra uma habilidade altamente desenvolvida para construir e fortalecer vínculos com colegas de diferentes áreas e níveis hierárquicos. Suas interações são pautadas por genuíno interesse, empatia e respeito, ampliando sua rede de forma estratégica e natural. Sua presença é reconhecida como construtiva e agregadora dentro da organização.\n<strong>Ações recomendadas</strong>: Mantenha sua postura genuína, amplie ainda mais a diversidade de seus contatos internos, e atue como um facilitador de integração entre áreas. Continue liderando com empatia e abertura, inspirando confiança e colaboração.",
+                        good:
+                            "<strong>Bom</strong>:\nVocê possui boas habilidades para estabelecer relações internas, mas em alguns momentos pode haver falta de consistência na aproximação ou profundidade nos vínculos. Em geral, você se conecta bem, mas pode expandir seu alcance estratégico dentro da organização.\n<strong>Ações recomendadas</strong>: Busque diversificar suas conexões, aproximando-se intencionalmente de áreas ou níveis que ainda não fazem parte da sua rede. Pratique maior intencionalidade nas interações informais e esteja atento(a) para manter e aprofundar os vínculos já criados.",
+                        average:
+                            "<strong>Oportunidades de melhoria</strong>:\nSua capacidade de construir relações próximas é limitada e tende a se restringir a círculos conhecidos ou à sua área imediata. Isso pode diminuir sua capacidade de ampliar perspectivas e abrir portas dentro da organização.\n<strong>Ações recomendadas</strong>: Trabalhe para sair da sua zona de conforto: participe de projetos interdepartamentais, eventos internos e atividades colaborativas. Estabeleça metas de ampliar seu networking interno buscando conhecer novos colegas de diferentes áreas ou níveis hierárquicos.",
+                        bad:
+                            "<strong>Necessário Investir Intensamente</strong>:\nSua pontuação indica dificuldades significativas em construir e manter relações próximas dentro da empresa. Isso pode impactar diretamente sua visibilidade, colaboração e possibilidades de crescimento interno.\n<strong>Ações recomendadas</strong>: Invista com urgência no fortalecimento de sua rede interna: participe de treinamentos de comunicação interpessoal, aceite convites para eventos internos, aproxime-se de colegas em momentos informais e desenvolva habilidades de aproximação genuína e empática. Networking interno é uma construção diária que começa com pequenas atitudes consistentes.",
+                    },
+                    "2. CONSTÂNCIA DE FOMENTO (CF)": {
+                        excellent:
+                            "<strong>Excelente</strong>:\nVocê demonstra alta consistência e qualidade nas suas interações internas. Sua rede está viva, ativa e produtiva, sustentada por contatos regulares e relevantes. Você entende que o valor do networking interno não está apenas em iniciar relações, mas em cultivá-las com frequência, atenção e propósito.\n<strong>Ações recomendadas</strong>: Continue nutrindo suas conexões com interações autênticas e intencionais. Amplie seu alcance participando de novos grupos, fóruns e eventos internos. Seja visto como alguém que não apenas se conecta, mas mantém relações consistentes e estratégicas ao longo do tempo.",
+                        good:
+                            "<strong>Bom</strong>:\nVocê mantém boas interações internas, mas pode haver variações na regularidade ou profundidade dessas conexões. Sua rede está ativa, mas poderia se beneficiar de uma atuação ainda mais constante e planejada para se tornar mais estratégica e sólida.\n<strong>Ações recomendadas</strong>: Estabeleça uma cadência de contatos regulares com pessoas-chave da sua rede interna. Planeje pequenos checkpoints de relacionamento e mantenha a presença ativa também nos canais digitais internos, não apenas nos momentos de necessidade.",
+                        average:
+                            "<strong>Oportunidade de melhoria</strong>:\nSua rede interna sofre com a falta de regularidade no contato. Você mantém conexões, mas de forma esporádica e reativa, o que dificulta a construção de vínculos sólidos e a percepção de valor a longo prazo.\n<strong>Ações recomendadas</strong>: Programe interações regulares — mesmo que breves — com sua rede interna. Participe de mais eventos internos, marque conversas de atualização e fortaleça sua presença em fóruns e plataformas digitais da empresa. A constância cria confiança e visibilidade.",
+                        bad:
+                            "<strong>Necessário Investir Intensamente</strong>:\nSua pontuação indica que seu networking interno é inconstante ou praticamente inexistente. A falta de constância no fomento das relações pode limitar seu acesso a oportunidades e enfraquecer sua presença organizacional.\n<strong>Ações recomendadas</strong>: Priorize o estabelecimento de rotinas de contato: envie mensagens de atualização, participe de reuniões voluntárias, envolva-se em grupos de trabalho e mantenha uma presença visível nos canais internos. Trate a manutenção da sua rede como uma atividade estratégica e não circunstancial.",
+                    },
+                    "3. ALINHAMENTO DE INTERESSES (AI)": {
+                        excellent:
+                            "<strong>Excelente</strong>:\nVocê demonstra uma capacidade elevada de construir parcerias baseadas em interesses comuns, confiança e crescimento mútuo. Sua atuação fortalece alianças estratégicas dentro da organização, gera trocas ricas e impulsiona oportunidades de colaboração verdadeira.\n<strong>Ações recomendadas</strong>: Continue identificando e aprofundando temas de interesse compartilhado. Crie espaços de colaboração proativa e mantenha seu papel como facilitador de crescimento mútuo entre colegas. Multiplique sua influência conectando pessoas e projetos que podem se fortalecer.",
+                        good:
+                            "<strong>Bom</strong>:\nVocê possui uma boa capacidade de alinhar interesses com colegas e criar parcerias produtivas, embora existam momentos em que o alinhamento poderia ser mais intencional ou aprofundado.\n<strong>Ações recomendadas</strong>: Trabalhe para identificar mais cedo os interesses em comum e fortalecer alianças estratégicas. Compartilhe mais informações relevantes e envolva colegas em projetos onde todos possam ganhar, ampliando seu impacto dentro da organização.",
+                        average:
+                            "<strong>Oportunidade de melhoria</strong>:\nSeu networking interno carece de aprofundamento em interesses compartilhados. As relações podem ser amistosas, mas nem sempre geram crescimento conjunto ou colaboração estratégica.\n<strong>Ações recomendadas</strong>: Busque ativamente identificar pontos de conexão além do contexto imediato. Proponha projetos colaborativos, compartilhe insights relevantes e demonstre genuíno interesse em construir parcerias de valor com seus colegas.",
+                        bad:
+                            "<strong>Necessário Investir Intensamente</strong>:\nSua pontuação indica que você ainda não utiliza a estratégia de interesses compartilhados para fortalecer sua rede interna. Isso limita a profundidade das relações e a abertura de novas oportunidades.\n<strong>Ações recomendadas</strong>: Desenvolva habilidades de escuta ativa para entender os objetivos e desafios dos colegas. Participe de projetos conjuntos, ofereça suporte em iniciativas que não sejam exclusivamente suas e invista na construção de parcerias genuínas, baseadas em confiança e reciprocidade.",
+                        },
+                    "4. ATUAÇÃO ESTRATÉGICA (AE)": {
+                        excellent:
+                            "<strong>Excelente</strong>:\nVocê atua estrategicamente de maneira exemplar, agregando valor nas interações, fortalecendo sua reputação e impactando positivamente o ambiente interno. Seu conhecimento técnico, visão estratégica e capacidade de contribuição são reconhecidos de forma natural e respeitosa. Você se posiciona como uma liderança de influência e referência dentro da organização.\n<strong>Ações recomendadas</strong>: Continue preparando-se para cada interação importante, buscando gerar valor diferenciado. Inspire outros a também atuarem com excelência, multiplicando o impacto positivo da sua presença estratégica na empresa.",
+                        good:
+                            "<strong>Bom</strong>:\nVocê demonstra valor e visão estratégica em boa parte das interações, mas ainda pode fortalecer sua preparação ou ampliar sua influência em fóruns, eventos e interações importantes. Há espaço para tornar sua contribuição ainda mais intencional e visível.\n<strong>Ações recomendadas</strong>: Planeje estrategicamente suas participações, buscando antecipar onde e como pode gerar mais impacto. Aproveite momentos de exposição interna para reforçar sua autoridade de forma genuína, consistente e sem excessos.",
+                        average:
+                            "<strong>Oportunidades de melhoria</strong>:\nSua capacidade de atuação estratégica é percebida de maneira irregular. Algumas interações agregam valor, mas muitas são conduzidas de forma improvisada, sem planejamento consciente. Isso limita seu reconhecimento e reduz o potencial de influência positiva.\n<strong>Ações recomendadas</strong>: Invista em sua preparação: antecipe dados, tendências e contribuições relevantes para cada situação. Trate cada reunião ou fórum como uma oportunidade estratégica para agregar valor e fortalecer sua reputação interna de forma intencional e ética.",
+                        bad:
+                            "<strong>Necessário Investir Intensamente</strong>:\nSua pontuação indica uma atuação interna reativa ou pouco estratégica. A falta de preparação e de geração ativa de valor nas interações prejudica sua visibilidade positiva e limita o crescimento da sua reputação dentro da organização.\n<strong>Ações recomendadas</strong>: Construa um plano de desenvolvimento focado em atuação estratégica: participe de treinamentos de comunicação estratégica, busque mentorias, pratique a preparação de pautas e entregas antes das reuniões, e cultive a consciência de que cada interação é uma oportunidade de gerar impacto duradouro.",
+                        }
+                };
+                if (impSectionInterpretations[sectionTitle]) {
+                    if (totalScore >= 66) {
+                    interpretation = "excellent";
+                    } else if (totalScore >= 51) {
+                    interpretation = "good";
+                    } else if (totalScore >= 36) {
+                    interpretation = "average";
+                    } else if (totalScore >= 20) {
+                    interpretation =  "bad";
+                    } else {
+                    interpretation =  "bad";
+                    }
+                }
             }
+
 
             return interpretation;
         }
