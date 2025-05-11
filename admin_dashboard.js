@@ -188,7 +188,7 @@ async function loadAssessmentData() {
         assessmentResults = Object.values(userScores);
     }
 
-    let userHighestScores = processHighestScores(assessmentResults);
+     let userHighestScores = processHighestScores(assessmentResults, currentAssessment);
 
     if (userHighestScores.length === 0) {
         console.log("No data found for the selected date range.");
@@ -467,7 +467,6 @@ function calculateSectionScores(assessmentResult, assessmentType) {
 }
 
 function sortTable(userHighestScores, columnIndex, direction) {
-    currentSortDirection = direction
     // Remove any existing sorting indicators
     const thElements = document.querySelectorAll('.leaderboard-table th');
     thElements.forEach(th => th.classList.remove('sorted-asc', 'sorted-desc'));
@@ -476,7 +475,6 @@ function sortTable(userHighestScores, columnIndex, direction) {
 
     if (currentSortColumn === columnIndex) {
         currentSortDirection = currentSortDirection === 'desc' ? 'asc' : 'desc';
-        loadAssessmentData();
     } else {
         currentSortColumn = columnIndex;
         currentSortDirection = 'desc'; // Default to descending for new columns
@@ -488,6 +486,7 @@ function sortTable(userHighestScores, columnIndex, direction) {
     } else {
         console.warn("The column index value is incorrect so any changes on html values are not valid.");
     }
+
     userHighestScores.sort((a, b) => {
         let valueA, valueB;
 
