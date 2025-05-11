@@ -132,6 +132,42 @@ li {
     /* slightly darker on hover */
 }
 
+#admin-users-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-size: 2rem;
+    /* Increased icon size */
+    color: white;
+    /* set the main color*/
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0.8rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom:0.5rem;
+    width: auto;
+    /* Set a fixed width */
+    height: 2.5rem;
+    /* Set a fixed height */
+    position: fixed;
+    /* Make container positioned relative to viewport */
+    top: 24px;
+    /* Distance from the top */
+    left: 72px;
+    /* Distance from the right */
+    z-index: 100;
+    /* Ensure button is above other content */
+}
+
+#admin-users-button:hover {
+    background-color: rgba(87, 48, 101, 0.3);
+    /* slightly darker on hover */
+}
+
 body {
     font-family: sans-serif;
     margin: 0;

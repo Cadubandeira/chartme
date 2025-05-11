@@ -9,6 +9,7 @@ auth.onAuthStateChanged(async (user) => {
                 const userData = userDoc.data();
                 if (userData.isAdmin === true) {
                     document.getElementById('admin-dashboard-button-container').style.display = 'block';
+                    document.getElementById('admin-users-button-container').style.display = 'block';
                     document.getElementById('admin-filters').style.display = 'block';
                     await populateUserSelect(); // Populate the select element
                 }
