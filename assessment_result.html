@@ -604,7 +604,7 @@
                     }
                 }
             } else if (assessmentType === 'ini') {
-                const impSectionInterpretations = {
+                const iniSectionInterpretations = {
                     "1. RELACIONAMENTO PRÓXIMO (RP)": {
                         excellent:
                             "<strong>Excelente</strong>:\nVocê demonstra uma habilidade altamente desenvolvida para construir e fortalecer vínculos com colegas de diferentes áreas e níveis hierárquicos. Suas interações são pautadas por genuíno interesse, empatia e respeito, ampliando sua rede de forma estratégica e natural. Sua presença é reconhecida como construtiva e agregadora dentro da organização.\n<strong>Ações recomendadas</strong>: Mantenha sua postura genuína, amplie ainda mais a diversidade de seus contatos internos, e atue como um facilitador de integração entre áreas. Continue liderando com empatia e abertura, inspirando confiança e colaboração.",
@@ -646,7 +646,7 @@
                             "<strong>Necessário Investir Intensamente</strong>:\nSua pontuação indica uma atuação interna reativa ou pouco estratégica. A falta de preparação e de geração ativa de valor nas interações prejudica sua visibilidade positiva e limita o crescimento da sua reputação dentro da organização.\n<strong>Ações recomendadas</strong>: Construa um plano de desenvolvimento focado em atuação estratégica: participe de treinamentos de comunicação estratégica, busque mentorias, pratique a preparação de pautas e entregas antes das reuniões, e cultive a consciência de que cada interação é uma oportunidade de gerar impacto duradouro.",
                         }
                 };
-                if (impSectionInterpretations[sectionTitle]) {
+                if (iniSectionInterpretations[sectionTitle]) {
                     if (totalScore >= 66) {
                     interpretation = "excellent";
                     } else if (totalScore >= 51) {
