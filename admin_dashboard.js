@@ -434,23 +434,20 @@ function processHighestScores(assessmentResults, assessmentType) {
 // Helper function to calculate section scores for a single assessment
 function calculateSectionScores(assessmentResult, assessmentType) {
     const sectionScores = [];
-    if (!assessmentResult.answers) {
-        console.warn("No answers found for assessmentResult:", assessmentResult);
-        // Return an array of zeros with length based on assessment
-        let numberOfSections = 5;
-        if (assessmentType === "Fórmula do Networking") {
-            numberOfSections = 3;
-        } else if (assessmentType === "Índice de Networking Interno") {
-            numberOfSections = 4;
-        }
-        return Array(numberOfSections).fill(0);
-    }
+    let numberOfSections = 5; // Default for Índice de Magnetismo Profissional
+    let numberOfQuestionsBySection = 5; // Default
 
-    let numberOfQuestionsBySection = 5;
     if (assessmentType === "Fórmula do Networking") {
+        numberOfSections = 3;
         numberOfQuestionsBySection = 5;
     } else if (assessmentType === "Índice de Networking Interno") {
+        numberOfSections = 4;
         numberOfQuestionsBySection = 5;
+    }
+
+    if (!assessmentResult.answers) {
+        console.warn("No answers found for assessmentResult:", assessmentResult);
+        return Array(numberOfSections).fill(0);
     }
 
     for (let sectionIndex = 0; sectionIndex < numberOfSections; sectionIndex++) {
