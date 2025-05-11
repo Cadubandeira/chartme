@@ -120,6 +120,8 @@ async function loadAssessmentHistory() {
                     resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
                 } else if (assessment.assessmentName === 'Fórmula do Networking' && assessment.result) {
                     resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
+                } else if (assessment.assessmentName === 'Índice de Networking Interno' && assessment.result) {
+                    resultDisplay = `Resultado: ${assessment.result} - ${translateResultInterpretation(assessment.resultInterpretation)}`;
                 } else {
                     resultDisplay = 'Resultado: Não Disponível';
                 }
