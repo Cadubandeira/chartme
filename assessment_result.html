@@ -271,39 +271,39 @@
         }
 
         function calculateScoresFromAnswers(answers, assessmentType) {
-            const sectionScores = [];
-            let sectionsConfig = [];
+    const sectionScores = [];
+    let sectionsConfig = [];
 
-            if (assessmentType === 'fn') {
-                sectionsConfig = [
-                    { title: "1. PROXIMIDADE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
-                    { title: "2. FREQUÊNCIA", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
-                    { title: "3. SINTONIA DE INTERESSES", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
-                ];
-            } else if (assessmentType === 'imp') {
-                sectionConfig = [
-                    { title: "1. AGRADABILIDADE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
-                    { title: "2. EXPERTISE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
-                    { title: "3. CONFIANÇA", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
-                    { title: "4. COLABORAÇÃO", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
-                    { title: "5. VISIBILIDADE", questions: [{}, {}, {}, {}, {}], options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
-                ];
+    if (assessmentType === 'fn') {
+        sectionsConfig = [
+            { title: "1. PROXIMIDADE", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "2. FREQUÊNCIA", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "3. SINTONIA DE INTERESSES", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
+        ];
+    } else if (assessmentType === 'imp') {
+        sectionsConfig = [
+            { title: "1. AGRADABILIDADE", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "2. EXPERTISE", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "3. CONFIANÇA", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "4. COLABORAÇÃO", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] },
+            { title: "5. VISIBILIDADE", questions: Array(5).fill({}), options: ["Sempre", "Frequentemente", "Ocasionalmente", "Raramente"] }
+        ];
+    }
+
+    sectionsConfig.forEach((section, sectionIndex) => {
+        let sectionScore = 0;
+        for (let i = 0; i < section.questions.length; i++) {
+            const answerIndexForQuestion = sectionIndex * section.questions.length + i;
+            const answer = answers.find(ans => ans.questionIndex === answerIndexForQuestion);
+            if (answer) {
+                sectionScore += (4 - answer.answerIndex);
             }
-
-            sectionsConfig.forEach((section, sectionIndex) => {
-                let sectionScore = 0;
-                for (let questionIndex = 0; questionIndex < section.questions.length; questionIndex++) {
-                    const answerIndexForQuestion = sectionIndex * section.questions.length + questionIndex;
-                    const answer = answers.find(ans => ans.questionIndex === answerIndexForQuestion);
-                    if (answer) {
-                        sectionScore += (4 - answer.answerIndex);
-                    }
-                }
-                sectionScores.push(sectionScore);
-            });
-
-            return sectionScores;
         }
+        sectionScores.push(sectionScore);
+    });
+
+    return sectionScores;
+}
 
         function generateRadarChart(sectionScores, sectionLabels) {
             const ctxRadar = document.getElementById('radarChart').getContext('2d');
