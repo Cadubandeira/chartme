@@ -647,16 +647,14 @@
                         }
                 };
                 if (iniSectionInterpretations[sectionTitle]) {
-                    if (totalScore >= 66) {
-                    interpretation = "excellent";
-                    } else if (totalScore >= 51) {
-                    interpretation = "good";
-                    } else if (totalScore >= 36) {
-                    interpretation = "average";
-                    } else if (totalScore >= 20) {
-                    interpretation =  "bad";
+                    if (sectionScore >= 17) {
+                        interpretation = impSectionInterpretations[sectionTitle].excellent;
+                    } else if (sectionScore >= 13) {
+                        interpretation = impSectionInterpretations[sectionTitle].good;
+                    } else if (sectionScore >= 9) {
+                        interpretation = impSectionInterpretations[sectionTitle].average;
                     } else {
-                    interpretation =  "bad";
+                        interpretation = impSectionInterpretations[sectionTitle].bad;
                     }
                 }
             }
